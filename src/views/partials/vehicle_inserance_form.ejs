@@ -1,0 +1,92 @@
+<!-- Vehicle Insurance Modal Start -->
+
+<!-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#vehicle_insurance">Vehicle Insurance</button> -->
+<!-- <br><br> -->
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="vehicle-insurance" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-titleId">Vehicle Insurance </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container ">
+          <div class="border bg-primary">
+            <h5 class="m-2 fw-bold text-center text-light">VEHICLE INSURANCE FORM</h5>
+          </div>
+        </div>
+
+        <div class="container"><br>
+          <div class="row">
+            <div class="mb-3 col-lg-6">
+              <label for="policy_number" class=" form-label fw-bold">Policy Number </label><br>
+              <input type="text" class="form-control border-dark w-75 " placeholder="Enter Policy Number" id="policy-number" aria-describedby="ride">
+              <span class="text-danger ms-4" id="policy-number-span"></span>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="policy_holder_name" class=" form-label fw-bold">Policy Holder Name</label><br>
+              <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Name" id="policy-holder-name" aria-describedby="ride">
+              <span class="text-danger ms-4" id="policy-holder-name-span"></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-lg-6">
+              <label for="policy_holder_contact" class=" form-label fw-bold">Policy Holder Contact </label><br>
+              <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Contact" id="policy-holder-contact" aria-describedby="ride">
+              <span class="text-danger ms-4" id="policy-holder-contact-span"></span>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="policy_holder_aadhar" class=" form-label fw-bold ">Policy Holder Aadhar Number</label><br>
+              <input type="text" class="form-control border-dark w-75" placeholder="Enter Aadhar Number" id="policy-holder-aadhar" aria-describedby="ride">
+              <span class="text-danger ms-4" id="policy-holder-aadhar-span"></span>
+            </div>
+          </div>
+
+          <div class=" row">
+            <div class="mb-3 col-lg-6">
+              <label for="coverage_start_date" class=" form-label fw-bold">Coverage Start Date</label><br>
+              <input type="date" class="form-control border-dark w-75" id="coverage-start-date" aria-describedby="ride">
+              <span class="text-danger ms-4" id="coverage-start-date-span"></span>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="coverage_end_date" class=" form-label fw-bold ">Coverage End Date</label><br>
+              <input type="date" class="form-control border-dark w-75 " id="coverage-end-date" aria-describedby="ride">
+              <span class="text-danger ms-4" id="coverage-end-date-span"></span>
+            </div>
+          </div>
+
+          <div class=" row ">
+            <div class="mb-3 col-lg-6">
+              <label for="insurance_premium_amount" class=" form-label fw-bold">Insurance Premium Amount</label><br>
+              <input type="text" class="form-control border-dark w-75" placeholder="Enter Insurance Premium Amount" id="insurance-premium-amount" aria-describedby="ride">
+              <span class="text-danger ms-4" id="insurance-premium-amount-span"></span>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="coverage_amount" class=" form-label fw-bold">Coverage Amount</label><br>
+              <input type="text" class="form-control border-dark w-75" placeholder="Enter Coverage Amount" id="coverage-amount" aria-describedby="ride">
+              <span class="text-danger ms-4" id="coverage-amount-span"></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-lg-6">
+              <label for="insurance_provider" class=" form-label fw-bold ">Insurance Provider</label><br>
+              <input type="text" class="form-control border-dark w-75 " placeholder="Enter Insurace Provider" id="insurance-provider" aria-describedby="ride">
+              <span class="text-danger ms-4" id="insurance-provider-span"></span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary ">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Vehicle Insurance Modal End -->

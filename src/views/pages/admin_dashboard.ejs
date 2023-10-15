@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/admin_dashboard.css">
+</head>
+<body>
+    <!-- adding navbar -->
+    <%- include('../partials/navbar')%>
+    <div class="container">
+        <div class="row">
+            <!-- Main Menu -->
+            <div class=" col-lg-4 col-md-12 col-sm-12 col-xs-12 mt-4 myDashboardCard " style="background-color:#535Af8">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user-circle text-light display-2 m-4"></i>
+                    <p class="my-4 text-light">Hemant Prajapati User<br>9879875678</p>
+                </div>
+                <div class="mx-5 fw-bold text-light">
+                     <span class="dashboard-links" onclick="showDetails('adminaccount-details')" >Account Details</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('allusers-details')" >User's List</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('allblockusers-details')" >Blocked Users</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('vehicles-details')" >Vehicle's List</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('allblockvehicles-details')" >Blocked Vehicles</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('change-password')" >Change Password</span><br><br>
+                </div>
+            </div>
+            <!-- Main Menu -->
+
+            <!-- Admin Profile Detail -->
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="adminaccount-details" >
+                <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+                    <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3 ps-5">
+                            <!-- <i class="fa-solid fa-circle-user m-4  display-1 text-secondary" style="color: #1f2551; height: fit-content;"></i> -->
+                            <img src="images/profilePic.jpeg" height="auto" width="50%" alt="" style="border-radius: 50%;">
+                          </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" >
+                            <label for="name" class="fw-bold fs-5 my-4">Name : </label><span> Andrew Anderson</span><br>
+                            <label for="gender" class="fw-bold fs-5 my-4">Gender : </label><span> Male</span><br>
+                            <label for="email" class="fw-bold fs-5 my-4">E-mail : </label><span> andrewanderson@gmail.com</span><br>
+                            <label for="Address" class="fw-bold fs-5 my-4">Contact No : </label><span> 9879875678</span><br>
+                            <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <!-- Admin Profile Detail -->
+
+      <!-- All User Details -->
+      <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="allusers-details">
+        <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+            <div class="table-responsive">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">User's List</h4>
+                <br>
+                <table class="table table-striped" style="background-color: white;">
+                    <thead>
+                        <th>Profile Image</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact No</th>
+                        <th>Address</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <!-- Table Data Fill Here -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="btn btn-danger">Block</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<!-- All User Details -->
+
+<!-- All Blocked User Details -->
+<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="allblockusers-details">
+    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+        <div class="table-responsive">
+            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked User's</h4>
+            <br>
+            <table class="table table-striped" style="background-color: white;">
+                <thead>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact No</th>
+                    <th>Address</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <!-- Table Data Fill Here -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- All Blocked User Details -->
+
+<!-- All Vehicles Details -->
+<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="vehicles-details">
+    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+        <div class="table-responsive">
+            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Vehicles List</h4>
+            <br>
+            <table class="table table-striped" style="background-color: white;">
+                <thead>
+                    <th>Registration No</th>
+                    <th>Company</th>
+                    <th>Model</th>
+                    <th>Class</th>
+                    <th>Insurance</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <!-- Table Data Fill Here -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-danger">Block</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- All Vehicles Details -->
+
+<!-- All Blocked Vehicle's Details -->
+<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="allblockvehicles-details">
+    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+        <div class="table-responsive">
+            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked Vehicle's</h4>
+            <br>
+            <table class="table table-striped" style="background-color: white;">
+                <thead>
+                    <th>Registration No</th>
+                    <th>Company</th>
+                    <th>Model</th>
+                    <th>Class</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <!-- Table Data Fill Here -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- All Blocked Vehicle's Details -->
+
+
+<!-- User Change Password -->
+<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="change-password">
+    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+        <h4 class="text-center fw-bold my-2 m-2 " style="background-color: white;">Change Password</h4>
+        <div class="m-2" style="background-color: white;">
+            
+            <div class="text-center" style="background-color: white;">
+                <div class="">
+                    <label class=" fw-bold fs-5 mt-3" for="oldpassword">Old Password</label><br>
+                    <input type="password" class="w-50 text-start border-dark " placeholder="Enter Old Password" id="oldpassword">
+                </div>
+                <div class="my-5">
+                    <label class="fw-bold fs-5 " for="newpassword">New Password</label><br>
+                    <input type="password" class="w-50 text-start border-dark " placeholder="Enter Old Password" id="newpassword">
+                </div>
+                <div class="my-5">
+                    <label class="fw-bold fs-5  " for="confirmpassword">Confirm Password</label><br>
+                    <input type="password" class="w-50 text-start border-dark " placeholder="Enter Old Password" id="confirmpassword">
+                </div>
+                <div class="mt-5">
+                   <button class="btn btn-primary w-25 fs-5 fw-bold form-control"  onsubmit="return validatePassword()">Submit</button><br><br>
+                </div>
+                <br>
+            </div>
+           
+        </div>
+    </div>
+</div>    
+<!-- User Change Password -->          
+</div>
+</div>
+<!-- adding footerr -->
+<%- include('../partials/footer')%>
+
+<script src="/js/admin_dashboard.js"></script>
+</body>
+</html>

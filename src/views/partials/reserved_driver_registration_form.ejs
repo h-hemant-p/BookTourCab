@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/css/formValidation.css">
+
+
+
+<!-- Reserved Driver Registration form start -->
+
+
+<!-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#reservedDriverRegistrationForm"> open</button> -->
+<div class="modal fade" id="reservedDriverRegistrationForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">Driver Registration Form </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="container ">
+            <div class="border bg-primary">
+              <h5 class="m-2 fw-bold text-center text-light">DRIVER REGISTRATION FORM</h5>
+            </div>
+          </div>
+      <form action="/sign/registerdriver" onsubmit="return checkDetails()" method="post" class="form">
+          <div class="container"><br>
+  
+            <div class="row">
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="driver-name" class=" form-label fw-bold">Name</label>
+                <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="driver-name" id="driver-name" onkeyup="checkUsername()" autocomplete="off">
+                <small></small>
+              </div>
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="driver-email" class=" form-label fw-bold">Enter Email</label>
+                <input type="email" class="form-control w-75 " placeholder="Enter E-mail" name="driver-email" id="driver-email" onkeyup="checkEmail()" aria-describedby="ride" autocomplete="off">
+                <small></small>
+              </div>
+            </div><br>
+  
+            <div class="row">
+              <div class="mb-3 col-lg-6 form-field">
+                  <label for="driver-contact" class=" form-label fw-bold">Contact No</label>
+                  <input type="text" class="form-control w-75" placeholder="Enter Contact Number" name="driver-contact" id="driver-contact" onkeyup="checkContact()" autocomplete="off">
+                  <small></small>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label for="gender" class=" form-label fw-bold ">Gender</label>
+                <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+                <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+                <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+              </div>
+              
+            </div><br>
+  
+            <div class="row">
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="licence-issue-date" class="form-label fw-bold">Driving Licence Issue Date</label>
+                <input type="date" class="form-control w-75 " name="licence-issue-date" id="licence-issue-date" onchange="checkLicenceIssueDate()" aria-describedby="ride">
+                <small></small>
+              </div>
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="licence-expiry-date" class=" form-label fw-bold">Driving Licence Expiry Date</label>
+                <input type="date" class="form-control w-75" name="licence-expiry-date" id="licence-expiry-date" onchange="checkLicenceExpiryDate()" aria-describedby="ride">
+                <small></small>
+              </div>
+            </div><br>
+  
+            <div class="row">
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="driving-licence-number" class=" form-label fw-bold ">Driving Licence Number</label>
+                <input type="text" class="form-control w-75 " placeholder="Enter Driving Licence Number" name="driving-licence-number" id="driving-licence-number" onkeyup="checkLicenceNUmber()" aria-describedby="ride">
+                <small></small>
+              </div>
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="driver-licence-image" class=" form-label fw-bold">Upload Driving Licence Image</label>
+                <input type="file" class="form-control w-75" placeholder="Upload Driving Licence here" name="driving-licence-image" id="driver-licence-image" aria-describedby="ride" onchange="checkLicenceImage()" >
+                <small></small>
+              </div>
+            </div><br>
+  
+            <div class="row">
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="driver-experience-year " class=" form-label fw-bold ">Experience Year</label>
+                <input type="text" class="form-control w-75" placeholder="Enter Experience Year" name="driver-experience-year" id="driver-experience-year" onkeyup="checkExperienceYear()" aria-describedby="ride">
+                <small></small>
+              </div>
+              
+              <div class="mb-3 col-lg-6 form-field">
+                <label for="driver-dob" class="form-label fw-bold ">Licence Class</label>
+                <select class=" form-control w-75 " name="licence-class" id="licence-class" onchange="ckeckLicenceClass()">
+                  <option class="fw-bold" value="">select Licence class</option>
+                  <option class="fw-bold" value="MCWG">MCWG (Motorcycle without Gear)</option>
+                  <option class="fw-bold" value="MCWOG">MCWOG (Motorcycle with Gear)</option>
+                  <option class="fw-bold" value="HMV">HMV (Heavy Motor Vehicle)</option>
+                  <option class="fw-bold" value="HGMV">HGMV (Heavy Goods Motor Vehicle)</option>
+                  <option class="fw-bold" value="LMV-NT">LMV-NT (Light Motor Vehicle - Non-Transport)</option>
+                  <option class="fw-bold" value="LMV-T">LMV-T (Light Motor Vehicle - Transport)</option>
+                </select>
+                <small></small>
+              </div>
+            </div><br>
+          </div><br>
+          <div class="row">
+            <div class="mb-3 col-lg-6 form-field">
+              <input type="submit" class="btn btn-primary w-75" value="Submit">
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <input type="button" class="btn btn-secondary w-75" value="cancel" data-bs-dismiss="modal">
+            </div>
+          </div><br>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Reserved Driver Registration form end -->
+  
+<script src="/js/driver_registration_form.js"></script>
+  

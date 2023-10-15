@@ -1,0 +1,18 @@
+#maindiv {
+    background-color: white;
+}
+
+h2 {
+    color: #211ED0;
+}
+.services-heading{
+   color: #5359E2;
+}
+.para-content{
+    text-align: justify;
+}
+
+.img-content{
+    width: 100%;
+    height: auto;
+}

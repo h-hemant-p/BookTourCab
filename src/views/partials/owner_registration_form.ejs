@@ -1,0 +1,81 @@
+<!-- Vehicle Owner Modal Start -->
+<!-- 
+<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#ownerRegistrationForm">
+    Vehivle Owner
+  </button><br><br> -->
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="ownerRegistrationForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Owner Registration Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="container ">
+          <div class="border bg-primary">
+            <h5 class="m-2 fw-bold text-center text-light">VEHICLE OWNER REGISTRATION FORM</h5>
+          </div>
+        </div>
+
+        <div class="container"><br>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6">
+              <label for="owner_name" class=" form-label fw-bold">Full Name</label><br>
+              <input type="text" class="form-control border-dark w-75" placeholder="Enter Full Name" id="owner_name" aria-describedby="ride">
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="owner_email" class=" form-label fw-bold">Enter Email</label><br>
+              <input type="email" class="form-control border-dark w-75 " placeholder="Enter E-mail" id="owner_email" aria-describedby="ride">
+            </div>
+          </div>
+
+          <div class=" row ">
+            <div class="mb-3 col-lg-6"><br>
+              <label for="gender" class=" form-label fw-bold ">Gender</label>
+              <input type="radio" class="border-dark fw-bold mx-3" value="Male" name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+              <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+              <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="owner_dob" class=" form-label fw-bold ">Date of Birth</label><br>
+              <input type="date" class="form-control border-dark w-75 " placeholder="Enter Date of Birth" id="owner_dob" aria-describedby="ride">
+            </div>
+          </div>
+        
+          <div class=" row ">
+            <div class="mb-3 col-lg-6">
+              <label for="owner_aadhar_number" class=" form-label fw-bold ">Aadhar Number</label><br>
+              <input type="text" class="form-control border-dark w-75 " placeholder="Enter Aadhar Number" id="owner_aadhar_number" aria-describedby="ride">
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="owner_aadhar" class=" form-label fw-bold">Upload Aadhar Image</label><br>
+              <input type="file" class="form-control border-dark w-75" placeholder="Upload Aadhar image here" id="owner_aadhar" aria-describedby="ride">
+            </div>
+          </div>
+
+          <div class=" row ">
+            <div class="mb-3 col-lg-6">
+              <label for="owner_aadhar_number" class=" form-label fw-bold ">Pan Card Number</label><br>
+              <input type="text" class="form-control border-dark w-75 " placeholder="Enter Aadhar Number" id="owner_aadhar_number" aria-describedby="ride">
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="owner_Pancard" class=" form-label fw-bold">Upload Pan Card Image</label><br>
+              <input type="file" class="form-control border-dark w-75" placeholder="Upload Pan Card image here" id="owner_Pancard" aria-describedby="ride">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary ">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Vehicle Owner Modal End -->

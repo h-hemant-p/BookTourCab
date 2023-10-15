@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+:root {
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.form-field label {
+    display: block;
+    color: black;
+}
+
+.form-field input, .form-field textarea, .form-field select  {
+    border: solid 2px rgb(105, 100, 100);
+    display: block;
+}
+
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus  {
+    outline: none;
+}
+
+.form-field.error input, .form-field.error textarea, .form-field.error select {
+    border-color: var(--error-color);
+}
+
+.form-field.success input, .form-field.success textarea, .form-field.success select {
+    border-color: var(--success-color);
+}
+
+
+.form-field small {
+    color: var(--error-color);
+}

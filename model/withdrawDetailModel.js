@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-// import connection from "../db/connection";
 
 var withdrawDetailModel = mongoose.Schema({
     transaction_id:{

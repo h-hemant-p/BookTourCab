@@ -3,7 +3,7 @@
 import express from 'express';
 
 // import {checkSigninController} from "../controller/indexController.js";
-import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userOwnerDashboardController,userDriverDashboardController,userDashboardController,userVehicleBookingController,userBecomeDriverController} from "../controller/userController.js";
+import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userOwnerDashboardController,userDriverDashboardController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -51,6 +51,7 @@ router.get("/ownerdashboard",userOwnerDashboardController)
 router.get("/driverdashboard",userDriverDashboardController)
 router.get("/userdashboard",userDashboardController);
 router.get("/booking",userVehicleBookingController);
-router.post('/registerdriver',userBecomeDriverController)
+router.post('/registerdriver',upload.single('licenceimage'),userRegisterDriverController);
+router.get("/registerowner",userRegisterOwnerController)
 // router.post('/vehicleregistration',userVehicleRegistrationController);
 export default router;

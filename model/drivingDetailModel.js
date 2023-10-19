@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
-// import connection from "../db/connection";
 
 import feedbacks from "./feedbackModel.js";
-// import wallets from "./walletModel";
 
 var drivingDetailModel = mongoose.Schema({
     experience_year:{
@@ -27,19 +25,15 @@ var drivingDetailModel = mongoose.Schema({
         required : true
     },
     dl_image:{
-        type : Buffer,
+        type : String,
         required : false
     },
     rating : {
         type : Number,
-        required : false
+        required : true,
+        default : 0
     },
-    feedback:[feedbacks.schema],
-    wallet:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref : 'wallets',
-        required : true
-    }
+    feedback:[feedbacks.schema]
 });
 
 var drivingDetails = mongoose.model("drivingDetails",drivingDetailModel,"drivingDetails");

@@ -2,8 +2,9 @@
 import { request, response } from 'express';
 import users from '../model/userModel.js';
 import contactUs from '../model/contactUs.js';
+import ownerDetails from '../model/ownerDetailModel.js';
 import drivingDetails from '../model/drivingDetailModel.js';
-import wallets from "../model/walletModel.js";
+// import wallets from "../model/walletModel.js";
 import bcrypt from 'bcrypt';
 
 
@@ -175,31 +176,27 @@ export const signInReloadController = (request,response,next)=>{
 }
 
 
-export const userBecomeDriverController = async(request,response) => {
+export const userRegisterDriverController = async(request,response) => {
     console.log(request.body);
     try{
-        await wallets.create({
-            email : request.session.log.email,
-            wallet_amount : 0,
-            user_role : "driver"
-        });
-
-        var driver_wallet= wallets.findOne({
-            email:request.session.log.email,
-            user_status : "driver"
-        });
-        console.log(driver_wallet);
-
         var res = await drivingDetails.create ({
+            experience_year : request.body.experienceyear,
             dl_number : request.body.licencenumber,
             dl_issue_date : request.body.licenceissuedate,
             dl_expiry_date : request.body.licenceexpirydate,
             dl_class : request.body.licenceclass,
-            experience_year : request.body.experienceyear,
-            wallet : driver_wallet._id
+            dl_image : `/uploads/${request.file.filename}`
         });
 
         console.log(res);
+        await users.updateOne({
+            email:request.session.log.email
+        },{
+            $set:{
+                is_driver : true,
+                driving_details : res._id
+            }
+        });
         console.log("data inserted Successfullly ... ");
         response.render("./pages/driver_dashboard",{user : request.session.log});
     }
@@ -211,31 +208,50 @@ export const userBecomeDriverController = async(request,response) => {
 
 
 
-
-// vvvvvvvvv
-export const vehicleRegistrationController = async(request,response)=>{
-    // console.log(request.body);
-    // const haveInsuranceValue = request.body.haveinsurance;
-    // const haveInsurance = haveInsuranceValue === "Yes";
-    // try{
-    //     var res = await vehicles.create({
-    //         reg_number : request.body.registrationnumber,
-    //         company : request.body.companyname,
-    //         model : request.body.modelname,
-    //         manufacture_year : request.body.manufactureyear,
-    //         registration_year : request.body.registrationyear,
-    //         fuel_type : request.body.fueltype,
-    //         vehicle_class : request.body.selectvehicle,
-    //         seating_capacity : request.body.seatingcapacity,
-    //         rc_book_image : request.body.rcbookimage,
-    //         have_insurance : haveInsurance,
-    //     });
+export const userRegisterOwnerController = async(request,response)=>{
+    try{
+        var owner = await ownerDetails.create({});
         
-    //     console.log(res);
-    //     console.log("Vehicle Data Inserted Successfully.. ");
-    //     response.render("./Pages/owner_dashboard",{user : request.session.log});   
-    // }
-    // catch(error){
-    //     console.log("Error While Register."+error);
-    // }
+        console.log(owner);
+
+        await users.updateOne({
+            email : request.session.log.email
+        },{
+            $set:{
+                is_owner : true,
+                owner_details : owner._id
+            }
+        })
+        
+        console.log("data inserted Successfullly ... ");
+        response.render("./pages/owner_dashboard",{user : request.session.log});
+    }catch(error){
+        console.log(".Error while becoming Owner ");
+        response.render("./pages/user_dashboard",{user : request.session.log});
+    }
+}
+
+export const userAddVehicleController = async(request,response)=>{
+    console.log(request.body);
+    console.log(request.file);
+    try{
+        var res = await vehicles.create({
+            reg_number : request.body.registrationno,
+            company : request.body.companyname,
+            model : request.body.modelname,
+            manufacture_year : request.body.manufactureyear,
+            registration_year : request.body.registrationyear,
+            fuel_type : request.body.fueltype,
+            vehicle_class : request.body.selectvehicle,
+            seating_capacity : request.body.seatingcapacity,
+            rc_book_image : request.body.rcbookimage
+        });
+        
+        console.log(res);
+        console.log("Vehicle Data Inserted Successfully.. ");
+        response.render("./Pages/owner_dashboard",{user : request.session.log});   
+    }
+    catch(error){
+        console.log("Error While Register."+error);
+    }
 }

@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
-import connection from '../db/connection.js';
 
 import vehicleImages from './vehicleImageModel.js';
-// import vehiclesInsurance from './vehicleInsuranceModel.js';
 import feedbacks from './feedbackModel.js';
 
 var vehicleModel = mongoose.Schema({
@@ -47,23 +45,25 @@ var vehicleModel = mongoose.Schema({
     },
     have_insurance :{
         type : Boolean,
-        required : true
+        required : true,
+        default : false
     },
     is_booked :{
         type : Boolean,
-        required : true
+        required : true,
+        default : false
     },
     insurance_details : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "vehiclesInsurance",
-        required : true
+        required : false
     },
-    images : [vehicleImages],
+    images : [vehicleImages.schema],
     rating : {
         type : Number,
         required : false
     },
-    feedback:[feedbacks]
+    feedback:[feedbacks.schema]
 });
 
 var vehicles = mongoose.model('vehicles',vehicleModel,'vehicles');

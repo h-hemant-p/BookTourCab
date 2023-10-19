@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import connection from "../db/connection";
 
 var vehicleBookingModel = mongoose.Schema({
     customer : {
@@ -65,4 +64,5 @@ var vehicleBookingModel = mongoose.Schema({
 });
 
 
-var bookings  = mongoose.model("bookings",vehicleBookingModel,"bookings")
+var bookings  = mongoose.model("bookings",vehicleBookingModel,"bookings");
+export default bookings;

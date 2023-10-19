@@ -1,10 +1,4 @@
 import mongoose from 'mongoose';
-// import connection from '../db/connection.js';
-
-// import vehicles from './vehicleModel.js';
-// import reservedDrivers from './reservedDriverModel.js';
-// import drivingDetails from './drivingDetailModel.js';
-// import ownerDetails from './ownerDetailModel.js';
 
 var userModel = mongoose.Schema({
     contact_no:{
@@ -89,6 +83,11 @@ var userModel = mongoose.Schema({
     driving_details : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'drivingDetails',
+        required : false
+    },
+    wallet:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'wallets',
         required : false
     }
 });

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import connection from '../db/connection.js';
 
 
 var adminModel = mongoose.Schema({

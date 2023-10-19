@@ -18,7 +18,7 @@
 
       <div class="modal-body">
         
-        <form action="/user/registerdriver" onsubmit="return submitFormData()" method="post" class="form">
+        <form action="/user/registerdriver" onsubmit="return submitFormData()" method="post" class="form" enctype="multipart/form-data">
         <div class="container ">
           <div class="border bg-primary">
             <h5 class="m-2 fw-bold text-center text-light">DRIVER REGISTRATION FORM</h5>
@@ -45,7 +45,7 @@
             </div>
             <div class="mb-3 col-lg-6 form-field">
               <label for="driver-licence-image" class=" form-label fw-bold">Upload Driving Licence Image</label>
-              <input type="file" class="form-control  w-75" placeholder="Upload Driving Licence here" name="licenceimage" id="driver-licence-image" aria-describedby="ride" onchange="checkLicenceImage1()" >
+              <input type="file" class="form-control  w-75" placeholder="Upload Driving Licence here" name="licenceimage" id="driver-licence-image" aria-describedby="ride" accept="image/*" onchange="checkLicenceImage1()" >
               <small></small>
             </div>
           </div><br>
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div><br>
-        
+
         <div class="row">
           <div class="mb-3 col-lg-6 form-field">
             <input type="button" class="btn btn-secondary w-75 fw-bold ms-2" value="cancel" data-bs-dismiss="modal">

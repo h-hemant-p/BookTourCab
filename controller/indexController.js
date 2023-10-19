@@ -1,6 +1,7 @@
 import { request, response } from 'express';
 import users from '../model/userModel.js';
 import admin from '../model/adminModel.js';
+import wallets from '../model/walletModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -22,17 +23,20 @@ export const indexSignupUserController = async (request, response) => {
     if ( request.session.otp == request.body.otp) {
         try {
             
+            console.log('hii2');
             const existingUser = await users.findOne({ email: request.session.email });
             if (existingUser) {
                 console.log("User allready Exist");
                 response.render("./pages/index",{user:""});
             }
             else{
+                console.log('hii3');
                 const existingAdmin = await admin.findOne({email:request.session.email});
                 if(existingAdmin){
                     console.log('You are an admin');
                     response.render("./pages/index",{user:""});
                 }else{
+                    console.log('hii4');
                     let payload = {};
                     const maxAge = 6 * 24 * 60 * 60 * 1000;
                     const SECRET_KEY = crypto.randomBytes(32).toString('hex');
@@ -46,17 +50,20 @@ export const indexSignupUserController = async (request, response) => {
                     };
                     
                     var token = jwt.sign(payload, SECRET_KEY,expiryTime);
+                    console.log('hi 5');
                     response.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
-                    console.log('hi 2');
                     writeSecretKey(SECRET_KEY);
                     console.log("cookie saved successfully.");
 
+                    var user_wallet = await wallets.create({});  
                     const newuser = await users.create({
                         contact_no: request.session.contact_no,
                         email: request.session.email,
+                        wallets : user_wallet._id
                     });
                     console.log('Data inserted successfully');
                     
+
                     var loggedUser = await users.findOne({email:request.session.email});
                     var user = {
                         name : loggedUser.name,
@@ -80,6 +87,7 @@ export const indexSignupUserController = async (request, response) => {
         }
         catch (err) {
             console.log('Error While fetching data.');
+            console.log(err);
             response.render('./pages/index', { user: "" })
         }
     }else {

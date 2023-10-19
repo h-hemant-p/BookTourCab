@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import connection from "../db/connection";
 
 var vehicleInsuranceModel = mongoose.Schema({
     policy_number :{
@@ -31,7 +30,7 @@ var vehicleInsuranceModel = mongoose.Schema({
         required : true
     },
     premium_amount:{
-        type : BigInt,
+        type : Number,
         required : true
     }
 });

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import connection from "../db/connection";
 
 var vehicleImageModel = mongoose.Schema({
     url:{
@@ -11,7 +10,7 @@ var vehicleImageModel = mongoose.Schema({
         required : true
     },
     image :{
-        type : Buffer,
+        type : String,
         required:true
     },
     description : {
@@ -20,5 +19,5 @@ var vehicleImageModel = mongoose.Schema({
     }
 })
 
-mongoose.model('vehicleImages',vehicleImageModel,'vehicleImages');
+var vehicleImages = mongoose.model('vehicleImages',vehicleImageModel,'vehicleImages');
 export default vehicleImages;

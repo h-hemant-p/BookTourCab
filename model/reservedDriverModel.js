@@ -1,7 +1,4 @@
 import mongoose from "mongoose";
-import connection from "../db/connection";
-
-// import drivingDetails from './drivingDetailModel';
 
 var reservedDriverModel = mongoose.Schema({
     contact_no:{
@@ -27,5 +24,5 @@ var reservedDriverModel = mongoose.Schema({
     }
 });
 
-var reservedDrivers = mongoose.Schema("reservedDrivers",reservedDriverModel,"reservedDrivers");
+var reservedDrivers = mongoose.model("reservedDrivers",reservedDriverModel,"reservedDrivers");
 export default reservedDrivers;

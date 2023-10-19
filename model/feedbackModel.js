@@ -1,7 +1,4 @@
 import mongoose from "mongoose";
-// import connection from "../db/connection";
-
-// import users from "./userModel";
 
 var feedbackModel = mongoose.Schema({
     rating : {

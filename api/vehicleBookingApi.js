@@ -4,7 +4,6 @@ let map = L.map('map', {
     center: [35.791188, -78.636755],
     zoom: 12
 });
-    
 
     function runDirection(start, end) {
         
@@ -24,7 +23,6 @@ let map = L.map('map', {
             ]
         });
     
-
         CustomRouteLayer = MQ.Routing.RouteLayer.extend({
             createStartMarker: (location) => {
                 var custom_icon;
@@ -65,7 +63,6 @@ let map = L.map('map', {
         })); 
     }
 
-
 function submitVehicleBooking(event){
 console.log("Hiiiii........");
 
@@ -74,36 +71,12 @@ console.log("Hiiiii........");
     // delete current map layer
     map.remove();
 
-
-
-    let totaldays = document.getElementById('days').value;
     let pickuplocation = document.getElementById('pickuplocation').value;
     let droplocation = document.getElementById('droplocation').value;
-    let bookDate = document.getElementById('bookDate').value;
-    let vehicletype = document.getElementById('vehicletype').value;
-    let vehiclecompany = document.getElementById('vehiclecompany').value;
-    let vehicleModel = document.getElementById('vehicleModel').value;
-    let paymentmode = document.getElementById('paymentmode').value;
-
      // run directions function
      runDirection(pickuplocation, droplocation);
-
-     // reset form
-     document.getElementById("form").reset();
-
-  
-
-    console.log("totaldays : "+totaldays);
-    console.log("pickuplocation : "+pickuplocation);
-    console.log("droplocation : "+droplocation);
-    console.log("bookDate : "+bookDate);
-    console.log("vehicletype : "+vehicletype);
-    console.log("vehiclecompany : "+vehiclecompany);
-    console.log("vehicleModel : "+vehicleModel);
-    console.log("paymentmode : "+paymentmode);
-
+    return false;
 }
-
 
 // asign the form to form variable
 const form = document.getElementById('form');

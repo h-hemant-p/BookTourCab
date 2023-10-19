@@ -1,3 +1,6 @@
+var datavalue1;
+var datavalue2;
+
 function addressAutocomplete1(containerElement, callback, options) {
     var inputElement = document.getElementById("pickuplocation")
     var currentItems;
@@ -166,10 +169,10 @@ function addressAutocomplete1(containerElement, callback, options) {
 
 }
 
-
 addressAutocomplete1(document.getElementById("autocomplete-container-country"), (data) => {
     console.log("Selected country: ");
     console.log(data);
+
 }, {
     placeholder: "Enter a country name here",
     type: "country"
@@ -177,6 +180,7 @@ addressAutocomplete1(document.getElementById("autocomplete-container-country"), 
 
 addressAutocomplete1(document.getElementById("autocomplete-container-city"), (data) => {
     console.log("Selected city: ");
+    datavalue1 = data;
     console.log(data);
 }, {
     placeholder: "Enter a city name here"
@@ -361,7 +365,6 @@ function addressAutocomplete2(containerElement, callback, options) {
 
 }
 
-
 addressAutocomplete2(document.getElementById("autocomplete-container-country-2"), (data) => {
     console.log("Selected country: ");
     console.log(data);
@@ -372,7 +375,39 @@ addressAutocomplete2(document.getElementById("autocomplete-container-country-2")
 
 addressAutocomplete2(document.getElementById("autocomplete-container-city-2"), (data) => {
     console.log("Selected city: ");
+    datavalue2 = data;
     console.log(data);
 }, {
     placeholder: "Enter a city name here"
 });
+
+
+function getDistance(){
+
+    var lat1 = datavalue1.properties.lat;
+    var lon1 = datavalue1.properties.lon;
+    var lat2 = datavalue2.properties.lat;
+    var lon2 = datavalue2.properties.lon;
+
+    console.log(lat1);
+    console.log(lon1);
+    console.log(lat2);
+    console.log(lon2);
+
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *   Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+    console.log("Distance : "+distance);
+    document.getElementById('distance').textContent = (distance.toFixed(2))+"KM";
+    document.getElementById('amount').textContent = (((distance.toFixed(2))*18).toFixed())+"₹";
+}
+
+// asign the form to form variable
+const formdata = document.getElementById('form');
+// 
+// call the submitForm() function when submitting the form
+formdata.addEventListener('submit', getDistance);

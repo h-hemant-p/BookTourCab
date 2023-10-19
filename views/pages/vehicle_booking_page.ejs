@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+  <link rel="stylesheet" href="/css/vehicle_booking.css">
+  <style>
+  body{
+    margin: 0;
+    border: 0;
+  }
+
+  #map {
+    height:120vh;
+    width: 100%;
+    position: relative;
+  }
+
+.formBlock {
+    /* max-width: 300px; */
+    background-color: #FFF;
+    border: 1px solid #fff;
+    /* position: absolute;
+    top: 10px;
+    left: 10px; */
+    /* padding: 10px; */
+    /* z-index: 999; */
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.leaflet-top .leaflet-control {
+    margin-top: 180px;
+}
+
+/* .input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    border-radius: 3px;
+} */
+
+/* #form {
+    padding: 0;
+    margin: 0;
+} */
+/* input:nth-child(1) {
+    margin-bottom: 10px;
+} */
+  </style>
+</head>
+
+<body>
+       <!-- adding navbar -->
+       <%- include('../partials/navbar')%>
+  <div class="container mt-5">
+
+
+  <div class="row">
+    <div class=" col-lg-4 col-md-12 col-sm-12 col-xs-12 formBlock" id="BelowlocationSection">
+      <form id="form">
+        <div class="m-3 p-1">
+          <label for="days" class="form-label fw-bold text-light">Enter Days</label>
+          <input type="number" class="form-control" placeholder="Enter Number Of Days" id="days" name="totaldays" aria-describedby="emailHelp">
+        </div>
+        <div class="m-3 p-1">
+          <label for="pickuplocation" class="form-label fw-bold text-light">Pick Up Location</label>
+          <!-- <input type="text" class="form-control" placeholder="Enter PickUp Location" id="pickuplocation" name="pickuplocation" aria-describedby="emailHelp"> -->
+          <input type="text" style="width: 100%; height: 100;" class="autocomplete-container" id="pickuplocation">
+          <div class="autocomplete-container" id="autocomplete-container-country"></div>
+          <div class="autocomplete-container" id="autocomplete-container-city"></div>
+        </div>
+
+        <div class="m-3 p-1">
+          <label for="droplocation" class="form-label fw-bold text-light">Dropping Off Location</label>
+          <input type="text" style="width: 100%; height: 100;" class="autocomplete-container" id="droplocation">
+          <div class="autocomplete-container" id="autocomplete-container-country-2"></div>
+          <div class="autocomplete-container" id="autocomplete-container-city-2"></div>
+          <!-- <input type="text" class="form-control" placeholder="Enter Dropping Up Location" id="droplocation" name="droplocation"> -->
+        </div>
+        <div class="m-3 p-1">
+          <label for="bookDate" class="form-label fw-bold text-light">Booking Start Date</label>
+          <input type="text" class="form-control" placeholder="Enter Booking Start Date " id="bookDate" name="bookstart">
+        </div>
+        <div class="m-3 p-1">
+          <label for="vehicletype" class="form-label fw-bold text-light">Select Type</label>
+          <select id="vehicletype" class="form-select" name="vehicletype">
+            <option class="fw-bold">Select Vehicle</option>
+            <option class="fw-bold">Bike</option>
+            <option class="fw-bold">Car</option>
+            <option class="fw-bold">Electric Vehicle</option>
+          </select>
+        </div>
+        <div class="m-3 p-1">
+          <label for="vehiclecompany" class="form-label fw-bold text-light">Select Vehicle Company</label>
+          <select id="vehiclecompany" class="form-select" name="vehiclecompany">
+            <option class="fw-bold" value="">Select Vehicle Company</option>
+            <option class="fw-bold" value="Honda">Honda</option>
+            <option class="fw-bold" value="TATA">TATA</option>
+            <option class="fw-bold" value="Mahindra">Mahindra</option>
+          </select>
+        </div>
+        <div class="m-3 p-1">
+          <label for="vehicleModel" class="form-label fw-bold text-light">Select Vehicle Mode</label>
+          <select id="vehicleModel" class="form-select" name="model">
+            <option class="fw-bold" value="">Select Vehicle Mode</option>
+            <option class="fw-bold" value="Honda">Hf-Deluxe</option>
+            <option class="fw-bold" value="TATA">Noxon</option>
+            <option class="fw-bold" value="Mahindra">Scorpio</option>
+          </select>
+        </div>
+
+        <div class="m-3 p-1">
+          <label for="payment_mode" class="form-label fw-bold text-light">Select Method</label>
+          <select id="paymentmode" class="form-select" name="paymentmode">
+            <option class="fw-bold" value="">Select Payment Method</option>
+            <option class="fw-bold" value="Online">Online</option>
+            <option class="fw-bold" value="Cash">Cash</option>
+          </select>
+        </div>
+
+      
+          <!-- <button class="btn  btn-primary mx-2 w-100" type="submit">Search Vehicle</button> -->
+          <div class="m-3 p-1">
+             <input type="submit" class="btn btn-primary w-100 d-none" value="Search Vehicle">
+          </div>
+        </form><br><br>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+      <div id='map'></div>
+      <!-- <iframe class="w-100 h-100 embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3450948.591902727!2d78.32457093676905!3d24.052936670834818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1693549531617!5m2!1sen!2sin" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> -->
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="row ">
+      <div class="col-lg-6 col-md-6 col-sm-12 my-3 ">
+        <div class="card w-100 card-shadow">
+          <div class="card-body justify-content-between d-flex">
+            <div>
+              <i class='fas fa-car-side display-1 mx-5'></i>
+            </div>
+            <div>
+              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
+              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
+              <button class="btn btn-warning">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="row"> -->
+      <div class="col col-lg-6 col-md-6 col-sm-12 my-3 ">
+        <div class="card w-100 card-shadow">
+          <div class="card-body justify-content-between d-flex">
+            <div>
+              <i class='fas fa-car-side display-1 mx-5'></i>
+            </div>
+            <div>
+              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
+              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
+              <button class="btn btn-warning">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="row"> -->
+      <div class="col col-lg-6 col-md-6 col-sm-12 my-3 ">
+        <div class="card w-100 card-shadow">
+          <div class="card-body justify-content-between d-flex">
+            <div>
+              <i class='fas fa-car-side display-1 mx-5'></i>
+            </div>
+            <div>
+              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
+              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
+              <button class="btn btn-warning">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="row"> -->
+      <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-md-5 my-3">
+        <div class="card w-100 card-shadow">
+          <div class="card-body justify-content-between d-flex">
+            <div>
+              <i class='fas fa-car-side display-1 mx-5'></i>
+            </div>
+            <div>
+              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
+              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
+              <button class="btn btn-warning">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="row"> -->
+      <div class="col col-lg-6 col-md-6 col-sm-12 my-3">
+        <div class="card w-100 card-shadow">
+          <div class="card-body justify-content-between d-flex">
+            <div>
+              <i class='fas fa-car-side display-1 mx-5'></i>
+            </div>
+            <div>
+              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
+              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
+              <button class="btn btn-warning">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col col-lg-6 col-md-6 col-sm-12 my-3">
+        <div class="card w-100 card-shadow">
+          <div class="card-body justify-content-between d-flex">
+            <div>
+              <i class='fas fa-car-side display-1 mx-5'></i>
+            </div>
+            <div>
+              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
+              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
+              <button class="btn btn-warning">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <!-- adding footer -->
+  <%- include('../partials/footer')%>
+</body>
+<!-- Map Api cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=S8d7L47mdyAG5nHG09dUnSPJjreUVPeC"></script>
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=S8d7L47mdyAG5nHG09dUnSPJjreUVPeC"></script>
+
+<script src="/vehicleBookingApi.js"></script>
+<script src="/autoCompleteAddressApi.js"></script>
+
+</html>

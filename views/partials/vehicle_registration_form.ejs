@@ -1,0 +1,126 @@
+<!-- Vehicle Registration Modal Start  -->
+
+<!-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Vehicle Registration</button>
+<br><br> -->
+
+<link rel="stylesheet" href="/css/formValidation.css">
+
+
+<div class="modal fade" id="vehicle-registration" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-titleId">Vehicle Registration Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/vehicleregistration" onsubmit="return submitVehicleDetails()" method="post">
+        <div class="container ">
+          <div class="border bg-primary">
+            <h5 class="m-2 fw-bold text-center text-light">VEHICLE REGISTRATION FORM</h5>
+          </div>
+        </div>
+        <div class="container"><br>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="registration-number" class=" form-label fw-bold">Rigistration Number</label>
+              <input type="text" class="form-control w-75" placeholder="Enter Vehicle Registration Number" id="registration-number" name="registration-number" aria-describedby="ride" onkeyup="VehicleRigistrationNumber()">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="company-name" class=" form-label fw-bold">Company Name</label>
+              <input type="text" class="form-control w-75 " placeholder="Enter Vehicle Company Name" id="company-name" name="company-name" aria-describedby="ride" onkeyup="VehicleCompaneyName()">
+              <small></small>
+            </div>
+          </div>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="manufacture-year" class=" form-label fw-bold ">Manufacture Year</label>
+              <input type="date" class="form-control w-75 " placeholder="Enter Manufacture Year" id="manufacture-year" name="manufacture-year" aria-describedby="ride" onchange="VehicleManufactureYear()">
+              <small></small> 
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="registration-year" class=" form-label fw-bold ">Registration Year</label>
+              <input type="date" class="form-control w-75 " placeholder="Enter Registration Year" id="registration-year" name="registration-year" aria-describedby="ride" onchange="VehicleRegistrationYear()">
+              <small></small>
+            </div>
+            
+          </div>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="model-name" class=" form-label fw-bold ">Model Name</label>
+              <input type="text" class="form-control  w-75 " placeholder="Enter Model Name" id="model-name" name="model-name" aria-describedby="ride" onkeyup="VehicleModelName()">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="seating-capacity" class=" form-label fw-bold">Seating Capacity</label>
+              <input type="text" min="1" class="form-control  w-75" placeholder="Enter Vehicle Seating Capacity"  id="seating-capacity" name="seating-capacity" aria-describedby="ride" onkeyup="VehicleSittingCapacity()">
+              <small></small>
+            </div>
+          </div>
+
+          <div class=" row my-3">
+            <div class="mb-3 col-lg-6 form-field">
+              <select class="form-control form w-75 fw-bold"  id="select-vehicle" onchange="checkSelectedVehicle()" aria-label="Default select example">
+                <option class="fw-bold" value="">Select Vehicle</option>
+                <option class="fw-bold" value="Mini Bus">Mini Bus</option>
+                <option class="fw-bold" value="Scooty">Scooty</option>
+                <option class="fw-bold" value="Auto">Auto</option>
+                <option class="fw-bold" value="Bike">Bike</option>
+                <option class="fw-bold" value="Car">Car</option>
+              </select>
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <select class="form-control form w-75 fw-bold" id="fuel-type" name="fuel-type" onchange="checkFuelType()" aria-label="Default select example">
+                <option class="fw-bold" value="">Select Fuel Type</option>
+                <option class="fw-bold" value="Petrol">Petrol</option>
+                <option class="fw-bold" value="Diesel">Diesel</option>
+                <option class="fw-bold" value="Electric">Electric</option>
+              </select>
+              <small></small>
+            </div>
+          </div>
+          <div class=" row">
+            <div class="mb-3 col-lg-6 form-field form-field">
+              <label for="rc-book-image" class=" form-label fw-bold ">Upload RC Book Image </label>
+              <input type="file" class="form-control w-75 " placeholder="Upload RC Book Imamge" id="rc-book-image"  name="rc-book-image" onchange="checkVehicleRcBook()" aria-describedby="ride">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="puc-certificate-image" class=" form-label fw-bold">Upload PUC Certificate Image</label>
+              <input type="file" class="form-control w-75" placeholder="Upload PUC Certificate Image" id="puc-certificate-image" name="puc-certificate-image" onchange="chechPucCertificate()" aria-describedby="ride">
+              <small></small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="fitness_certificate_image" class=" form-label fw-bold">Upload Fitness Certificate Image</label>
+              <input type="file" class="form-control w-75" placeholder="Upload Fitness Certificate Image" id="fitness-certificate-image" name="fitness-certificate-image" onchange="checkFitnessCertificate()" aria-describedby="ride">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="have-insurance" class="form-label fw-bold mt-4">Have Insurance</label>
+              <input type="radio" class="border-dark mx-2" id="Yes" name="have_insurance" value="Yes" aria-describedby="ride" checked> <label for="Yes" class="fw-bold">Yes</label>
+              <input type="radio" class="border-dark mx-2" id="No" name="have_insurance" value="No" aria-describedby="ride"> <label for="No" class="fw-bold">No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-lg-6 form-field">
+            <input type="submit" class="btn btn-primary w-75" value="Submit">
+          </div>
+          <div class="mb-3 col-lg-6 form-field">
+            <input type="button" class="btn btn-secondary w-75" value="cancel" data-bs-dismiss="modal">
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/vehicle_registration_form.js"></script>
+
+<!-- Vehicle Registration Modal End  -->

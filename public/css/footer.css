@@ -1,0 +1,19 @@
+.linksList p{
+    font-weight: 500;
+}
+.linksList p a, .linksList p span{
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+}
+
+.linksList p a:hover , .linksList p span:hover{
+    color: #434AE8;
+}
+
+#footer-background{
+    background-image: linear-gradient(180deg, #5359E2 , #E5E6FF );
+}
+#footer-copyright{
+    background-color: #434AE8;
+}

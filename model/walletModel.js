@@ -4,6 +4,11 @@ import withdrawDetails from "./withdrawDetailModel.js";
 import creditDetails from "./creditDetailModel.js";
 
 var walletModel = mongoose.Schema({
+    email : {
+        type : String,
+        required : true,
+        unique : true
+    },
     wallet_amount : {
         type : Number,
         required : true,

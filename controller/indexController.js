@@ -55,11 +55,16 @@ export const indexSignupUserController = async (request, response) => {
                     writeSecretKey(SECRET_KEY);
                     console.log("cookie saved successfully.");
 
-                    var user_wallet = await wallets.create({});  
+                    var user_wallet = await wallets.create({
+                        email : request.session.email
+                    }); 
+                    console.log("wallet created");
+
+                    console.log(user_wallet);
                     const newuser = await users.create({
                         contact_no: request.session.contact_no,
                         email: request.session.email,
-                        wallets : user_wallet._id
+                        wallet : user_wallet._id
                     });
                     console.log('Data inserted successfully');
                     

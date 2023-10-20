@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import connection from '../db/connection.js'
 
 var userModel = mongoose.Schema({
     contact_no:{
@@ -88,7 +89,7 @@ var userModel = mongoose.Schema({
     wallet:{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'wallets',
-        required : false
+        required : true
     }
 });
 

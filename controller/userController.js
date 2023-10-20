@@ -4,8 +4,6 @@ import users from '../model/userModel.js';
 import contactUs from '../model/contactUs.js';
 import ownerDetails from '../model/ownerDetailModel.js';
 import drivingDetails from '../model/drivingDetailModel.js';
-// import wallets from "../model/walletModel.js";
-import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
 
@@ -41,7 +39,7 @@ export const userCompleteProfileController = async(request,response)=>{
                     aadhar_number : request.body.aadharnumber,
                     pan_number : request.body.pannumber,
                     aadhar_image : `/uploads/${aadharimg.filename}`,
-                    pan_image : `/uploads/${panimg.filename}`
+                    pan_image : `${panimg.filename}`
                 }
             }
         );
@@ -128,29 +126,10 @@ export const userContactUsController = async(request, response) => {
 }
 
 
-export const userOwnerDashboardController = (request,response)=>{
-    var user = request.session.log;
-    if(user && user.is_owner ){
-        response.render("./pages/owner_dashboard",{user:user});
-    }else{
-        response.status(404).render("./pages/404");
-    }
-}
-
-export const userDriverDashboardController = (request,response)=>{
-    var user = request.session.log;
-    if(user && user.is_driver){
-        response.render("./pages/driver_dashboard",{user:user});
-    }else{
-        response.status(404).render("./pages/404");
-    }
-}
-
 export const userDashboardController = (request,response)=>{
     var user = request.session.log;
     console.log(user);
     console.log(request.session);
-
     
     if(user){
         response.render("./pages/user_dashboard",{user:user});
@@ -187,7 +166,7 @@ export const userRegisterDriverController = async(request,response) => {
             dl_issue_date : request.body.licenceissuedate,
             dl_expiry_date : request.body.licenceexpirydate,
             dl_class : request.body.licenceclass,
-            dl_image : `/uploads/${request.file.filename}`
+            dl_image : request.file.filename
         });
 
         console.log(res);
@@ -257,3 +236,5 @@ export const userAddVehicleController = async(request,response)=>{
         console.log("Error While Register."+error);
     }
 }
+
+

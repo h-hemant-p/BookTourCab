@@ -20,18 +20,18 @@
               <h5 class="m-2 fw-bold text-center text-light">DRIVER REGISTRATION FORM</h5>
             </div>
           </div>
-      <form action="/sign/registerdriver" onsubmit="return checkDetails()" method="post" class="form">
+      <form action="/user/adddriver" onsubmit="return submitFormData7()" method="post" class="form">
           <div class="container"><br>
   
             <div class="row">
               <div class="mb-3 col-lg-6 form-field">
                 <label for="driver-name" class=" form-label fw-bold">Name</label>
-                <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="driver-name" id="driver-name" onkeyup="checkUsername()" autocomplete="off">
+                <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="driver-name" id="driver-name-7" onkeyup="checkUsername7()" autocomplete="off">
                 <small></small>
               </div>
               <div class="mb-3 col-lg-6 form-field">
                 <label for="driver-email" class=" form-label fw-bold">Enter Email</label>
-                <input type="email" class="form-control w-75 " placeholder="Enter E-mail" name="driver-email" id="driver-email" onkeyup="checkEmail()" aria-describedby="ride" autocomplete="off">
+                <input type="email" class="form-control w-75 " placeholder="Enter E-mail" name="driver-email" id="driver-email-7" onkeyup="checkEmail7()" aria-describedby="ride" autocomplete="off">
                 <small></small>
               </div>
             </div><br>
@@ -39,7 +39,7 @@
             <div class="row">
               <div class="mb-3 col-lg-6 form-field">
                   <label for="driver-contact" class=" form-label fw-bold">Contact No</label>
-                  <input type="text" class="form-control w-75" placeholder="Enter Contact Number" name="driver-contact" id="driver-contact" onkeyup="checkContact()" autocomplete="off">
+                  <input type="text" class="form-control w-75" placeholder="Enter Contact Number" name="driver-contact" id="driver-contact-7" onkeyup="checkContact7()" autocomplete="off">
                   <small></small>
               </div>
               <div class="mb-3 col-lg-6">
@@ -54,12 +54,12 @@
             <div class="row">
               <div class="mb-3 col-lg-6 form-field">
                 <label for="licence-issue-date" class="form-label fw-bold">Driving Licence Issue Date</label>
-                <input type="date" class="form-control w-75 " name="licence-issue-date" id="licence-issue-date" onchange="checkLicenceIssueDate()" aria-describedby="ride">
+                <input type="date" class="form-control w-75 " name="licence-issue-date" id="licence-issue-date-7" onchange="checkLicenceIssueDate7()" aria-describedby="ride">
                 <small></small>
               </div>
               <div class="mb-3 col-lg-6 form-field">
                 <label for="licence-expiry-date" class=" form-label fw-bold">Driving Licence Expiry Date</label>
-                <input type="date" class="form-control w-75" name="licence-expiry-date" id="licence-expiry-date" onchange="checkLicenceExpiryDate()" aria-describedby="ride">
+                <input type="date" class="form-control w-75" name="licence-expiry-date" id="licence-expiry-date-7" onchange="checkLicenceExpiryDate7()" aria-describedby="ride">
                 <small></small>
               </div>
             </div><br>
@@ -67,12 +67,12 @@
             <div class="row">
               <div class="mb-3 col-lg-6 form-field">
                 <label for="driving-licence-number" class=" form-label fw-bold ">Driving Licence Number</label>
-                <input type="text" class="form-control w-75 " placeholder="Enter Driving Licence Number" name="driving-licence-number" id="driving-licence-number" onkeyup="checkLicenceNUmber()" aria-describedby="ride">
+                <input type="text" class="form-control w-75 " placeholder="Enter Driving Licence Number" name="driving-licence-number" id="driving-licence-number-7" onkeyup="checkLicenceNUmber7()" aria-describedby="ride">
                 <small></small>
               </div>
               <div class="mb-3 col-lg-6 form-field">
                 <label for="driver-licence-image" class=" form-label fw-bold">Upload Driving Licence Image</label>
-                <input type="file" class="form-control w-75" placeholder="Upload Driving Licence here" name="driving-licence-image" id="driver-licence-image" aria-describedby="ride" onchange="checkLicenceImage()" >
+                <input type="file" class="form-control w-75" placeholder="Upload Driving Licence here" name="driving-licence-image" id="driver-licence-image-7" aria-describedby="ride" onchange="checkLicenceImage7()" >
                 <small></small>
               </div>
             </div><br>
@@ -80,13 +80,13 @@
             <div class="row">
               <div class="mb-3 col-lg-6 form-field">
                 <label for="driver-experience-year " class=" form-label fw-bold ">Experience Year</label>
-                <input type="text" class="form-control w-75" placeholder="Enter Experience Year" name="driver-experience-year" id="driver-experience-year" onkeyup="checkExperienceYear()" aria-describedby="ride">
+                <input type="text" class="form-control w-75" placeholder="Enter Experience Year" name="driver-experience-year" id="driver-experience-year-7" onkeyup="checkExperienceYear7()" aria-describedby="ride">
                 <small></small>
               </div>
               
               <div class="mb-3 col-lg-6 form-field">
                 <label for="driver-dob" class="form-label fw-bold ">Licence Class</label>
-                <select class=" form-control w-75 " name="licence-class" id="licence-class" onchange="ckeckLicenceClass()">
+                <select class=" form-control w-75 " name="licence-class" id="licence-class-7" onchange="ckeckLicenceClass7()">
                   <option class="fw-bold" value="">select Licence class</option>
                   <option class="fw-bold" value="MCWG">MCWG (Motorcycle without Gear)</option>
                   <option class="fw-bold" value="MCWOG">MCWOG (Motorcycle with Gear)</option>
@@ -116,5 +116,4 @@
   
   <!-- Reserved Driver Registration form end -->
   
-<script src="/js/driver_registration_form.js"></script>
-  
+  <script src="/js/reserved_driver_registration_form.js"></script>

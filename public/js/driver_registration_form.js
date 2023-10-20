@@ -3,32 +3,6 @@
 
 /* ------------------ Reserved Driver Under Owner -------------------- */
 
-const checkContact1 = ()=>{
-    let driver_contact = document.getElementById('driver-contact');
-    let valid = false;
-    let driver_contact_input = driver_contact.value.trim();
-
-    if(!isRequired1(driver_contact_input)){
-        showError1(driver_contact,"Contact number connot be blank.")
-    }
-    else if(!isValidContact1(driver_contact_input)){
-        showError1(driver_contact,'Invalid contact number.')
-    }
-    else{
-        showSuccess1(driver_contact);
-        valid = true;
-    }
-    return valid;
-}
-
-
-function isValidContact1(contact_no){
-    var res = /^[6-9]\d{9}$/;
-    return res.test(contact_no);
-}
-
-/* ------------------ Reserved Driver Under Owner -------------------- */
-
 
 
 const checkUsername1 = () => {
@@ -192,7 +166,7 @@ const isValidLicenceExpiryDate1 = (issue_date,expiry_date) => {
 
 
 function checkLicenceImage1(){
-    console.log("hii");
+    // console.log("hii");
     let licence_image = document.getElementById('driver-licence-image');
     let licence_image_input = licence_image.files[0];
     var valid = false;
@@ -253,34 +227,14 @@ const showSuccess1 = (input) => {
 }
 
 function submitFormData(){ 
-    if(checkLicenceIssueDate1() && checkLicenceExpiryDate1() && checkLicenceNumber1() &&
-     checkLicenceImage1() && checkExperienceYear1() && ckeckLicenceClass1()) {
+    if(checkLicenceIssueDate1() && checkLicenceExpiryDate1() && checkLicenceNumber1() && checkLicenceImage1() && checkExperienceYear1() && ckeckLicenceClass1()) {
         return true;
     }
     else{
-     checkLicenceIssueDate1();
-     checkLicenceExpiryDate1();
-     checkLicenceNumber1();
-     checkLicenceImage1();
-     checkExperienceYear1();
-     ckeckLicenceClass1();
-    return false;
-    }
-}
-
-function checkDetails(){
-    if(checkUsername1() && checkEmail1() && checkLicenceIssueDate1() && checkLicenceExpiryDate1() && checkLicenceNumber1() && 
-    checkLicenceImage1() && checkContact1() && checkExperienceYear1() && ckeckLicenceClass1()){
-        return true;
-    }
-    else{
-        checkUsername1();
-        checkEmail1();
         checkLicenceIssueDate1();
         checkLicenceExpiryDate1();
         checkLicenceNumber1();
         checkLicenceImage1();
-        checkContact1();
         checkExperienceYear1();
         ckeckLicenceClass1();
         return false;

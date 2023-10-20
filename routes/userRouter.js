@@ -3,7 +3,7 @@
 import express from 'express';
 
 // import {checkSigninController} from "../controller/indexController.js";
-import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userOwnerDashboardController,userDriverDashboardController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController} from "../controller/userController.js";
+import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -37,9 +37,6 @@ router.post('/completeprofile',upload.fields([
     { name: 'panimg', maxCount: 1 }
 ]),userCompleteProfileController);
 
-
-// router.post('/registerdriver',userRegisterDriverController)
-
 router.get('/logoutuser',userLogoutUserController)
 
 router.post('/createpassword',userCreatePasswordController);
@@ -47,11 +44,9 @@ router.post('/changepassword',userChangePasswordController);
 
 router.post('/contactus',userContactUsController);
 
-router.get("/ownerdashboard",userOwnerDashboardController)
-router.get("/driverdashboard",userDriverDashboardController)
 router.get("/userdashboard",userDashboardController);
 router.get("/booking",userVehicleBookingController);
 router.post('/registerdriver',upload.single('licenceimage'),userRegisterDriverController);
 router.get("/registerowner",userRegisterOwnerController)
-// router.post('/vehicleregistration',userVehicleRegistrationController);
+router.post('/addvehicle',userAddVehicleController);
 export default router;

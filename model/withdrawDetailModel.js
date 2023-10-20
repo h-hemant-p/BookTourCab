@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 var withdrawDetailModel = mongoose.Schema({
     transaction_id:{
         type :String,
-        unique : true,
+        // unique : true,
         reqired : true
     },
     amount : {
@@ -48,7 +48,7 @@ var withdrawDetailModel = mongoose.Schema({
         reqired : false
     },
     acc_number:{
-        type : BigInt,
+        type : Number,
         reqired : false
     }
 }); 

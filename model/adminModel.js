@@ -23,7 +23,7 @@ var adminModel = mongoose.Schema({
         required : true
     },
     prifile_image : {
-        type : Buffer,
+        type : String,
         required : true
     }
 });

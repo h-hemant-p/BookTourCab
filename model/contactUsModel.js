@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 var contactUsModel = mongoose.Schema({
     contact_no :{
-        type : BigInt,
+        type : Number,
         required : true
     },
     email : {

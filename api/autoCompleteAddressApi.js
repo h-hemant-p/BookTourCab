@@ -382,17 +382,64 @@ addressAutocomplete2(document.getElementById("autocomplete-container-city-2"), (
 });
 
 
-function getDistance(){
+async function getDistance(){
+    console.log(datavalue1);
+    console.log(datavalue2);
 
-    var lat1 = datavalue1.properties.lat;
-    var lon1 = datavalue1.properties.lon;
-    var lat2 = datavalue2.properties.lat;
-    var lon2 = datavalue2.properties.lon;
+    var lat1 = "";
+    var lat2 = "";
+    var lon1 = "";
+    var lon2 = "";
 
-    console.log(lat1);
-    console.log(lon1);
-    console.log(lat2);
-    console.log(lon2);
+    if(datavalue1 == undefined){
+        console.log("Inside Datavalue1 undefined");
+        let locationName = document.getElementById('pickuplocation').value;
+
+        await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                var latitude = data[0].lat;
+                var longitude = data[0].lon;
+                lat1 =  parseFloat(latitude);
+                console.log(lat1);
+                lon1 =  parseFloat(longitude);
+                console.log(lon1);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }else{
+        lat1 = datavalue1.properties.lat;
+        lon1 = datavalue1.properties.lon;
+    }
+    if(datavalue2 == undefined){
+        console.log("Inside Datavalue2 undefined");
+        let locationName = document.getElementById('droplocation').value;
+        await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                var latitude = data[0].lat;
+                var longitude = data[0].lon;
+                lat2 =  parseFloat(latitude);
+                console.log(lat2);
+                lon2 =  parseFloat(longitude);
+                console.log(lon2);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }else{
+        lat2 = datavalue2.properties.lat;
+        lon2 = datavalue2.properties.lon;
+    }
+        console.log(lat1);
+        console.log(lon1);
+        console.log(lat2);
+        console.log(lon2);
 
     const R = 6371; // Radius of the Earth in kilometers
     const dLat = (lat2 - lat1) * (Math.PI / 180);

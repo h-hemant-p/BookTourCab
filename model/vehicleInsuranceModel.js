@@ -14,7 +14,7 @@ var vehicleInsuranceModel = mongoose.Schema({
         required : true
     },
     policy_holder_aadhar_no:{
-        type : BigInt,
+        type : Number,
         required : true
     },
     insurance_provider : {

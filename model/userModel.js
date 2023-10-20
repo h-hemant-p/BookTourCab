@@ -21,7 +21,7 @@ var userModel = mongoose.Schema({
         required:false
     },
     profile_img : {
-        type : Buffer,
+        type : String,
         required : false
     },
     is_driver:{
@@ -61,7 +61,7 @@ var userModel = mongoose.Schema({
         required : false
     },
     aadhar_number :{
-        type : BigInt,
+        type : Number,
         required : false
     },
     aadhar_image :{

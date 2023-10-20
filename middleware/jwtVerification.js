@@ -43,39 +43,24 @@ export const authorizeUser = async(request,response,next)=>{
     if(request.payload.data.role == "user"){
         try{
             var loggedUser = await users.findOne({ email: request.payload.data.email });
-            var user = {
-                name : loggedUser.name,
-                contact_no : loggedUser.contact_no,
-                email : loggedUser.email,
-                is_driver : loggedUser.is_driver,
-                is_owner : loggedUser.is_owner,
-                is_complete : loggedUser.is_complete,
-                city : loggedUser.city,
-                state : loggedUser.state,
-                role : "user",
-                password: loggedUser.password
-            }
-            request.session.log = user;
+            request.session.log = loggedUser;
+            request.session.role = request.payload.data.role;
             request.session.save();
 
-            console.log("Logged user : "+user);
-            response.render("./pages/index",{user : user});
+            response.render("./pages/index",{user : request.session.log});
 
         }catch(error){
-
             console.error('user not found inside authorize user.');
+            console.log(error);
             response.render("./pages/index",{user:""});
             
         }
     }else if(request.payload.data.role=="admin"){
         try{
             var loggedAdmin = await admin.findOne({ email: request.payload.data.email });
-            var adminData = {
-                contact_no : loggedAdmin.contact_no,
-                email : loggedAdmin.email,
-                role : request.payload.data.role
-            }
-            request.session.log = adminData;
+
+            request.session.log = loggedAdmin;
+            request.session.role = request.payload.data.role;
             request.session.save();
 
             response.render("./pages/admin_dashboard",{admin : request.session.log});

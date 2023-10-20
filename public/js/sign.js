@@ -173,7 +173,7 @@ function isValidOtp2(otp){
 }
 
 function isValidPassword2(password){
-    const res =  /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+    const res =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
     return res.test(password);
 }
 

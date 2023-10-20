@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 var creditDetailModel = mongoose.Schema({
     transaction_id:{
         type :String,
-        unique : true,
+        // unique : true,
         reqired : true
     },
     amount : {
@@ -36,7 +36,7 @@ var creditDetailModel = mongoose.Schema({
         reqired : false
     },
     acc_number:{
-        type : BigInt,
+        type : Number,
         reqired : false
     }
 });

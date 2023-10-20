@@ -2,7 +2,7 @@ import { request, response } from 'express';
 import users from '../model/userModel.js';
 import admin from '../model/adminModel.js';
 import wallets from '../model/walletModel.js';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
@@ -66,25 +66,13 @@ export const indexSignupUserController = async (request, response) => {
                         email: request.session.email,
                         wallet : user_wallet._id
                     });
+                    console.log(newuser)
                     console.log('Data inserted successfully');
                     
-
-                    var loggedUser = await users.findOne({email:request.session.email});
-                    var user = {
-                        name : loggedUser.name,
-                        contact_no : loggedUser.contact_no,
-                        email : loggedUser.email,
-                        is_driver : loggedUser.is_driver,
-                        is_owner : loggedUser.is_owner,
-                        is_complete : loggedUser.is_complete,
-                        city : loggedUser.city,
-                        state : loggedUser.state,
-                        role : "user",
-                        password : loggedUser.password
-                    }
-                    request.session.log = user;
+                    request.session.log = newuser;
+                    request.session.role = "user";
                     request.session.save();
-                    console.log('user saved in session successfully'+user);
+                    console.log('user saved in session successfully');
                     
                     response.render("./pages/index",{user : request.session.log})
                 }
@@ -106,6 +94,7 @@ export const indexSigninUserController = async(request, response) => {
     var is_admin = false;
     var is_user = false;
     
+    // sign in with otp
     if(request.session.otp){
         if(request.session.otp==request.body.otp){
             try{
@@ -131,35 +120,50 @@ export const indexSigninUserController = async(request, response) => {
             console.log("OTP does'nt match.");
             response.render("./pages/index",{user:""});
         }
-    }else {
+        
+    }else {// sign in with password
         try{
-            var existingUser = await users.findOne({email : request.session.email});
+            console.log(password);
+            const sha256Hash = crypto.createHash('sha256');
+            sha256Hash.update(request.body.password);
+            var password = sha256Hash.digest('hex');
+            var existingUser = await users.findOne({
+                email : request.body.email,
+                password : password
+            });
             if(!existingUser){
-                var existingAdmin = await admin.findOne({email: request.session.email});
+                var existingAdmin = await admin.findOne({
+                    email: request.body.email,
+                    password : password
+                });
                 if(!existingAdmin){
                     console.log('User has not any account.');
                     response.render("./pages/index",{user : ""});
                 }else{
-                    console.log('You are an Admin.');
-                    if(bcrypt.compare(request.body.password,existingAdmin.password)){
+                    // console.log('You are an Admin.');
+                    // if(bcrypt.compare(request.body.password,existingAdmin.password)){
                         is_admin = true;
                         request.session.email = request.body.email;
                         request.session.save();
-                    }else{
-                        console.log("Password does'nt match.");
-                        response.render("./pages/index",{user:""});
-                    }
+                    // }else{
+                        // is_admin=false;
+                        // console.log("Password does'nt match.");
+                        // response.render("./pages/index",{user:""});
+                    // }
                 }
             }else{
-                console.log('You are an User.');
-                if(bcrypt.compare(request.body.password,existingUser.password)){
+                // console.log('You are an User.');
+                // if(bcrypt.compare(request.body.password,existingUser.password)){
                     is_user = true;
                     request.session.email = request.body.email;
                     request.session.save();
-                }else{
-                    console.log("Password does'nt match.");
-                    response.render("./pages/index",{user:""});
-                }
+                // }else{
+                //     is_user = false;
+                //     console.log("Password does'nt match.");
+                //     response.render("./pages/index",{user:""});
+                // }
+                // $2b$10$wzUtGaF4EfrecnEeT3wI1emPZBZQI1I0RRQqPNl8.IpBOVVB5eRMe
+                // $2b$10$A1ugwwRiTnRDx1GMncFQ..GmfG.xLVpOlXHIyC.9vFfpF4gXdfIEa
             }
         }catch(error){
             console.log('Error while fetching data in sign in.');
@@ -186,13 +190,8 @@ export const indexSigninUserController = async(request, response) => {
         console.log("cookie saved successfully.");
 
         var loggedAdmin = await admin.findOne({email:request.session.email});
-        var adminData = {
-            contact_no : loggedAdmin.contact_no,
-            email : loggedAdmin.email,
-            role : "admin"
-        }
-
-        request.session.log = adminData;
+        request.session.log = loggedAdmin;
+        request.session.role = "admin";
         request.session.save();
 
         response.render('./pages/admin_dashboard', { admin: request.session.log});
@@ -218,22 +217,9 @@ export const indexSigninUserController = async(request, response) => {
 
         var loggedUser = await users.findOne({email:request.session.email});
         console.log(loggedUser)
-        var user = {
-            name : loggedUser.name,
-            contact_no : loggedUser.contact_no,
-            email : loggedUser.email,
-            is_driver : loggedUser.is_driver,
-            is_owner : loggedUser.is_owner,
-            is_complete : loggedUser.is_complete,
-            city : loggedUser.city,
-            state : loggedUser.state,
-            role : "user",
-            password : loggedUser.password
-        }
-        request.session.log = user;
+        request.session.log = loggedUser;
+        request.session.role = "admin";
         request.session.save();
-        console.log("SIgnin : ");
-        console.log(user);
         response.render('./pages/index', { user: request.session.log});
     }
 }

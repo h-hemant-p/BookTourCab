@@ -40,7 +40,7 @@ var vehicleModel = mongoose.Schema({
         required : true
     },
     rc_book_image:{
-        type : Buffer,
+        type : String,
         required : true,
     },
     have_insurance :{

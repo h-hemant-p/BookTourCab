@@ -6,6 +6,7 @@ import ownerDetails from '../model/ownerDetailModel.js';
 import drivingDetails from '../model/drivingDetailModel.js';
 // import wallets from "../model/walletModel.js";
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 
 export const userLogoutUserController = (request, response) => {
@@ -54,32 +55,25 @@ export const userCompleteProfileController = async(request,response)=>{
 
 export const userCreatePasswordController = async(request,response) => {
     try{
-        var temp = {
-            name:request.body.name,
-            isComplete : true,
-            gender : request.body.gender,
-            address : request.body.address,
-            city : request.body.city,
-            state : request.body.state,
-            pin_code : request.body.pincode,
-            aadhar_number : request.body.aadharnumber,
-            pan_number : request.body.pannumber
-        };
-        console.log(temp);
         console.log(request.session.log);
+        var sha256Hash = crypto.createHash('sha256');
+        sha256Hash.update(request.body.createconfirmpass);
+        var password = sha256Hash.digest('hex');
+        console.log(password);
         console.log("pass : "+request.body.confirmpassword);
         await users.updateOne(
             {
                 email:request.session.log.email
             },{
                 $set:{
-                    password : request.body.createconfirmpass
+                    password : password
                 }
             }
         );
         console.log("Password Created Successfully");
         response.render('./pages/user_dashboard',{user : request.session.log})
     }catch(error){
+        console.log(error);
         console.log("Error while Create a user Password.");
         response.render("./pages/user_dashboard",{user : request.session.log});
     }
@@ -87,15 +81,23 @@ export const userCreatePasswordController = async(request,response) => {
 
 export const userChangePasswordController = async(request,response) => {
     try{
+        var newpass = crypto.createHash('sha256');
+        newpass.update(request.body.changecnfpassword);
+        var newpassword = newpass.digest('hex');
+        console.log(newpassword);
+
+        var oldpass = crypto.createHash('sha256');
+        oldpass.update(request.body.changeoldpassword);
+        var oldpassword = oldpass.digest('hex');
+        console.log(oldpassword);
+        
         await users.updateOne({
-            $and:[
-                { email : request.session.log.email},
-                { password : request.body.changeoldpassword }
-            ]
+            email : request.session.log.email,
+            password : oldpassword 
         },
         {
             $set : {
-                password : request.body.changenewpassword
+                password : newpassword
             }
         });
         console.log("Password Updated Successfully.....");

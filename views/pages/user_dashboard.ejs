@@ -20,36 +20,51 @@
     <%- include('../partials/driver_registration_form'); %>
     <%- include('../partials/reserved_driver_registration_form') %>
     <%- include('../partials/vehicle_registration_form') %>
+    <%- include('../partials/user_registration_form') %>
 
      <div class="container">
           <div class="row">
                <!-- Main Menu -->
                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 mt-4 myDashboardCard " style="background-color:#535Af8">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-user-circle text-light display-2 m-4"></i>
-                        <p class="my-4 text-light">Hemant Prajapati User<br>9879875678</p>
+                    <div class="text-center">
+                        <i class="fas fa-user-circle text-light display-2 m-4"></i><br>
+                        <% if(user.name){ %>
+                            <span class="text-light fw-bold"><%= user.name %></span><br>
+                            <span class="text-light fw-bold"><%= user.contact_no %></span>
+                        <% }else{ %>
+                            <span class="text-light fw-bold"><%= user.email %></span><br>
+                            <span class="text-light fw-bold"><%= user.contact_no %></span>
+                        <% } %>
                     </div>
+                    <br><br>
                     <div class="mx-5 fw-bold text-light">
-                         <span class="dashboard-links" onclick="dashboardChoices('my-profile')" >My Profile</span><br><br>
-                         <span class="dashboard-links" onclick="dashboardChoices('my-bookings')" >My Bookings</span><br><br>
-                         <span class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</span><br><br>
-                         <span class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</span><br><br>
-                         <span class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</span><br><br>
-                         <span class="dashboard-links" onclick="dashboardChoices('my-vehicles-history')">My Vehicle History</span><br><br>
-                         <span class="dashboard-links" onclick="dashboardChoices('my-wallet')" >My Wallet</span><br><br>
-                         <%# console.log('pass : '+user.email) %>
-                         <% if(!user.password){%>
+                        <span class="dashboard-links" onclick="dashboardChoices('my-profile')" >My Profile</span><br><br>
+                        <span class="dashboard-links" onclick="dashboardChoices('my-bookings')" >My Bookings</span><br><br>
+                        <% if(user.is_driver){ %>
+                            <span class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</span><br><br>
+                        <% }%>
+                        <% if(user.is_owner){ %>
+                            <span class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</span><br><br>
+                            <span class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</span><br><br>
+                            <span class="dashboard-links" onclick="dashboardChoices('my-vehicles-history')">My Vehicle History</span><br><br>
+                        <% } %>
+                        <span class="dashboard-links" onclick="dashboardChoices('my-wallet')" >My Wallet</span><br><br>
+                        <% if(!user.password){%>
                             <span class="dashboard-links" onclick="dashboardChoices('change-password')" >Create Password</span><br><br>
                         <%}else{%>
                             <span class="dashboard-links" onclick="dashboardChoices('change-password')" >Change Password</span><br><br>
                          <%}%>
                           
                          
-                         <%if(!user.is_driver){%>
+                         <%if(!user.is_driver && user.is_complete){%>
                             <button class="btn btn-primary  mt-2 w-75 text-dark" data-bs-toggle="modal" data-bs-target="#driverRegistrationForm" style="background-color: #d8d6e3;" >Become Driver</button>
-                        <%}%>
-                        <% if(!user.is_owner){%>  
-                            <button class="btn btn-primary  my-3 w-75 text-dark" id="owner-dashboard-btn" style="background-color: #d8d6ed;"><a href="/user/ownerdashboard" class="text-decoration-none text-dark">Owner DashBoard</a></button> 
+                        <%}else if(!user.is_driver && !user.is_complete){%>
+                            <button class="btn bg-light  my-3 w-75 text-dark" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Become Driver</button>
+                        <% } %>
+                        <% if(!user.is_owner && user.is_complete){%>  
+                            <button class="btn btn-primary  my-3 w-75 text-dark" id="owner-dashboard-btn" style="background-color: #d8d6ed;"><a href="/user/registerowner" class="text-decoration-none text-dark">Beacome Owner</a></button> 
+                        <%}else if(!user.is_owner && !user.is_complete){%>
+                            <button class="btn bg-light my-3 w-75 text-dark" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Beacome Owner</button>
                         <%}%>
                     </div>
                 </div>
@@ -73,7 +88,12 @@
                                 <label for="state" class="fw-bold fs-5 my-1">State : </label><span>  Madhya Pradesh</span><br>
                                 <label for="pincode" class="fw-bold fs-5 my-1">Pin code : </label><span>  452020</span><br>
                                 <label for="pincode" class="fw-bold fs-5 my-1">Aadhar Number : </label><span> 9810 3410 3453</span><br>
-                                <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
+                                <% if(user.is_complete){%>
+                                    <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
+                                <% } else{%>
+                                    <button class="btn btn-primary button-shadow w-50 ms-2 mt-5" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Complete Profile</button>
+                                <%}%>
+
                             </div>
                         </div>
                     </div>

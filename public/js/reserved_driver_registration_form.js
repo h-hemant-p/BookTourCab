@@ -83,7 +83,7 @@ function checkLicenceIssueDate7(){
 
 function checkLicenceExpiryDate7(){
     let licence_expiry_date = document.getElementById('licence-expiry-date-7');
-    let licence_issue_date = document.getElementById('licence-issue-date');
+    let licence_issue_date = document.getElementById('licence-issue-date-7');
     const input_issue_date = licence_issue_date.value.trim();
 
     if(!isRequired7(input_issue_date)){

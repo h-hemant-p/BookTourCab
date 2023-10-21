@@ -226,7 +226,7 @@ const showSuccess1 = (input) => {
     error.textContent = '';
 }
 
-function submitFormData(){ 
+function submitFormData1(){ 
     if(checkLicenceIssueDate1() && checkLicenceExpiryDate1() && checkLicenceNumber1() && checkLicenceImage1() && checkExperienceYear1() && ckeckLicenceClass1()) {
         return true;
     }

@@ -3,7 +3,7 @@
 import express from 'express';
 
 // import {checkSigninController} from "../controller/indexController.js";
-import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController} from "../controller/userController.js";
+import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -37,16 +37,27 @@ router.post('/completeprofile',upload.fields([
     { name: 'panimg', maxCount: 1 }
 ]),userCompleteProfileController);
 
+
+
 router.get('/logoutuser',userLogoutUserController)
-
-router.post('/createpassword',userCreatePasswordController);
-router.post('/changepassword',userChangePasswordController);
-
+router.get("/booking",userVehicleBookingController);
 router.post('/contactus',userContactUsController);
 
 router.get("/userdashboard",userDashboardController);
-router.get("/booking",userVehicleBookingController);
+router.post('/createpassword',userCreatePasswordController);
+router.post('/changepassword',userChangePasswordController);
+
 router.post('/registerdriver',upload.single('licenceimage'),userRegisterDriverController);
 router.get("/registerowner",userRegisterOwnerController)
-router.post('/addvehicle',userAddVehicleController);
+
+router.post('/adddriver',upload.single('licenceimage'),userAddDriverController);
+// router.post('/adddriver',upload.fields([
+//     { name: 'licenceimage', maxCount: 1 }
+// ]),userAddDriverController);
+router.post('/addvehicle',upload.fields([
+    {name: 'rcbookimage', maxCount: 1},
+    {name: 'vehicleimage', maxCount: 1}
+]),userAddVehicleController);
+
+
 export default router;

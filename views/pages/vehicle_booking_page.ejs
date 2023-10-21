@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
   <link rel="stylesheet" href="/css/vehicle_booking.css">
   <link rel="stylesheet" href="/css/formValidation.css">
+
+  <script src="/js/vehicle_booking_page.js"></script>
+
 </head>
 
 <body>
@@ -21,17 +24,17 @@
       <form id="form">
         <div class="m-3 p-1 form-field">
           <label for="bookstartdate" class="form-label fw-bold text-light">Booking Start Date</label>
-          <input type="date" class="form-control" placeholder="Enter Booking Start Date " id="bookstartdate" name="bookstartdate" onchange="checkBookingStartDate()">
+          <input type="date" class="form-control" placeholder="Enter Booking Start Date " id="bookstartdate" name="bookstartdate" onchange="bookStartDate5()">
           <small></small>
         </div>
         <div class="m-3 p-1 form-field">
           <label for="bookstarttime" class="form-label fw-bold text-light">Booking Start Time</label>
-          <input type="time" class="form-control" placeholder="Enter Booking Start Date " id="bookstarttime" name="bookstarttime" onchange="checkBookStartTime()">
+          <input type="time" class="form-control" placeholder="Enter Booking Start Date " id="bookstarttime" name="bookstarttime" onchange="checkBookStartTime5()">
           <small></small>
         </div>
         <div class="m-3 p-1 form-field">
           <label for="bookenddate" class="form-label fw-bold text-light">Booking End Date</label>
-          <input type="date" class="form-control" placeholder="" id="bookenddate" name="bookenddate" onchange="checkBookingEndDate()">
+          <input type="date" class="form-control" placeholder="" id="bookenddate" name="bookenddate" onchange="BookEndDate5()">
           <small></small>
         </div>
         <div class="m-3 p-1 form-field">
@@ -41,7 +44,7 @@
         </div>
         <div class="m-3 p-1 form-field">
           <label for="pickuplocation" class="form-label fw-bold text-light">Pick Up Location</label>
-          <input type="text" class="autocomplete-container form-control" placeholder="Enter PickUp Location" id="pickuplocation" name="pickuplocation" onkeyup="checkPickUpLocation()">
+          <input type="text" class="autocomplete-container form-control" placeholder="Enter PickUp Location" id="pickuplocation" name="pickuplocation" onkeyup="checkPickUpLocation5()">
           <div class="autocomplete-container" id="autocomplete-container-country"></div>
           <div class="autocomplete-container" id="autocomplete-container-city"></div>
           <small></small>
@@ -49,32 +52,25 @@
 
         <div class="m-3 p-1 form-field">
           <label for="droplocation" class="form-label fw-bold text-light">Dropping Off Location</label>
-          <input type="text" class="autocomplete-container form-control" placeholder="Enter Dropping Up Location" id="droplocation" onkeyup="checkDropLocation()">
+          <input type="text" class="autocomplete-container form-control" placeholder="Enter Dropping Up Location" id="droplocation" name="droplocation" onkeyup="checkDropLocation5()">
           <div class="autocomplete-container" id="autocomplete-container-country-2"></div>
           <div class="autocomplete-container" id="autocomplete-container-city-2"></div>
           <small></small>
         </div>
-        <div class="m-3 p-1 form-field">
-          <label for="vehicleclass" class="form-label fw-bold text-light">Vehicle Class</label>
-          <select class="form-select" name="vehicleclass" id="vehicleclass" onchange="checkVehicleClass()">
-            <option class="fw-bold" value="">Select Vehicle Class</option>
-            <option class="fw-bold" value="Online">Two Wheeler</option>
-            <option class="fw-bold" value="Cash">Four Wheeler</option>
-          </select>
-          <small></small>
-        </div>
-        <div class="m-3 p-1 form-field">
+       
+        <!-- <div class="m-3 p-1 form-field">
           <label for="payment_mode" class="form-label fw-bold text-light">Select Method</label>
-          <select id="paymentmode" class="form-select" name="paymentmode" onchange="checkPaymentMode()">
+          <select id="paymentmode" class="form-select" name="paymentmode" onchange="checkPaymentModel5()">
             <option class="fw-bold" value="">Select Payment Method</option>
             <option class="fw-bold" value="Online">Online</option>
             <option class="fw-bold" value="Cash">Cash</option>
           </select>
           <small></small>
-        </div>
+        </div> -->
 
           <div class="m-3 p-1"><br>
-             <input type="submit" class="btn btn-primary w-100 " value="Search Vehicle">
+             <!-- <input type="submit" class="btn btn-primary w-100 " value="Search Vehicle" onclick="postData()"> -->
+             <button  class="btn btn-primary w-100 " onclick="postData()">Search Vehicle</button>
              <input type="reset" class="btn btn-secondary w-100 mt-3" value="Reset Form">
           </div>
         </form>
@@ -87,113 +83,66 @@
   <div class="container mt-5">
     <label for="distancetotal" class="fs-5 fw-bold ">Distance : </label>
     <span id="distance" class="fs-5 fw-bold"></span><br>
+
     <label for="amounttotal" class="fs-5 fw-bold">Total Amount : </label>
-    <span id="amount" class="fs-5 fw-bold"></span>
+    <span id="amount" class="fs-5 fw-bold"></span><br>
+
+    <label for="hours" class="fs-5 fw-bold ">Total Hours : </label>
+    <span id="hours" class="fs-5 fw-bold" name="hours"></span><br>
   </div>
 
+  <div class="container">
+
+    <div class="row rounded border border-1 bg-secondary text-light fw-bold fs-5">
+      <div class="col-lg-4 col-md-4 col-sm-4  text-center text mt-2 mb-2 ">Total Time : 22 hr</div>
+      <div class="col-lg-4 col-md-4 col-sm-4  text-center text mt-2 mb-2 ">Total Distance : &#8377; 10km</div>
+      <div class="col-lg-4 col-md-4 col-sm-4  text-center text mt-2 mb-2 ">Total amount  : 10km</div>  <br>
+    </div>
+  </div><br>
+
   <div class="container mt-4">
-    <div class="row ">
-      <div class="col-lg-6 col-md-6 col-sm-12 my-3 ">
-        <div class="card w-100 card-shadow">
-          <div class="card-body justify-content-between d-flex">
-            <div>
-              <i class='fas fa-car-side display-1 mx-5'></i>
-            </div>
-            <div>
-              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
-              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
-              <button class="btn btn-warning">Book Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- </div> -->
 
-      <!-- <div class="row"> -->
-      <div class="col col-lg-6 col-md-6 col-sm-12 my-3 ">
-        <div class="card w-100 card-shadow">
-          <div class="card-body justify-content-between d-flex">
-            <div>
-              <i class='fas fa-car-side display-1 mx-5'></i>
-            </div>
-            <div>
-              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
-              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
-              <button class="btn btn-warning">Book Now</button>
-            </div>
-          </div>
-        </div>
+    <div class="row custom-div" >
+      <div class=" col-lg-2 bg-light">
+       <img src="images/images.jpg" height="200px" width="220px" alt="">
       </div>
-      <!-- </div> -->
+      <div class=" col-lg-7 ">
+        <span class="fs-5 ms-3 fw-bold">Mahindra Scorpio S11 <sub>(2010)</sub></span><br>
+        <div class="row mt-3">
+            <div class="offset-lg-2 col-lg-2 col-md-4 col-sm-4 col-xs-4"><i class="fas fa-user" style="color: #a5adbb; font-size: 22px;"></i><span class="text-secondary fw-bold ms-1"> 5 seats</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4"><img src="images/airbag.jpg" width="25px" height="25px" alt=""> <span class="text-secondary fw-bold ms-1">2 bags</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4"><img src="images/cardoor.jpg" width="25px" height="25px" alt=""> <span class="text-secondary fw-bold ms-1">5 Doors</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4"><img src="images/manualcar.jpg" width="25px" height="25px" alt=""> <span class="text-secondary fw-bold ms-1"> Manual</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4"><img src="images/accar.jpg" width="25px" height="25px" alt=""><span class="text-secondary fw-bold ms-1">A/C</span></div>
+        </div><br>
 
-      <!-- <div class="row"> -->
-      <div class="col col-lg-6 col-md-6 col-sm-12 my-3 ">
-        <div class="card w-100 card-shadow">
-          <div class="card-body justify-content-between d-flex">
-            <div>
-              <i class='fas fa-car-side display-1 mx-5'></i>
-            </div>
-            <div>
-              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
-              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
-              <button class="btn btn-warning">Book Now</button>
-            </div>
-          </div>
+        <div class="row">
+            <div class="offset-lg-2 col-lg-2 col-md-4 col-sm-4"><i class="fa-solid fa-gas-pump" style="color: #787d87;"></i> <span class="text-secondary fw-bold ms-1"> Diesel</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4"><i class="fas fa-tachometer-alt" style="color: #818283;"></i> <span class="text-secondary fw-bold ms-1">22km/l</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4"><img src="images/withdriver.jpg" width="25px" height="25px" alt=""> <span class="text-secondary fw-bold ms-1">No</span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4"> <span class="fa fa-star checked" style="color: orange"></span><span class="fa fa-star checked" style="color: orange"></span><span class="fa fa-star checked" style="color: orange"></span><span class="fa fa-star checked" style="color: black"></span><span class="fa fa-star checked" style="color: black"></span> 3.0<span class="text-secondary fw-bold ms-1"></span></div>
+            <div class="col-lg-2 col-md-4 col-sm-4"> <span class="text-secondary fw-bold ">XUV</span></div>
         </div>
-      </div>
-      <!-- </div> -->
 
-      <!-- <div class="row"> -->
-      <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-md-5 my-3">
-        <div class="card w-100 card-shadow">
-          <div class="card-body justify-content-between d-flex">
-            <div>
-              <i class='fas fa-car-side display-1 mx-5'></i>
-            </div>
-            <div>
-              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
-              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
-              <button class="btn btn-warning">Book Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- </div> -->
-
-      <!-- <div class="row"> -->
-      <div class="col col-lg-6 col-md-6 col-sm-12 my-3">
-        <div class="card w-100 card-shadow">
-          <div class="card-body justify-content-between d-flex">
-            <div>
-              <i class='fas fa-car-side display-1 mx-5'></i>
-            </div>
-            <div>
-              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
-              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
-              <button class="btn btn-warning">Book Now</button>
-            </div>
+        <div class="row">
+          <div class="offset-lg-2 mt-3">
+            <small class=" text-primary fw-bold "> Available At : <span class="text-secondary">Bholaram Ring Road Near Rajiv Ghandhi Square, Indore(452001)</span></small>
           </div>
         </div>
       </div>
 
-      <div class="col col-lg-6 col-md-6 col-sm-12 my-3">
-        <div class="card w-100 card-shadow">
-          <div class="card-body justify-content-between d-flex">
-            <div>
-              <i class='fas fa-car-side display-1 mx-5'></i>
-            </div>
-            <div>
-              <h5 class="card-title text-primary">Mahindra Scorpio</h5>
-              <p class="card-text"> <i class='fas fa-map-pin fs-2 text-danger '></i>Rajwada Circle</p>
-              <button class="btn btn-warning">Book Now</button>
-            </div>
-          </div>
-        </div>
+      <div class=" col-lg-3 ">
+        <p class="fs-3 text-lg-center fw-bold "> &#x20B9; 1500  <span class="text-center fw-bold ms-1 fs-6">(Total Cost of Rental)</span> </p>
+        <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; 22.50  <span class="text-center fw-bold ms-1 fs-6">(Per/hr Cost)</span> </p>
+        <p class="ms-3"><i class="fa-solid fa-check" style="color: #21c076; font-size: 18px; font-weight: bold;"></i><span class="ms-2 text-secondary fw-bold">Free Cancellation</span></p>
+        <button class="btn btn-primary ms-3 mb-4  " style="width: 88%;">Book Now</button>
       </div>
+    </div>
+
 
     </div>
   </div>
-  </div>
+  
   <!-- adding footer -->
   <%- include('../partials/footer')%>
 </body>
@@ -204,5 +153,5 @@
 
 <script src="/vehicleBookingApi.js"></script>
 <script src="/autoCompleteAddressApi.js"></script>
-<script src="/js/vehicle_booking_page.js"></script>
+
 </html>

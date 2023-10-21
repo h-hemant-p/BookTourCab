@@ -10,7 +10,7 @@ body {
 /* ---- Map CSS Start */
 
 #map { 
-    height: 120vh;
+    height: 112vh;
     width: 100%;
     position: relative;
 }
@@ -68,3 +68,19 @@ body {
 
 
 /* ----- Autocomplete Input Field CSS End ----- */
+
+
+
+/* Custom div shadow */
+.custom-div {
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 20px;
+}
+
+.custom-div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}

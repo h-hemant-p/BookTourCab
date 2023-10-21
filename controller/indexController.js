@@ -2,7 +2,6 @@ import { request, response } from 'express';
 import users from '../model/userModel.js';
 import admin from '../model/adminModel.js';
 import wallets from '../model/walletModel.js';
-// import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
@@ -68,8 +67,8 @@ export const indexSignupUserController = async (request, response) => {
                     });
                     console.log(newuser)
                     console.log('Data inserted successfully');
-                    
-                    request.session.log = newuser;
+                    var loggedUser = await users.findOne({email:request.session.email});
+                    request.session.log = loggedUser;
                     request.session.role = "user";
                     request.session.save();
                     console.log('user saved in session successfully');

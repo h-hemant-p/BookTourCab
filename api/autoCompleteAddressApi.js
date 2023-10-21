@@ -448,9 +448,28 @@ async function getDistance(){
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
+
+    const startDate = new Date(`${document.getElementById('bookstartdate').value}T${document.getElementById('bookstarttime').value}`);
+    const endDate = new Date(`${document.getElementById('bookenddate').value}T${document.getElementById('bookendtime').value}`);
+    var totalHours = 0;
+    if (!isNaN(startDate) && !isNaN(endDate)) {
+        const timeDifference = Math.abs(endDate - startDate);
+        totalHours = Math.floor(timeDifference / (1000 * 60 * 60)); // Hours
+        
+        const totalMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)); // Minutes
+        if(totalMinutes > 30){
+            totalHours = totalHours+1;
+        }
+        
+        document.getElementById('hours').textContent = totalHours;
+
+    }
+
+    console.log(totalHours);
+
     console.log("Distance : "+distance);
     document.getElementById('distance').textContent = (distance.toFixed(2))+"KM";
-    document.getElementById('amount').textContent = (((distance.toFixed(2))*18).toFixed())+"₹";
+    document.getElementById('amount').textContent = (parseInt(totalHours)*18)+"₹";
 }
 
 // asign the form to form variable

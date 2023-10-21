@@ -4,7 +4,11 @@ import users from '../model/userModel.js';
 import contactUs from '../model/contactUs.js';
 import ownerDetails from '../model/ownerDetailModel.js';
 import drivingDetails from '../model/drivingDetailModel.js';
+import vehicles from '../model/vehicleModel.js';
+// import vehicleImages from '../model/vehicleImageModel.js';
+// import reservedDrivers from '../model/reservedDriverModel.js';
 import crypto from 'crypto';
+import session from 'express-session';
 
 
 export const userLogoutUserController = (request, response) => {
@@ -21,7 +25,7 @@ export const userLogoutUserController = (request, response) => {
 export const userCompleteProfileController = async(request,response)=>{
     const aadharimg = request.files['aadharimg'][0];
     const panimg = request.files['panimg'][0];
-    console.log(request.files);
+    // console.log(request.files);
     // console.log("Inside userCompleteProfileController");
     try{
         await users.updateOne(
@@ -38,11 +42,15 @@ export const userCompleteProfileController = async(request,response)=>{
                     pin_code : request.body.pincode,
                     aadhar_number : request.body.aadharnumber,
                     pan_number : request.body.pannumber,
-                    aadhar_image : `/uploads/${aadharimg.filename}`,
-                    pan_image : `${panimg.filename}`
+                    aadhar_image : aadharimg.filename,
+                    pan_image : panimg.filename
                 }
             }
         );
+
+        var loggedUser = await users.findOne({email:request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.save();
         console.log("Profile Updated Successfully");
         response.render("./pages/vehicle_booking_page",{user : request.session.log});
     }catch(error){
@@ -68,6 +76,10 @@ export const userCreatePasswordController = async(request,response) => {
                 }
             }
         );
+
+        var loggedUser = await users.findOne({email:request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.save();
         console.log("Password Created Successfully");
         response.render('./pages/user_dashboard',{user : request.session.log})
     }catch(error){
@@ -98,6 +110,10 @@ export const userChangePasswordController = async(request,response) => {
                 password : newpassword
             }
         });
+
+        var loggedUser = await users.findOne({email:request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.save();
         console.log("Password Updated Successfully.....");
         console.log(request.session.log);
         response.render("./pages/user_dashboard",{user : request.session.log});
@@ -178,8 +194,12 @@ export const userRegisterDriverController = async(request,response) => {
                 driving_details : res._id
             }
         });
+        
+        var loggedUser = await users.findOne({email:request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.save();
         console.log("data inserted Successfullly ... ");
-        response.render("./pages/driver_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log});
     }
     catch(error){
         console.log("Error While Become a BTC Driver."+error);
@@ -191,7 +211,9 @@ export const userRegisterDriverController = async(request,response) => {
 
 export const userRegisterOwnerController = async(request,response)=>{
     try{
-        var owner = await ownerDetails.create({});
+        var owner = await ownerDetails.create({
+            email : request.session.log.email
+        });
         
         console.log(owner);
 
@@ -203,37 +225,134 @@ export const userRegisterOwnerController = async(request,response)=>{
                 owner_details : owner._id
             }
         })
-        
+        var loggedUser = await users.findOne({email:request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.save();
         console.log("data inserted Successfullly ... ");
-        response.render("./pages/owner_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log});
     }catch(error){
         console.log(".Error while becoming Owner ");
+        console.log(error)
         response.render("./pages/user_dashboard",{user : request.session.log});
     }
 }
 
+
+
+export const userAddDriverController = async(request,response)=>{
+    console.log(request.body);
+    // console.log(request.files);
+    // var licenceimg = request.files['licenceimage'][0];
+    try{
+        var driving_datails = await drivingDetails.create({
+            experience_year : request.body.experienceyear ,
+            dl_number : request.body.licencenumber,
+            dl_issue_date : request.body.issuedate,
+            dl_expiry_date : request.body.expirydate,
+            dl_class : request.body.licenceclass,
+            dl_image : request.file.filename
+            // dl_image : licenceimg.filename
+        });
+        var driving_datails = await drivingDetails.create({
+            experience_year : request.body.experienceyear ,
+            dl_number : request.body.licencenumber,
+            dl_issue_date : request.body.issuedate,
+            dl_expiry_date : request.body.expirydate,
+            dl_class : request.body.licenceclass,
+            dl_image : request.file.filename
+            // dl_image : licenceimg.filename
+        });
+
+        var reserved_driver ={
+            contact_no : request.body.contactno,
+            email : request.body.email,
+            name : request.body.name,
+            gender : request.body.gender,
+            driving_detail : driving_datails._id
+        };
+        // var reserved_driver = await reservedDrivers.create({
+        //     contact_no : request.body.contactno,
+        //     email : request.body.email,
+        //     name : request.body.name,
+        //     gender : request.body.gender,
+        //     driving_detail : driving_datails._id
+        // });
+
+        var user = await users.findOne({
+            email : request.session.log.email
+        });
+
+        var owner = await ownerDetails.updateOne({
+            _id : user.owner_details
+        },{
+            $push:{
+                drivers : reserved_driver 
+            }
+        });
+        console.log("Driver Added Successfully.");
+        var loggedUser = await users.findOne({email : request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.save();
+        response.render("./pages/user_dashboard",{user : request.session.log});
+    }catch(error){
+        console.log("Error while Adding Driver.")
+        console.log(error);
+        response.render("./pages/user_dashboard",{user : request.session.log});
+    }
+}
+
+
 export const userAddVehicleController = async(request,response)=>{
     console.log(request.body);
-    console.log(request.file);
+    console.log(request.files);
+    var rcimg = request.files['rcbookimage'][0];
+    var vehicleimage = request.files['vehicleimage'][0];
+
     try{
-        var res = await vehicles.create({
+        var vehicle_image = {
+            image : vehicleimage.filename
+        }
+        // var res = await vehicles.create({
+        var vehicle = {
             reg_number : request.body.registrationno,
             company : request.body.companyname,
             model : request.body.modelname,
             manufacture_year : request.body.manufactureyear,
             registration_year : request.body.registrationyear,
             fuel_type : request.body.fueltype,
-            vehicle_class : request.body.selectvehicle,
+            vehicle_class : request.body.vehicleclass,
             seating_capacity : request.body.seatingcapacity,
-            rc_book_image : request.body.rcbookimage
+            doors : request.body.doors,
+            air_bags : request.body.airbags,
+            mileage : request.body.mileage,
+            rent : request.body.rent,
+            automatic : (request.body.automatic=="true"),
+            ac : (request.body.ac=="true"),
+            driver : (request.body.driver=="true") ,
+            // have_insurance : (request.body.haveinsurance=="true"),
+            rc_book_image : rcimg.filename,
+            images : vehicle_image
+        };
+        var user = await users.findOne({email : request.session.log.email});
+        var owner = await ownerDetails.updateOne({
+            _id : user.owner_details
+        },{
+            $push:{
+                vehicles : vehicle
+            }
         });
-        
-        console.log(res);
+
+        console.log(owner);
+        var loggedUser = await users.findOne({email:request.session.log.email});
+        request.session.log = loggedUser;
+        request.session.role = "user";
+        request.session.save(); 
         console.log("Vehicle Data Inserted Successfully.. ");
-        response.render("./Pages/owner_dashboard",{user : request.session.log});   
+        response.render("./pages/user_dashboard",{user : request.session.log});   
     }
     catch(error){
         console.log("Error While Register."+error);
+        response.render("./pages/user_dashboard",{user : request.session.log});   
     }
 }
 

@@ -26,7 +26,7 @@ var drivingDetailModel = mongoose.Schema({
     },
     dl_image:{
         type : String,
-        required : false
+        required : true
     },
     rating : {
         type : Number,

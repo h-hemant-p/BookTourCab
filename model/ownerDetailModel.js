@@ -4,6 +4,11 @@ import reservedDrivers from "./reservedDriverModel.js";
 import vehicles from "./vehicleModel.js";
 
 var ownerDetailModel = mongoose.Schema({
+    email:{
+        type : String,
+        required : true,
+        unique:true
+    },
     total_vehicles:{
         type : Number,
         required : true,

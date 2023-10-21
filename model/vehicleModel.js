@@ -6,8 +6,7 @@ import feedbacks from './feedbackModel.js';
 var vehicleModel = mongoose.Schema({
     reg_number :{
         type : String,
-        required : true,
-        unique : true
+        required : true
     },
     company : {
         type : String,
@@ -18,25 +17,53 @@ var vehicleModel = mongoose.Schema({
         required : true
     },
     manufacture_year :{
-        type : Number,
+        type : Date,
         required : true
     },
     registration_year :{
-        type : Number,
+        type : Date,
         required : true
     },
     fuel_type :{
         type : String,
-        enum :['CNG','Petrol','Desiel','Electric'],
+        enum :['CNG','Petrol','Diesel','Electric'],
         required : true
     },
     vehicle_class :{
         type : String,
-        enum : ['Auto','Bike/Scooty','Car/Taxi','Minibus'],
+        enum : ['Car/Taxi','Minibus'],
         required : true
     },
     seating_capacity:{
         type :Number,
+        required : true
+    },
+    doors:{
+        type : Number,
+        required : true
+    },
+    air_bags : {
+        type : Number,
+        required : true
+    },
+    mileage:{
+        type : Number,
+        required : true
+    },
+    rent:{
+        type : Number,
+        required : true
+    },
+    automatic : {
+        type : Boolean,
+        required : true
+    },
+    ac :{
+        type : Boolean,
+        required : true
+    },
+    driver : {
+        type : Boolean,
         required : true
     },
     rc_book_image:{

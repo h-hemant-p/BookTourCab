@@ -1,6 +1,8 @@
 /*------------------------  Function Number 5 ------------------- */
 
-function checkBookingStartDate(){
+function bookStartDate5(){
+    console.log("check Book Start date");
+
     let bookingdate = document.getElementById('bookstartdate');
 
     let valid = false;
@@ -9,7 +11,7 @@ function checkBookingStartDate(){
     if(!isRequired5(bookingdate_input)){
         showError5(bookingdate,"Date cannot be blank.")
     }
-    else if(!isValidBookingDate(bookingdate_input)){
+    else if(!isValidBookingDate5(bookingdate_input)){
         showError5(bookingdate,"Invalid Date input.")
     }
     else{
@@ -17,8 +19,8 @@ function checkBookingStartDate(){
         valid = true;
     }
     return valid;
-
-function checkBookStartTime(){
+}
+function checkBookStartTime5(){
     let starttime = document.getElementById('bookstarttime');
     
     let valid = false;
@@ -27,7 +29,7 @@ function checkBookStartTime(){
     if(!isRequired5(starttime_input)){
         showError5(starttime,"Time cannot be blank.");
     }
-    else if(!isValidBookStartTime(starttime_input)){
+    else if(!isValidBookStartTime5(starttime_input)){
         showError5(starttime,'Invalid time input.');
     }
     else{
@@ -37,29 +39,40 @@ function checkBookStartTime(){
     return valid;
 }
 
-}
-function checkBookingEndDate(){
+function BookEndDate5(){
+    let bookingstart = document.getElementById('bookstartdate');
     let bookingend = document.getElementById('bookenddate');
 
-    let valid = false;
-    let bookingend_input = bookingend.value.trim();
-
-    if(!isRequired5(bookingend_input)){
-        showError5(bookingend,"Date cannot be blank.")
-    }
-    else if(!isValidBookingDate(bookingend_input)){
-        showError5(bookingend,"Invalid Date input.")
-    }
+    let bookingstart_input = bookingstart.value.trim();
+    if(!isRequired5(bookingstart_input)){
+        showError5(bookingend,"select Start Date First.")
+    } 
     else{
-        showSuccess5(bookingend);
-        valid = true;
+        let valid = false;
+        let bookingend_input = bookingend.value.trim();
+
+        if(!isRequired5(bookingend_input)){
+            showError5(bookingend,"Date cannot be blank.")
+        }
+        else if(!isValidBookingDate5(bookingend_input)){
+            showError5(bookingend,"Invalid Date input.")
+        }
+        else{
+            if(!isValidBookingEndDate5(bookingstart_input,bookingend_input)){
+                showError5(bookingend,"Start Date Cannot Be Greater than End Date.");
+            }
+            else{
+                showSuccess5(bookingend);
+                valid = true;
+            }
+        }
     }
     return valid;
 }
 
 
 
-function checkPickUpLocation(){
+function checkPickUpLocation5(){
     let pickuplocation = document.getElementById('pickuplocation');
 
     let valid = false;
@@ -77,7 +90,7 @@ function checkPickUpLocation(){
     return valid;
 }
 
-function checkDropLocation(){
+function checkDropLocation5(){
     let droplocation = document.getElementById('droplocation');
 
     let valid = false;
@@ -93,23 +106,7 @@ function checkDropLocation(){
     return valid;
 }
 
-function checkVehicleClass(){
-    let vehicleclass = document.getElementById('vehicleclass');
-
-    let valid = false;
-    let vehicleclass_input = vehicleclass.value.trim();
-
-    if(!isRequired5(vehicleclass_input)){
-        showError5(vehicleclass,"vehicle class cannot be blank.");
-    }
-    else {
-        showSuccess5(vehicleclass);
-        valid = true;
-    }
-    return valid;
-}
-
-function checkPaymentMode(){
+function checkPaymentMode5(){
     let paymentmode = document.getElementById('paymentmode');
 
     let valid = false;
@@ -131,19 +128,25 @@ function isRequired5(value) {
     return true;
 }
 
-
-function isValidBookingDate(date){
+function isValidBookingDate5(date){
     let selectdate = new Date(date);
     let currdate = new Date();
-    console.log("Current date : "+currdate);
-    console.log("Selected date : "+selectdate);
 
-    if(selectdate >= currdate)
+    if(selectdate > currdate)
         return true;
     return false;
 }
 
-function isValidBookStartTime(starttime){
+function isValidBookingEndDate5(startdate,enddate){
+    let start = new Date(startdate);
+    let end = new Date(enddate);
+
+    if(start>end)
+        return false;
+    return true;
+}
+
+function isValidBookStartTime5(starttime){
     
     let selecttime = new Date(`${starttime}`);
     console.log("selected time : "+selecttime);
@@ -174,4 +177,40 @@ function showSuccess5(input) {
 
     const error = formField.querySelector('small');
     error.textContent = '';
+}
+
+
+
+
+var postData = ()=>{
+    var data = {
+        bookstartdate : document.getElementById('bookstartdate').value,
+        bookstarttime : document.getElementById('bookstarttime').value,
+        bookenddate : document.getElementById('bookenddate').value,
+        bookendtime : document.getElementById('bookendtime').value,
+        pickuplocation : document.getElementById('pickuplocation').value,
+        droplocation : document.getElementById('droplocation').value,
+    }
+    const url = 'http://localhost:3001/user/booking';
+    const request = new Request(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    fetch(request)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(responseData => {
+        console.log('Server response:', responseData);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }

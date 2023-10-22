@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import fs from "fs";
 import users from '../model/userModel.js';
 import admin from '../model/adminModel.js';
+import ownerDetails from '../model/ownerDetailModel.js';
 
 export const aunthicateJWT = (request,response,next)=>{
     console.log('inside authenticateJWT');

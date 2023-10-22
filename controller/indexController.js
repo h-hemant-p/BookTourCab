@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import fs from 'fs';
+import ownerDetails from '../model/ownerDetailModel.js';
 
 
 var writeSecretKey = (secretKey)=>{
@@ -209,7 +210,7 @@ export const indexSigninUserController = async(request, response) => {
             request.session.ownerDetails = {};
         }
         request.session.log = loggedUser;
-        request.session.role = "admin";
+        request.session.role = "user";
         request.session.save();
         response.render('./pages/index', { user: request.session.log});
     }

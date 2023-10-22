@@ -5,8 +5,6 @@ import contactUs from '../model/contactUs.js';
 import ownerDetails from '../model/ownerDetailModel.js';
 import drivingDetails from '../model/drivingDetailModel.js';
 import vehicles from '../model/vehicleModel.js';
-// import vehicleImages from '../model/vehicleImageModel.js';
-// import reservedDrivers from '../model/reservedDriverModel.js';
 import crypto from 'crypto';
 import session from 'express-session';
 
@@ -81,11 +79,11 @@ export const userCreatePasswordController = async(request,response) => {
         request.session.log = loggedUser;
         request.session.save();
         console.log("Password Created Successfully");
-        response.render('./pages/user_dashboard',{user : request.session.log})
+        response.render('./pages/user_dashboard',{user : request.session.log,ownerDetails : request.session.ownerDetails})
     }catch(error){
         console.log(error);
         console.log("Error while Create a user Password.");
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
 }
 
@@ -116,11 +114,11 @@ export const userChangePasswordController = async(request,response) => {
         request.session.save();
         console.log("Password Updated Successfully.....");
         console.log(request.session.log);
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
     catch(error){
         console.log("Error While Updating Password.");
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
 }
 
@@ -148,7 +146,7 @@ export const userDashboardController = (request,response)=>{
     console.log(request.session);
     
     if(user){
-        response.render("./pages/user_dashboard",{user:user});
+        response.render("./pages/user_dashboard",{user:user,ownerDetails : request.session.ownerDetails});
     }else{
         response.status(404).render("./pages/404");
     }
@@ -199,11 +197,11 @@ export const userRegisterDriverController = async(request,response) => {
         request.session.log = loggedUser;
         request.session.save();
         console.log("data inserted Successfullly ... ");
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
     catch(error){
         console.log("Error While Become a BTC Driver."+error);
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
 }
 
@@ -229,11 +227,11 @@ export const userRegisterOwnerController = async(request,response)=>{
         request.session.log = loggedUser;
         request.session.save();
         console.log("data inserted Successfullly ... ");
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }catch(error){
         console.log(".Error while becoming Owner ");
         console.log(error)
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
 }
 
@@ -241,8 +239,6 @@ export const userRegisterOwnerController = async(request,response)=>{
 
 export const userAddDriverController = async(request,response)=>{
     console.log(request.body);
-    // console.log(request.files);
-    // var licenceimg = request.files['licenceimage'][0];
     try{
         var driving_datails = await drivingDetails.create({
             experience_year : request.body.experienceyear ,
@@ -251,7 +247,6 @@ export const userAddDriverController = async(request,response)=>{
             dl_expiry_date : request.body.expirydate,
             dl_class : request.body.licenceclass,
             dl_image : request.file.filename
-            // dl_image : licenceimg.filename
         });
         var driving_datails = await drivingDetails.create({
             experience_year : request.body.experienceyear ,
@@ -260,7 +255,6 @@ export const userAddDriverController = async(request,response)=>{
             dl_expiry_date : request.body.expirydate,
             dl_class : request.body.licenceclass,
             dl_image : request.file.filename
-            // dl_image : licenceimg.filename
         });
 
         var reserved_driver ={
@@ -270,13 +264,6 @@ export const userAddDriverController = async(request,response)=>{
             gender : request.body.gender,
             driving_detail : driving_datails._id
         };
-        // var reserved_driver = await reservedDrivers.create({
-        //     contact_no : request.body.contactno,
-        //     email : request.body.email,
-        //     name : request.body.name,
-        //     gender : request.body.gender,
-        //     driving_detail : driving_datails._id
-        // });
 
         var user = await users.findOne({
             email : request.session.log.email
@@ -293,11 +280,11 @@ export const userAddDriverController = async(request,response)=>{
         var loggedUser = await users.findOne({email : request.session.log.email});
         request.session.log = loggedUser;
         request.session.save();
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }catch(error){
         console.log("Error while Adding Driver.")
         console.log(error);
-        response.render("./pages/user_dashboard",{user : request.session.log});
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});
     }
 }
 
@@ -312,7 +299,6 @@ export const userAddVehicleController = async(request,response)=>{
         var vehicle_image = {
             image : vehicleimage.filename
         }
-        // var res = await vehicles.create({
         var vehicle = {
             reg_number : request.body.registrationno,
             company : request.body.companyname,
@@ -329,7 +315,6 @@ export const userAddVehicleController = async(request,response)=>{
             automatic : (request.body.automatic=="true"),
             ac : (request.body.ac=="true"),
             driver : (request.body.driver=="true") ,
-            // have_insurance : (request.body.haveinsurance=="true"),
             rc_book_image : rcimg.filename,
             images : vehicle_image
         };
@@ -344,15 +329,18 @@ export const userAddVehicleController = async(request,response)=>{
 
         console.log(owner);
         var loggedUser = await users.findOne({email:request.session.log.email});
+        var loggedOwnerDetails = await ownerDetails.findOne({
+            _id : loggedUser.owner_details
+        });
         request.session.log = loggedUser;
-        request.session.role = "user";
+        request.session.ownerDetails = loggedOwnerDetails;
         request.session.save(); 
         console.log("Vehicle Data Inserted Successfully.. ");
-        response.render("./pages/user_dashboard",{user : request.session.log});   
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});   
     }
     catch(error){
         console.log("Error While Register."+error);
-        response.render("./pages/user_dashboard",{user : request.session.log});   
+        response.render("./pages/user_dashboard",{user : request.session.log,ownerDetails : request.session.ownerDetails});   
     }
 }
 

@@ -191,9 +191,9 @@ var postData = ()=>{
         pickuplocation : document.getElementById('pickuplocation').value,
         droplocation : document.getElementById('droplocation').value,
     }
-    const url = 'http://localhost:3001/user/booking';
+    const url = 'http://localhost:3000/user/booking';
     const request = new Request(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

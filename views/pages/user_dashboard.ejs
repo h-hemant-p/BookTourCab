@@ -76,18 +76,39 @@
                         <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3 ps-5">
                                 <!-- <i class="fa-solid fa-circle-user m-4  display-1 text-secondary" style="color: #1f2551; height: fit-content;"></i> -->
-                                <img src="images/profilePic.jpeg" height="auto" width="50%" alt="" style="border-radius: 50%;">
-                              </div>
+                            </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" >
-                                <label for="name" class="fw-bold fs-5 my-1">Name : </label><span> Andrew Anderson</span><br>
-                                <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span> Male</span><br>
-                                <label for="Date" class="fw-bold fs-5 my-1">DOB : </label><span> 29/12/2004</span><br>
-                                <label for="email" class="fw-bold fs-5 my-1">E-mail : </label><span> andrewanderson@gmail.com</span><br>
-                                <label for="Address" class="fw-bold fs-5 my-1">Address : </label><span> Khandwa Naka, Indore</span><br>
-                                <label for="city" class="fw-bold fs-5 my-1">City : </label><span>  Indore</span><br>
-                                <label for="state" class="fw-bold fs-5 my-1">State : </label><span>  Madhya Pradesh</span><br>
-                                <label for="pincode" class="fw-bold fs-5 my-1">Pin code : </label><span>  452020</span><br>
-                                <label for="pincode" class="fw-bold fs-5 my-1">Aadhar Number : </label><span> 9810 3410 3453</span><br>
+                                <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
+                                <%if(user.name){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
+                                <%}%>
+                                <%if(user.gender){%>
+                                    <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= user.gender %></span><br>
+                                <%}%>
+                                <%if(user.email){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= user.email %></span><br>
+                                <%}%>
+                                <%if(user.contact_no){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Contact : </label><span class="fs-6 fw-bold ms-2"><%= user.contact_no%></span><br>
+                                <%}%>
+                                <%if(user.address){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Address : </label><span class="fs-6 fw-bold ms-2"><%= user.address %></span><br>
+                                <%}%>
+                                <%if(user.city){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">City : </label><span class="fs-6 fw-bold ms-2"><%= user.city %></span><br>
+                                <%}%>
+                                <%if(user.state){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">State : </label><span class="fs-6 fw-bold ms-2"><%= user.state %></span><br>
+                                <%}%>
+                                <%if(user.pin_code){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Pincode : </label><span class="fs-6 fw-bold ms-2"><%= user.pin_code %></span><br>
+                                <%}%>
+                                <%if(user.aadhar_number){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Aadhar Number : </label><span class="fs-6 fw-bold ms-2"><%= user.aadhar_number %></span><br>
+                                <%}%>
+                                <%if(user.pan_number){%>
+                                    <label for="name" class="fw-bold fs-5 my-1">Pan Number : </label><span class="fs-6 fw-bold ms-2"><%= user.pan_number %></span><br>
+                                <%}%>
                                 <% if(user.is_complete){%>
                                     <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
                                 <% } else{%>
@@ -722,97 +743,15 @@
                                 <th>Fuel Type</th>
                             </thead>
                             <tbody>
-                                <!-- Table Data Fill Here -->
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <%  if(ownerDetails.vehicles){
+                                    ownerDetails.vehicles.forEach((vehicle)=> { %>  
+                                        <tr>
+                                            <td><%= vehicle.reg_number %></td>
+                                            <td><%= vehicle.vehicle_class %></td>
+                                            <td><%= vehicle.fuel_type %></td>
+                                        </tr>
+                            <%      });
+                                }   %>
                             </tbody>
                         </table>
                         <div class="row mx-1 my-2 bg-light">
@@ -839,121 +778,20 @@
                         <br>
                         <table class="table table-striped" style="background-color: white;">
                             <thead>
-                                <th>Driver Name</th>
-                                <th>Gender</th>
-                                <th>Age</th>
-                                <th>Driver Contact</th>
+                                <th>Name</th>
+                                <th>Contact</th>
                             </thead>
                             <tbody>
                                 <!-- Table Data Fill Here -->
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <%  if(ownerDetails.drivers){
+                                    ownerDetails.drivers.forEach((driver)=>{ %>
+                                        <tr>
+                                            <td><%= driver.name %></td>
+                                            <td><%= driver.contact_no %></td>
+                                            <td></td>
+                                        </tr>
+                            <%      });
+                                }   %>
                             </tbody>
                         </table>
                         <div class="row mx-1 my-2 bg-light">

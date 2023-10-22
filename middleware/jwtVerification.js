@@ -10,7 +10,6 @@ export const aunthicateJWT = (request,response,next)=>{
         var SECRET_KEY =JSON.parse(fs.readFileSync(path)).SECRET_KEY;
         
         const token = request.cookies.jwt;
-        // var SECRET_KEY = request.cookies.SECRET_KEY;
         if(token){
             console.log('tocken ');
             console.log(jwt)
@@ -43,6 +42,14 @@ export const authorizeUser = async(request,response,next)=>{
     if(request.payload.data.role == "user"){
         try{
             var loggedUser = await users.findOne({ email: request.payload.data.email });
+            var loggedOwnerDetails = await ownerDetails.findOne({
+                _id : loggedUser.owner_details
+            });
+            if(loggedOwnerDetails){
+                request.session.ownerDetails = loggedOwnerDetails;
+            }else{
+                request.session.ownerDetails = {};
+            }
             request.session.log = loggedUser;
             request.session.role = request.payload.data.role;
             request.session.save();

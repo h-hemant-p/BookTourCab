@@ -69,6 +69,7 @@ export const indexSignupUserController = async (request, response) => {
                     console.log('Data inserted successfully');
                     var loggedUser = await users.findOne({email:request.session.email});
                     request.session.log = loggedUser;
+                    request.session.ownerDetails = {};
                     request.session.role = "user";
                     request.session.save();
                     console.log('user saved in session successfully');
@@ -139,30 +140,14 @@ export const indexSigninUserController = async(request, response) => {
                     console.log('User has not any account.');
                     response.render("./pages/index",{user : ""});
                 }else{
-                    // console.log('You are an Admin.');
-                    // if(bcrypt.compare(request.body.password,existingAdmin.password)){
-                        is_admin = true;
-                        request.session.email = request.body.email;
-                        request.session.save();
-                    // }else{
-                        // is_admin=false;
-                        // console.log("Password does'nt match.");
-                        // response.render("./pages/index",{user:""});
-                    // }
-                }
-            }else{
-                // console.log('You are an User.');
-                // if(bcrypt.compare(request.body.password,existingUser.password)){
-                    is_user = true;
+                    is_admin = true;
                     request.session.email = request.body.email;
                     request.session.save();
-                // }else{
-                //     is_user = false;
-                //     console.log("Password does'nt match.");
-                //     response.render("./pages/index",{user:""});
-                // }
-                // $2b$10$wzUtGaF4EfrecnEeT3wI1emPZBZQI1I0RRQqPNl8.IpBOVVB5eRMe
-                // $2b$10$A1ugwwRiTnRDx1GMncFQ..GmfG.xLVpOlXHIyC.9vFfpF4gXdfIEa
+                }
+            }else{
+                is_user = true;
+                request.session.email = request.body.email;
+                request.session.save();
             }
         }catch(error){
             console.log('Error while fetching data in sign in.');
@@ -215,7 +200,14 @@ export const indexSigninUserController = async(request, response) => {
         console.log("cookie saved successfully.");
 
         var loggedUser = await users.findOne({email:request.session.email});
-        console.log(loggedUser)
+        var loggedOwnerDetails = await ownerDetails.findOne({
+            _id : loggedUser.owner_details
+        });
+        if(loggedOwnerDetails){
+            request.session.ownerDetails = loggedOwnerDetails;
+        }else{
+            request.session.ownerDetails = {};
+        }
         request.session.log = loggedUser;
         request.session.role = "admin";
         request.session.save();

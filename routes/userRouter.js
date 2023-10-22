@@ -40,7 +40,7 @@ router.post('/completeprofile',upload.fields([
 
 
 router.get('/logoutuser',userLogoutUserController)
-router.get("/booking",userVehicleBookingController);
+router.post("/booking",userVehicleBookingController);
 router.post('/contactus',userContactUsController);
 
 router.get("/userdashboard",userDashboardController);

@@ -11,6 +11,7 @@ export const aunthicateJWT = (request,response,next)=>{
         var SECRET_KEY =JSON.parse(fs.readFileSync(path)).SECRET_KEY;
         
         const token = request.cookies.jwt;
+        // var SECRET_KEY = request.cookies.SECRET_KEY;
         if(token){
             console.log('tocken ');
             console.log(jwt)

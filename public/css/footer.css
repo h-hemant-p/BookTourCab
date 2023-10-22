@@ -17,3 +17,14 @@
 #footer-copyright{
     background-color: #434AE8;
 }
+
+#newsletter{
+    width: 66%;
+}
+#newsletter-btn{
+   background-color: #4AB8F8;
+ }
+
+ #newsletter-btn:hover{
+    background-color: rgb(23, 129, 190)
+ }

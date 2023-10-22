@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import fs from 'fs';
-import ownerDetails from '../model/ownerDetailModel.js';
 
 
 var writeSecretKey = (secretKey)=>{
@@ -141,14 +140,30 @@ export const indexSigninUserController = async(request, response) => {
                     console.log('User has not any account.');
                     response.render("./pages/index",{user : ""});
                 }else{
-                    is_admin = true;
-                    request.session.email = request.body.email;
-                    request.session.save();
+                    // console.log('You are an Admin.');
+                    // if(bcrypt.compare(request.body.password,existingAdmin.password)){
+                        is_admin = true;
+                        request.session.email = request.body.email;
+                        request.session.save();
+                    // }else{
+                        // is_admin=false;
+                        // console.log("Password does'nt match.");
+                        // response.render("./pages/index",{user:""});
+                    // }
                 }
             }else{
-                is_user = true;
-                request.session.email = request.body.email;
-                request.session.save();
+                // console.log('You are an User.');
+                // if(bcrypt.compare(request.body.password,existingUser.password)){
+                    is_user = true;
+                    request.session.email = request.body.email;
+                    request.session.save();
+                // }else{
+                //     is_user = false;
+                //     console.log("Password does'nt match.");
+                //     response.render("./pages/index",{user:""});
+                // }
+                // $2b$10$wzUtGaF4EfrecnEeT3wI1emPZBZQI1I0RRQqPNl8.IpBOVVB5eRMe
+                // $2b$10$A1ugwwRiTnRDx1GMncFQ..GmfG.xLVpOlXHIyC.9vFfpF4gXdfIEa
             }
         }catch(error){
             console.log('Error while fetching data in sign in.');
@@ -210,7 +225,7 @@ export const indexSigninUserController = async(request, response) => {
             request.session.ownerDetails = {};
         }
         request.session.log = loggedUser;
-        request.session.role = "user";
+        request.session.role = "admin";
         request.session.save();
         response.render('./pages/index', { user: request.session.log});
     }

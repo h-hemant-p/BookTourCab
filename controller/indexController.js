@@ -2,6 +2,7 @@ import { request, response } from 'express';
 import users from '../model/userModel.js';
 import admin from '../model/adminModel.js';
 import wallets from '../model/walletModel.js';
+import ownerDetails from '../model/ownerDetailModel.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';

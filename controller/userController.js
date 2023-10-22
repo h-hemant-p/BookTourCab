@@ -1,13 +1,9 @@
-
 import { request, response } from 'express';
 import users from '../model/userModel.js';
 import contactUs from '../model/contactUs.js';
 import ownerDetails from '../model/ownerDetailModel.js';
 import drivingDetails from '../model/drivingDetailModel.js';
 import vehicles from '../model/vehicleModel.js';
-import ownerDetails from '../model/ownerDetailModel.js';
-// import vehicleImages from '../model/vehicleImageModel.js';
-// import reservedDrivers from '../model/reservedDriverModel.js';
 import crypto from 'crypto';
 import session from 'express-session';
 
@@ -26,8 +22,6 @@ export const userLogoutUserController = (request, response) => {
 export const userCompleteProfileController = async(request,response)=>{
     const aadharimg = request.files['aadharimg'][0];
     const panimg = request.files['panimg'][0];
-    // console.log(request.files);
-    // console.log("Inside userCompleteProfileController");
     try{
         await users.updateOne(
             {
@@ -242,8 +236,6 @@ export const userRegisterOwnerController = async(request,response)=>{
 
 export const userAddDriverController = async(request,response)=>{
     console.log(request.body);
-    // console.log(request.files);
-    // var licenceimg = request.files['licenceimage'][0];
     try{
         var driving_datails = await drivingDetails.create({
             experience_year : request.body.experienceyear ,
@@ -252,7 +244,6 @@ export const userAddDriverController = async(request,response)=>{
             dl_expiry_date : request.body.expirydate,
             dl_class : request.body.licenceclass,
             dl_image : request.file.filename
-            // dl_image : licenceimg.filename
         });
         var driving_datails = await drivingDetails.create({
             experience_year : request.body.experienceyear ,
@@ -261,7 +252,6 @@ export const userAddDriverController = async(request,response)=>{
             dl_expiry_date : request.body.expirydate,
             dl_class : request.body.licenceclass,
             dl_image : request.file.filename
-            // dl_image : licenceimg.filename
         });
 
         var reserved_driver ={
@@ -271,13 +261,6 @@ export const userAddDriverController = async(request,response)=>{
             gender : request.body.gender,
             driving_detail : driving_datails._id
         };
-        // var reserved_driver = await reservedDrivers.create({
-        //     contact_no : request.body.contactno,
-        //     email : request.body.email,
-        //     name : request.body.name,
-        //     gender : request.body.gender,
-        //     driving_detail : driving_datails._id
-        // });
 
         var user = await users.findOne({
             email : request.session.log.email
@@ -313,7 +296,6 @@ export const userAddVehicleController = async(request,response)=>{
         var vehicle_image = {
             image : vehicleimage.filename
         }
-        // var res = await vehicles.create({
         var vehicle = {
             reg_number : request.body.registrationno,
             company : request.body.companyname,

@@ -2,7 +2,6 @@
 
 import express from 'express';
 
-// import {checkSigninController} from "../controller/indexController.js";
 import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
@@ -11,7 +10,6 @@ let router = express.Router();
 
 router.use(express.static('public'));
 router.use(express.static('api'));
-// router.use("/upload",express.static('upload'));
 
 router.get('/',function (req,res){
     res.render('pages/index',{user:req.session.log});
@@ -51,9 +49,6 @@ router.post('/registerdriver',upload.single('licenceimage'),userRegisterDriverCo
 router.get("/registerowner",userRegisterOwnerController)
 
 router.post('/adddriver',upload.single('licenceimage'),userAddDriverController);
-// router.post('/adddriver',upload.fields([
-//     { name: 'licenceimage', maxCount: 1 }
-// ]),userAddDriverController);
 router.post('/addvehicle',upload.fields([
     {name: 'rcbookimage', maxCount: 1},
     {name: 'vehicleimage', maxCount: 1}

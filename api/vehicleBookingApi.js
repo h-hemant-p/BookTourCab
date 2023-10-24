@@ -83,3 +83,4 @@ const form = document.getElementById('form');
 
 // call the submitForm() function when submitting the form
 form.addEventListener('submit', submitVehicleBooking);
+

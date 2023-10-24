@@ -43,7 +43,7 @@ export const indexSignupUserController = async (request, response) => {
                     payload.data = {
                         email:request.session.email,
                         role : "user"
-                    };
+                    };nnnnn
                     
                     const expiryTime ={
                         expiresIn: "6d"

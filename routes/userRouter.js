@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController} from "../controller/userController.js";
+import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSeachVehicleDetailsController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -53,6 +53,8 @@ router.post('/addvehicle',upload.fields([
     {name: 'rcbookimage', maxCount: 1},
     {name: 'vehicleimage', maxCount: 1}
 ]),userAddVehicleController);
+
+router.post("/searchvehicle",userSeachVehicleDetailsController);
 
 
 export default router;

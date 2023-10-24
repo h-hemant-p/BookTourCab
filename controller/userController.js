@@ -6,6 +6,7 @@ import drivingDetails from '../model/drivingDetailModel.js';
 import vehicles from '../model/vehicleModel.js';
 import crypto from 'crypto';
 import session from 'express-session';
+import { log } from 'console';
 
 
 export const userLogoutUserController = (request, response) => {
@@ -343,4 +344,8 @@ export const userAddVehicleController = async(request,response)=>{
     }
 }
 
-
+export const userSeachVehicleDetailsController = async(request,response)=>{
+    
+    console.log(request.body);
+    // var
+};

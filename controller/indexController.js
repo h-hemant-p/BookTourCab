@@ -18,39 +18,42 @@ var writeSecretKey = (secretKey)=>{
 }
 
 export const indexSignupUserController = async (request, response) => {
-    console.log('hi');
+    // console.log('hi');
     
     if ( request.session.otp == request.body.otp) {
         try {
             
-            console.log('hii2');
+            // console.log('hii2');
+            // const options = { maxTimeMS: 1000 };
+            // db.setProfilingLevel(1, { slowms: 100 });
             const existingUser = await users.findOne({ email: request.session.email });
+            // const existingUser = await users.findOne({ email: request.session.email },null, options);
             if (existingUser) {
                 console.log("User allready Exist");
                 response.render("./pages/index",{user:""});
             }
             else{
-                console.log('hii3');
+                // console.log('hii3');
                 const existingAdmin = await admin.findOne({email:request.session.email});
                 if(existingAdmin){
                     console.log('You are an admin');
                     response.render("./pages/index",{user:""});
                 }else{
-                    console.log('hii4');
+                    // console.log('hii4');
                     let payload = {};
                     const maxAge = 6 * 24 * 60 * 60 * 1000;
                     const SECRET_KEY = crypto.randomBytes(32).toString('hex');
                     payload.data = {
                         email:request.session.email,
                         role : "user"
-                    };nnnnn
+                    };
                     
                     const expiryTime ={
                         expiresIn: "6d"
                     };
                     
                     var token = jwt.sign(payload, SECRET_KEY,expiryTime);
-                    console.log('hi 5');
+                    // console.log('hi 5');
                     response.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
                     writeSecretKey(SECRET_KEY);
                     console.log("cookie saved successfully.");
@@ -59,8 +62,8 @@ export const indexSignupUserController = async (request, response) => {
                         email : request.session.email
                     }); 
                     console.log("wallet created");
-
                     console.log(user_wallet);
+                    
                     const newuser = await users.create({
                         contact_no: request.session.contact_no,
                         email: request.session.email,
@@ -68,6 +71,7 @@ export const indexSignupUserController = async (request, response) => {
                     });
                     console.log(newuser)
                     console.log('Data inserted successfully');
+
                     var loggedUser = await users.findOne({email:request.session.email});
                     request.session.log = loggedUser;
                     request.session.ownerDetails = {};
@@ -141,30 +145,14 @@ export const indexSigninUserController = async(request, response) => {
                     console.log('User has not any account.');
                     response.render("./pages/index",{user : ""});
                 }else{
-                    // console.log('You are an Admin.');
-                    // if(bcrypt.compare(request.body.password,existingAdmin.password)){
-                        is_admin = true;
-                        request.session.email = request.body.email;
-                        request.session.save();
-                    // }else{
-                        // is_admin=false;
-                        // console.log("Password does'nt match.");
-                        // response.render("./pages/index",{user:""});
-                    // }
-                }
-            }else{
-                // console.log('You are an User.');
-                // if(bcrypt.compare(request.body.password,existingUser.password)){
-                    is_user = true;
+                    is_admin = true;
                     request.session.email = request.body.email;
                     request.session.save();
-                // }else{
-                //     is_user = false;
-                //     console.log("Password does'nt match.");
-                //     response.render("./pages/index",{user:""});
-                // }
-                // $2b$10$wzUtGaF4EfrecnEeT3wI1emPZBZQI1I0RRQqPNl8.IpBOVVB5eRMe
-                // $2b$10$A1ugwwRiTnRDx1GMncFQ..GmfG.xLVpOlXHIyC.9vFfpF4gXdfIEa
+                }
+            }else{
+                is_user = true;
+                request.session.email = request.body.email;
+                request.session.save();
             }
         }catch(error){
             console.log('Error while fetching data in sign in.');
@@ -195,7 +183,7 @@ export const indexSigninUserController = async(request, response) => {
         request.session.role = "admin";
         request.session.save();
 
-        response.render('./pages/admin_dashboard', { admin: request.session.log});
+        response.render('./pages/admin_dashboard', { admin: request.session.log,data : ""});
 
     }else if(is_user){
         let payload = {};

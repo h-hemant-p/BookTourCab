@@ -6,10 +6,20 @@ var vehicleBookingModel = mongoose.Schema({
         required : true,
         ref : "users"
     },
-    driver :{
+    btc_driver :{
         type : mongoose.Schema.Types.ObjectId,
         required : false,
         ref : "users"
+    },
+    owner_driver:{
+        type : mongoose.Schema.Types.ObjectId,
+        required : false,
+        ref : "reservedDrivers"
+    },
+    vehicle :{
+        type : mongoose.Schema.Types.ObjectId,
+        required : true,
+        ref : "ownerDetails"
     },
     owner :{
         type : mongoose.Schema.Types.ObjectId,
@@ -18,27 +28,43 @@ var vehicleBookingModel = mongoose.Schema({
     },
     start_date : {
         type : Date,
-        required : false,
+        required : true,
     },
     end_date:{
         type : Date,
-        required : false
+        required : true
+    },
+    booking_date:{
+        type : Date,
+        required : true
     },
     start_time:{
         type : String,
-        required : false
+        required : true
     },
     end_time : {
         type : String,
-        required : false
+        required : true
     },
-    total_distance : {
+    booking_time : {
+        type : String,
+        required : true
+    },
+    pickup_location:{
+        type : String,
+        required : true
+    },
+    destination_location : {
+        type : String,
+        required : true
+    },
+    total_time : {
         type : Number,
-        required : false,
+        required : true,
     },
     payment_method :{
         type : String,
-        required : true,
+        required : false,
         enum : ["Online","Cash"]
     },
     transaction_id : {
@@ -51,16 +77,28 @@ var vehicleBookingModel = mongoose.Schema({
     },
     gst_charges : {
         type : Number,
-        required : false
+        required : true
     },
     insurance_charges : {
         type : Number,
-        required : true
+        required : false
     },
     total_charges : {
         type : Number,
         required : true
-    }
+    },
+    bookingpin : {
+        type: Number,
+        required : true
+   },
+    booking_status : {
+        type : String,
+        enum : ["Pending","Confirm","Rejected","Cancelled","Running","Completed"]
+   },
+    driver_status : {
+        type : Boolean,
+        required : true
+   }
 });
 
 

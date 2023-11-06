@@ -1,0 +1,47 @@
+<!-- Modal for Delete Vehicle Start -->
+<div class="modal fade" id="deletevehicle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center align-items-center"
+            style="background-color: rgb(99, 99, 232);">
+
+            <!-- <button class="btn bg-transparent mx-5 fw-bold text-light" data-bs-toggle="modal" data-bs-target="#signinmodal" style="width:30%;">Sign In</button>
+            <button class="btn btn-primary mx-5 text-dark bg-light fw-bold" data-bs-toggle="modal" data-bs-target="#signupmodal" style="width:30%;">Sign Up</button> -->
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+
+            <div class="modal-body">
+                <form action="/user/deletevehicle" method="post" onsubmit="">
+                    <div class="form-outline">
+                        <div class="row">
+                            <div class="col-12 ">
+                              <div class="form-field">
+                                <label for="reg_number" class="mx-4 fw-bold">Registration Number*</label>
+                                <input type="text" class="form-control ms-4" placeholder="Enter Registration Number" id="reg_number" name="reg_number" style="width: 90%;"  >
+                                <small class="ms-4"></small><br>
+                              </div>
+                            <!-- <div class="form-field">
+                                <label for="signin-password" class="ms-4 fw-bold">Password*</label>
+                                <input type="password" class="form-control mx-4" placeholder="Enter Password" id="signin-password" name="signin-password" style="width: 90%;" onkeyup="checkSigninPassword()">
+                                <small class="ms-4"></small><br>
+                            </div> -->
+                            </div>
+                        </div><br>
+                        <div class="row">
+                          <div class="mb-3 col-md-12 ">
+                            <input type="submit" class="btn btn-success mx-4 fw-bold" value="Delete" style="width: 90%;"><br>
+                          </div>
+                      </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div class="col d-flex justify-content-center align-items-center">
+                     <!-- <a href="#" class="" data-bs-toggle="modal" data-bs-target="#signinotpmodal"> signin with otp</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Delete Vehicle End -->

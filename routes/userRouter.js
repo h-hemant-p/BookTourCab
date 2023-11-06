@@ -2,13 +2,14 @@
 
 import express from 'express';
 
-import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSeachVehicleDetailsController} from "../controller/userController.js";
+import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleCOntroller,userRemoveOwnerDriverController,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingsController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
 let router = express.Router();
 
 router.use(express.static('public'));
+router.use("/uploads",express.static('uploads'));
 router.use(express.static('api'));
 
 router.get('/',function (req,res){
@@ -54,7 +55,46 @@ router.post('/addvehicle',upload.fields([
     {name: 'vehicleimage', maxCount: 1}
 ]),userAddVehicleController);
 
-router.post("/searchvehicle",userSeachVehicleDetailsController);
+router.post("/searchvehicle",userSearchVehicleDetailsController);
+router.post("/booknow",userBookNowVehicleController);
 
-
+router.post('/addInsurance',userAddInsuranceController);
+router.get('/viewbookinghistory',userViewBookingHistoryController);
+router.get('/deletevehicle',userDeleteVehicleCOntroller);
+router.get('/ownerremovedriver',userRemoveOwnerDriverController)
+router.post('/updateinsurance',userUpdateInsuranceController);
+router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
+router.get('/ownervehiclebooking',userVehicleBookingsController)
 export default router;
+
+
+
+
+/*
+-----------------------
+Success message show 
+1. owner
+2. Booking 
+3. signin 
+4. logout
+-------------------
+My bookings table scrollable
+Add New Rough data
+Correct all validatioin 
+--------------------
+User registration form modify
+----------------------------
+modify fetch code
+---------------------------
+
+verify user while booking start by owner 
+---------------------------
+vehicle booking status bar for owner 
+---------------------------
+generate a notification on owner when user book vehicle 
+---------------------------
+payment status on owner
+---------------------------
+
+
+*/

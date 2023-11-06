@@ -89,7 +89,7 @@ var userModel = mongoose.Schema({
     wallet:{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'wallets',
-        required : true
+        required : false
     }
 });
 

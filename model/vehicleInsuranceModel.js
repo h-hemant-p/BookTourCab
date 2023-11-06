@@ -32,6 +32,10 @@ var vehicleInsuranceModel = mongoose.Schema({
     premium_amount:{
         type : Number,
         required : true
+    },
+    coverage_amount : {
+        type : Number,
+        required : true
     }
 });
 

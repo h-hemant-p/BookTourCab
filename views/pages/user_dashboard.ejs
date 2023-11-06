@@ -6,14 +6,16 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>User Dashboard</title>
      <!-- Bootstrap CSS Link -->
+     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> 
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
      <link rel="stylesheet" href="css/user_dashboard.css">
      <link rel="stylesheet" href="css/formValidation.css">
     <script src="/js/driver_registration_form.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-
 <body>
 
      <!-- adding navbar -->
@@ -23,966 +25,612 @@
     <%- include('../partials/reserved_driver_registration_form') %>
     <%- include('../partials/vehicle_registration_form') %>
     <%- include('../partials/user_registration_form') %>
+    <%- include('../partials/vehicle_insurance_form') %>
+    <%- include('../partials/delete_form_modal') %>
 
-     <div class="container">
+     <div class="container-fluid">
           <div class="row">
                <!-- Main Menu -->
-               <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 mt-4 myDashboardCard " style="background-color:#535Af8">
-                    <div class="text-center">
-                        <i class="fas fa-user-circle text-light display-2 m-4"></i><br>
-                        <% if(user.name){ %>
-                            <span class="text-light fw-bold"><%= user.name %></span><br>
-                            <span class="text-light fw-bold"><%= user.contact_no %></span>
-                        <% }else{ %>
-                            <span class="text-light fw-bold"><%= user.email %></span><br>
-                            <span class="text-light fw-bold"><%= user.contact_no %></span>
-                        <% } %>
-                    </div>
-                    <br><br>
-                    <div class="mx-5 fw-bold text-light">
-                        <span class="dashboard-links" onclick="dashboardChoices('my-profile')" >My Profile</span><br><br>
-                        <span class="dashboard-links" onclick="dashboardChoices('my-bookings')" >My Bookings</span><br><br>
-                        <% if(user.is_driver){ %>
-                            <span class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</span><br><br>
-                        <% }%>
-                        <% if(user.is_owner){ %>
-                            <span class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</span><br><br>
-                            <span class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</span><br><br>
-                            <span class="dashboard-links" onclick="dashboardChoices('my-vehicles-history')">My Vehicle History</span><br><br>
-                        <% } %>
-                        <span class="dashboard-links" onclick="dashboardChoices('my-wallet')" >My Wallet</span><br><br>
-                        <% if(!user.password){%>
-                            <span class="dashboard-links" onclick="dashboardChoices('change-password')" >Create Password</span><br><br>
-                        <%}else{%>
-                            <span class="dashboard-links" onclick="dashboardChoices('change-password')" >Change Password</span><br><br>
-                         <%}%>
+               <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="background: #5359E2;"> 
+                    <div id="accordian" class="menu-parent style1">
+                        <ul class="menu">
+                            <li class="menu-child">
+                                <div class="text-center">
+                                    <i class="fas fa-user-circle text-light display-2 m-4"></i><br>
+                                    <% if(user.name){ %>
+                                        <span class="text-light fw-bold"><%= user.name %></span><br>
+                                        <span class="text-light fw-bold"><%= user.contact_no %></span>
+                                    <% }else{ %>
+                                        <span class="text-light fw-bold"><%= user.email %></span><br>
+                                        <span class="text-light fw-bold"><%= user.contact_no %></span>
+                                    <% } %>
+                                </div>
+                            </li>
+                            <li class="menu-child">
+                                <a href="#" class="dashboard-links" onclick="dashboardChoices('my-profile')" ><i class="fas fa-user text-light fs-6"></i> &nbsp;My Profile</a>
+                              </li>
+                          <li class="menu-child">
+                            <a href="#" class="dashboard-links"><i class="fa fa-tachometer"></i> User Dashboard</a>
+                            <ul>
+                              <li> <a href="#" class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Current Bookings</a></li>
+                              <li> <a href="#" class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Booking History</a></li>
+                            </ul>
+                          </li>
+                          <% if(user.is_driver){ %>
+                          <li class="menu-child">
+                            <a href="#" class="dashboard-links"><i class="fa fa-tachometer"></i> Driver Dashboard</a>
+                            <ul>
+                               <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</a></li>
+                            </ul>
+                          </li>
+                          <% }%>
                           
-                         
-                         <%if(!user.is_driver && user.is_complete){%>
-                            <button class="btn btn-primary  mt-2 w-75 text-dark" data-bs-toggle="modal" data-bs-target="#driverRegistrationForm" style="background-color: #d8d6e3;" >Become Driver</button>
+                          <% if(user.is_owner){ %>
+                          <li class="menu-child">
+                            <a href="#" class="dashboard-links"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
+                            <ul>
+                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</a></li>
+                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</a></li>
+                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-current-bookings')">My Current Bookings</a></li>
+                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-vehicle-booking-history')">My Vehicle Bookings History</a></li>
+                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-booking-request')" id="vehicles-bookings-request">My Booking Requests</a></li>
+                            </ul>
+                          </li>
+                          <% }%>
+                    
+                          <li class="menu-child">
+                            <a href="#" class="dashboard-links" onclick="dashboardChoices('my-wallet')"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
+                          </li>
+                          <li class="menu-child">
+                            <% if(!user.password){%>
+                                <a href="#" class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Create Password</a>
+                            <%}else{%>
+                                <a href="#" class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
+                             <%}%>
+                          </li>
+
+                        <%if(!user.is_driver && user.is_complete){%>
+                            <li class="menu-child">
+                                <a href="#" class="dashboard-links text-light" data-bs-toggle="modal" data-bs-target="#driverRegistrationForm" style="background-color: #d8d6e3;" ><i class="bi bi-person-video"></i> Become Driver</a>
+                            </li>   
                         <%}else if(!user.is_driver && !user.is_complete){%>
-                            <button class="btn bg-light  my-3 w-75 text-dark" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Become Driver</button>
+                            <li class="menu-child">
+                                <a href="#" class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm"><i class="bi bi-person-video"></i> Become Driver</button>
+                            </li>
                         <% } %>
+
                         <% if(!user.is_owner && user.is_complete){%>  
-                            <button class="btn btn-primary  my-3 w-75 text-dark" id="owner-dashboard-btn" style="background-color: #d8d6ed;"><a href="/user/registerowner" class="text-decoration-none text-dark">Beacome Owner</a></button> 
+                            <li >
+                                <a href="/user/registerowner" class="dashboard-links">Become Owner</a> 
+                            </li>
                         <%}else if(!user.is_owner && !user.is_complete){%>
-                            <button class="btn bg-light my-3 w-75 text-dark" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Beacome Owner</button>
+                            <li class="menu-child">
+                                <a href="#" class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Beacome Owner</a>
+                            </li>
                         <%}%>
-                    </div>
+
+                            <li >
+                                <a href="/user/logoutuser" class="dashboard-links"><i class="fa fa-sign-out"></i> Logout</a>
+                            </li>
+                        </ul>
+                      </div>
                 </div>
           <!-- Main Menu -->
 
            <!-- User Details -->
-                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " id="my-profile" >
-                    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                        <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3 ps-5">
-                                <!-- <i class="fa-solid fa-circle-user m-4  display-1 text-secondary" style="color: #1f2551; height: fit-content;"></i> -->
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" >
-                                <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
-                                <%if(user.name){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
-                                <%}%>
-                                <%if(user.gender){%>
-                                    <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= user.gender %></span><br>
-                                <%}%>
-                                <%if(user.email){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= user.email %></span><br>
-                                <%}%>
-                                <%if(user.contact_no){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Contact : </label><span class="fs-6 fw-bold ms-2"><%= user.contact_no%></span><br>
-                                <%}%>
-                                <%if(user.address){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Address : </label><span class="fs-6 fw-bold ms-2"><%= user.address %></span><br>
-                                <%}%>
-                                <%if(user.city){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">City : </label><span class="fs-6 fw-bold ms-2"><%= user.city %></span><br>
-                                <%}%>
-                                <%if(user.state){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">State : </label><span class="fs-6 fw-bold ms-2"><%= user.state %></span><br>
-                                <%}%>
-                                <%if(user.pin_code){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Pincode : </label><span class="fs-6 fw-bold ms-2"><%= user.pin_code %></span><br>
-                                <%}%>
-                                <%if(user.aadhar_number){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Aadhar Number : </label><span class="fs-6 fw-bold ms-2"><%= user.aadhar_number %></span><br>
-                                <%}%>
-                                <%if(user.pan_number){%>
-                                    <label for="name" class="fw-bold fs-5 my-1">Pan Number : </label><span class="fs-6 fw-bold ms-2"><%= user.pan_number %></span><br>
-                                <%}%>
-                                <% if(user.is_complete){%>
-                                    <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
-                                <% } else{%>
-                                    <button class="btn btn-primary button-shadow w-50 ms-2 mt-5" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Complete Profile</button>
-                                <%}%>
-
-                            </div>
-                        </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " id="my-profile" >
+                <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
+                    <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
+                        <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
+                        <%if(user.name){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
+                        <%}%>
+                        <%if(user.gender){%>
+                            <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= user.gender %></span><br>
+                        <%}%>
+                        <%if(user.email){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= user.email %></span><br>
+                        <%}%>
+                        <%if(user.contact_no){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Contact : </label><span class="fs-6 fw-bold ms-2"><%= user.contact_no%></span><br>
+                        <%}%>
+                        <%if(user.address){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Address : </label><span class="fs-6 fw-bold ms-2"><%= user.address %></span><br>
+                        <%}%>
+                        <%if(user.city){%>
+                            <label for="name" class="fw-bold fs-5 my-1">City : </label><span class="fs-6 fw-bold ms-2"><%= user.city %></span><br>
+                        <%}%>
+                        <%if(user.state){%>
+                            <label for="name" class="fw-bold fs-5 my-1">State : </label><span class="fs-6 fw-bold ms-2"><%= user.state %></span><br>
+                        <%}%>
+                        <%if(user.pin_code){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Pincode : </label><span class="fs-6 fw-bold ms-2"><%= user.pin_code %></span><br>
+                        <%}%>
+                        <%if(user.aadhar_number){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Aadhar Number : </label><span class="fs-6 fw-bold ms-2"><%= user.aadhar_number %></span><br>
+                        <%}%>
+                        <%if(user.pan_number){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Pan Number : </label><span class="fs-6 fw-bold ms-2"><%= user.pan_number %></span><br>
+                        <%}%>
+                        <% if(user.is_complete){%>
+                            <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
+                        <% } else{%>
+                            <button class="btn btn-primary button-shadow w-50 ms-2 mt-5" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Complete Profile</button>
+                        <%}%>
                     </div>
                 </div>
+            </div>
           <!-- User Details -->
 
+
            <!-- Booking History -->
-                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-bookings" style=" display: none;">
-                    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                        <div class="table-responsive">
-                            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">View Booking History</h4>
-                            <br>
-                            <table class="table table-striped" style="background-color: white;">
-                                <thead>
-                                    <th>Booking Date</th>
-                                    <th>Booking Days</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Driver Name</th>
-                                    <th>Driver Contact</th>
-                                    <th>Total Cost</th>
-                                </thead>
-                                <tbody>
-                                    <!-- Table Data Fill Here -->
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-bookings">
+                <h4 class="text-center fw-bold m-2 " style="background-color: white;">View Booking History</h4>
+                <div class="table-responsive" id="user-booking"></div>
+            </div>
+          <!-- Booking History -->
+
+
+          <!-- View Driver Booking History Start  -->
+          <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-driving-history" >
+            <div class="table-responsive">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Booking History</h4><br>
+                <table class="table table-striped" style="background-color: white;">
+                <thead>
+                    <th>Booking Date</th>
+                    <th>Booking Days</th>
+                    <th>Vehicle Number</th>
+                    <th>Passenger Name</th>
+                    <th>Passenger Contact</th>
+                    <th>Income</th>
+                </thead>
+                <tbody>
+                <!-- Table Data Fill Here -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>  
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+         <!-- View Driver Booking History End  -->
+
+
+        <!-- User Create Password Start -->
+        <%if(!user.password ){%>
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password">
+            <h4 class="text-center fw-bold my-2 m-2 " style="background-color: white; width: 98%;">Create Password</h4>
+            <div align="center" style="background-color: white;">
+                <form action="/user/createpassword" method="post" onsubmit="return submitCreateFormData()">
+                    <div class="my-5 form-field">
+                        <label class="fw-bold fs-5 " for="newpassword">Enter Password*</label>
+                        <input type="password" class="w-75 form-control" placeholder="Enter password" id="createnewpass" name="newpassword" onkeyup="createCheckNewPass4()">
+                        <small></small>
+                    </div>
+                    <div class="my-5 form-field">
+                        <label class="fw-bold fs-5" for="createconfirmpass">Confirm Password*</label>
+                        <input type="password" class="w-75 form-control" placeholder="Enter confirm password" id="createconfirmpass" name="createconfirmpass" onkeyup="createCheckCnfPass4()">
+                        <small></small>
+                    </div>
+                    <div class="mt-5">
+                        <input type="submit" class="btn btn-primary w-75 fs-5 fw-bold form-control" value="Create">
+                    </div><br><br>
+                </form>
+            </div>
+        </div>    
+        <!-- User Create Password End -->
+        <%}else{%>
+        <!-- User Change Password  Start-->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" >
+            <div class="row  ms-lg-1 mt-4">
+                <h4 class="text-center fw-bold my-2 m-2 ">Change Password</h4>
+                <div class="m-2" style="background-color: white; width: 98%;"> 
+                    <form action="/user/changepassword" onsubmit=" return submitchangepassword()" method="post">
+                        <div align="center" style="background-color: white;">
+                            <div class="form-field">
+                                <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
+                                <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass4()">
+                                <small></small>
+                            </div>
+                            <div class="mt-4 form-field">
+                                <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
+                                <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass4()">
+                                <small></small>
+                            </div>
+                            <div class="mt-4 form-field">
+                                <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
+                                <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass4()">
+                                <small></small>
+                            </div>
+                            <div class="my-5">
+                                <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>    
+        <%}%>
+        <!-- User Change Password End -->
+
+
+        <!-- User Wallet -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-wallet">
+            <div class="row mt-4">
+                <div>
+                    <h4 class="text-center fw-bold mt-2 bg-light">WALLET</h4>
+                <div class="bg-light "><br>
+                        <span class="fs-4  ms-5 fw-bold">Wallet Amount: $ 300</span>
+                    <div class="row mx-1 my-1 bg-light">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <button class="btn btn-primary btn-md m-4 w-75">Add Amount</button>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <button class="btn btn-primary btn-md m-4 w-75">View History</button>
                         </div>
                     </div>
                 </div>
-          <!-- Booking History -->
-
-          <!-- View Driver Booking History Start  -->
-
-          <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-driving-history" style="display: none;">
-            <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
                 <div class="table-responsive">
-                  <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Booking History</h4><br>
-                     <table class="table table-striped" style="background-color: white;">
+                
+                    <table class="table table-striped" style="background-color: white;">
                         <thead>
-                           <th>Booking Date</th>
-                           <th>Booking Days</th>
-                           <th>Vehicle Number</th>
-                           <th>Passenger Name</th>
-                           <th>Passenger Contact</th>
-                           <th>Income</th>
+                            <th>S.No.</th>
+                            <th>Date</th>
+                            <th> Amount</th>
                         </thead>
                         <tbody>
-                        <!-- Table Data Fill Here -->
+                            <!-- Table Data Fill Here -->
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>
-                            <tr>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                            </tr>  
-                          </tbody>
-                     </table>  
+                        </tbody>
+                    </table>
+                </div>
                 </div>
             </div>
         </div>
-
-
-          <!-- View Driver Booking History End  -->
-
-
-          <%if(!user.password ){%>
-          <!-- User Create Password End -->
-           <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" style="display: none;">
-               <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                   <h4 class="text-center fw-bold my-2 m-2 " style="background-color: white; width: 98%;">Create Password</h4>
-                   <div class="m-2" style="background-color: white; width: 98%;">
-                      <div align="center" style="background-color: white;">
-                          <form action="/user/createpassword" method="post" onsubmit="return submitCreateFormData()">
-                             <div class="my-5 form-field">
-                                <label class="fw-bold fs-5 " for="newpassword">Enter Password*</label>
-                                <input type="password" class="w-50 form-control" placeholder="Enter password" id="createnewpass" name="newpassword" onkeyup="createCheckNewPass4()">
-                                <small></small>
-                              </div>
-                             <div class="my-5 form-field">
-                                <label class="fw-bold fs-5" for="createconfirmpass">Confirm Password*</label>
-                                <input type="password" class="w-50 form-control" placeholder="Enter confirm password" id="createconfirmpass" name="createconfirmpass" onkeyup="createCheckCnfPass4()">
-                                <small></small>
-                              </div>
-                             <div class="mt-5">
-                                <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Create">
-                             </div><br><br>
-                          </form>
-                      </div>
-                   </div>
-               </div>
-           </div>    
-           <!-- User Create Password End -->
-           <%}else{%>
-                <!-- User Change Password -->
-                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" style="display: none;">
-                     <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                         <h4 class="text-center fw-bold my-2 m-2 h-100 " style="background-color: white; width: 98%;">Change Password</h4>
-                         <div class="m-2" style="background-color: white; width: 98%;">
-                             
-                            <form action="/user/changepassword" onsubmit=" return submitchangepassword()" method="post">
-                                <div align="center" style="background-color: white;">
-                                    <div class="form-field">
-                                        <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
-                                        <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass4()">
-                                        <small></small>
+        <!-- User Wallet -->
+           
+           
+        <!-- Owner Vehicles List Start -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-vehicles">
+            <div class="table-responsive">
+                <h4 class="text-center fw-bold mt-2 ">Vehicle List</h4><br>
+                <table class="table" >
+                    <thead>
+                        <th>Registration Number</th>
+                        <th>Vehicle Class</th>
+                        <th>Fuel Type</th>
+                        <th>Add/Update Insurance</th>
+                        <th>Delete Vehicle</th>
+                    </thead>
+                    <tbody>
+                        <%  if(ownerDetails.vehicles){
+                            ownerDetails.vehicles.forEach((vehicle)=> { %>  
+                                <tr>
+                                <td id="vehichleReegistrationno"><%= vehicle.reg_number %></td>
+                                <td><%= vehicle.vehicle_class %></td>
+                                <td><%= vehicle.fuel_type %></td>
+                                <% if(!vehicle.have_insurance){%>
+                                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" onclick="setRegistrationNumber('<%= vehicle.reg_number %>','<%=ownerDetails._id %>')">Insurance</button></td>
+                                <%}else{%>
+                                    <td><button  data-bs-toggle="modal" data-bs-target="#exampleModal" class="open-modal btn btn-warning text-light" data-insurance_details="<%= vehicle.insurance_details %>">Update</button></td>
+                                <%}%>
+                                    <td><button  class=" btn btn-danger " data-insurance_details=""><a href="/user/deletevehicle?reg_number=<%=vehicle.reg_number %>" class="text-decoration-none text-light">Delete</a></button></td>
+                                </tr>
+                            <%});
+                        }%>
+                    </tbody>
+                </table>
+                <!-- Insurance Update Modal start  -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Update Insurance Form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <form action="/user/updateinsurancedetails" method="post">
+                                <div class="container ">
+                                    <div class="border bg-primary">
+                                    <h5 class="m-2 fw-bold text-center text-light">VEHICLE INSURANCE FORM</h5>
                                     </div>
-                                    <div class="mt-4 form-field">
-                                        <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
-                                        <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass4()">
-                                        <small></small>
+                                </div>
+                                <div class="container"><br>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <input type="hidden" id="insuranceid" name="insuranceid" value="">
+                                            <label for="policy_number" class=" form-label fw-bold">Policy Number </label><br>
+                                            <input type="text" class="form-control border-dark w-75 " placeholder="Enter Policy Number" id="policynumber" name="policynumber" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="policy-number-span"></span>
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="policy_holder_name" class=" form-label fw-bold">Policy Holder Name</label><br>
+                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Name" id="policyholdername" name="policyholdername" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="policy-holder-name-span"></span>
+                                        </div>
                                     </div>
-                                    <div class="mt-4 form-field">
-                                        <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
-                                        <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass4()">
-                                        <small></small>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="policy_holder_contact" class=" form-label fw-bold">Policy Holder Contact </label><br>
+                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Contact" id="policyholdercontact" name="policyholdercontact" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="policy-holder-contact-span"></span>
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="policy_holder_aadhar" class=" form-label fw-bold ">Policy Holder Aadhar Number</label><br>
+                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Aadhar Number" id="policyholderaadhar" name="policyholderaadhar" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="policy-holder-aadhar-span"></span>
+                                        </div>
                                     </div>
-                                    <div class="my-5">
-                                        <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
+                                    <div class=" row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="coverage_start_date" class=" form-label fw-bold">Coverage Start Date</label><br>
+                                            <input type="date" class="form-control border-dark w-75" id="coveragestartdate" name="coveragestartdate" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="coverage-start-date-span"></span>
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="coverage_end_date" class=" form-label fw-bold ">Coverage End Date</label><br>
+                                            <input type="date" class="form-control border-dark w-75 " id="coverageenddate" name="coverageenddate" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="coverage-end-date-span"></span>
+                                        </div>
+                                    </div>
+                                    <div class=" row ">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="insurance_premium_amount" class=" form-label fw-bold">Insurance Premium Amount</label><br>
+                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Insurance Premium Amount" id="insurancepremiumamount" name="insurancepremiumamount" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="insurance-premium-amount-span"></span>
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="coverage_amount" class=" form-label fw-bold">Coverage Amount</label><br>
+                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Coverage Amount" id="coverageamount" name="coverageamount" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="coverage-amount-span"></span>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="insurance_provider" class=" form-label fw-bold ">Insurance Provider</label><br>
+                                            <input type="text" class="form-control border-dark w-75 " placeholder="Enter Insurace Provider" id="insuranceprovider" name="insuranceprovider" aria-describedby="ride">
+                                            <span class="text-danger ms-4" id="insurance-provider-span"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="mb-3 col-lg-6 form-field">
+                                        <input type="button" class="btn btn-secondary w-75 fw-bold ms-2" value="cancel" data-bs-dismiss="modal">
+                                    </div>
+                                    <div class="mb-3 col-lg-6 form-field">
+                                        <input type="submit" class="btn btn-primary w-75 fw-bold" value="Submit">
+                                    </div>
                                     </div><br>
                                 </div>
                             </form>
-                            
-                         </div>
-                     </div>
-                 </div>    
-                 <!-- User Change Password -->
-            <%}%>
-           <!-- User Wallet -->
-           <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-wallet" style="display: none;">
-               <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                   <div>
-                       <h4 class="text-center fw-bold mt-2 " style="background-color: white;">WALLET</h4>
-                   <div class="bg-light "><br>
-                           <span class="fs-4  ms-5 fw-bold">Wallet Amount: $ 300</span>
-                       <div class="row mx-1 my-1 bg-light">
-                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                               <button class="btn btn-primary btn-md m-4 w-75">Add Amount</button>
-                           </div>
-                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                               <button class="btn btn-primary btn-md m-4 w-75">View History</button>
-                           </div>
-                           
-                       </div>
-                   </div>
-                   <div class="table-responsive">
-                 
-                       <table class="table table-striped" style="background-color: white;">
-                           <thead>
-                               <th>S.No.</th>
-                               <th>Date</th>
-                               <th> Amount</th>
-                           </thead>
-                           <tbody>
-                               <!-- Table Data Fill Here -->
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                               </tr>
-                           </tbody>
-                       </table>
-                   </div>
-                   </div>
-               </div>
-           </div>
-           <!-- User Wallet -->
-              
-             <!-- Owner Vehicles -->
-             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-vehicles" style="display: none;">
-                <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                    <div class="table-responsive">
-                        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Vehicle List</h4>
-                        <br>
-                        <% if(ownerDetails.vehicles) { %>
-                            <table class="table table-striped" style="background-color: white;">
-                                <thead>
-                                    <th>Registration Number</th>
-                                    <th>Vehicle Class</th>
-                                    <th>Fuel Type</th>
-                                </thead>
-                                <tbody>
-                                    <% ownerDetails.vehicles.forEach((vehicle)=> {%>  
-                                        <tr>
-                                            <td><%= vehicle.reg_number %></td>
-                                            <td><%= vehicle.vehicle_class %></td>
-                                            <td><%= vehicle.fuel_type %></td>
-                                        </tr>
-                                    <%});%>
-                                </tbody>
-                            </table>
-                        <% } %>
-
-                        <div class="row mx-1 my-2 bg-light">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <button class="btn btn-primary w-75 m-4 fw-bold"  data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Add Vehicle</button>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <button class="btn btn-primary w-75 m-4 fw-bold">Update Vehicle</button>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <button class="btn btn-primary w-75 m-4 fw-bold">Remove Vehicle</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Owner Vehicles -->
-
-            <!-- Owner Drivers List -->
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-drivers" style="display: none;">
-                <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                    <div class="table-responsive">
-                        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Driver List</h4>
-                        <br>
-                        <% if(ownerDetails.drivers) { %>
-                            <table class="table table-striped" style="background-color: white;">
-                                <thead>
-                                    <th>Driver Name</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>Driver Contact</th>
-                                </thead>
-                                <tbody>
-                                    <% ownerDetails.drivers.forEach((driver)=>{ %>
-                                        <tr>
-                                            <td><%= driver.name %></td>
-                                            <td><%= driver.contact_no %></td>
-                                            <td></td>
-                                        </tr>
-                                    <% }); %>
-                                </tbody>
-                            </table>
-                        <% } %>
-                        <div class="row mx-1 my-2 bg-light">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <button class="btn btn-primary w-75 m-4 fw-bold" data-bs-toggle="modal" data-bs-target="#reservedDriverRegistrationForm"> Add Driver</button>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <button class="btn btn-primary w-75 m-4 fw-bold">Update Driver </button>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <button class="btn btn-primary w-75 m-4 fw-bold">Remove Driver</button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row mx-1 my-2">
+                <div class="offset-md-1 col-lg-5 col-md-6 col-sm-12">
+                    <button class="btn btn-primary w-75 m-4 fw-bold"  data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Add Vehicle</button>
                 </div>
             </div>
-            <!-- Owner Drivers List -->
-
-
-
-            <!--History-->
-
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-vehicles-history" style="display: none;">
-                <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                    <div>
-                        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">History</h4>
-                    <div class="bg-light "><br>
-                            <span class="fs-5 fw-bold ms-5">Vehicle Registration Number or Driver Name</span>
-                            <input type="text" class="ms-5 my-2 w-75 border-dark" placeholder="Enter Vehicle Registration Number Or Driver Name">
-                        <div class="row mx-1 my-1 bg-light">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <button class="btn btn-primary btn-md m-4 w-75">Search</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                  
-                        <table class="table table-striped" style="background-color: white;">
-                            <thead>
-                                <th>S.No.</th>
-                                <th>Date</th>
-                                <th>Driver Name</th>
-                                <th>Passenger Name</th>
-                                <th>Passenger Contact</th>
-                                <th> Charges</th>
-                            </thead>
-                            <tbody>
-                                <!-- Table Data Fill Here -->
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <!-- History -->
-
         </div>
+        <!-- Insurance Update Modal End -->
+        <!-- Owner Vehicles List End -->
+
+
+        <!-- Owner Drivers List -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-drivers">
+            <div class="table-responsive">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Driver List</h4><br>
+                <% if(ownerDetails.drivers) { %>
+                <table class="table table-striped" style="background-color: white;">
+                    <thead>
+                        <th>Driver Name</th>
+                        <th>Gender</th>
+                        
+                        <th>Driver Email</th>
+                        <th>Driver Contact</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody>
+                        <% ownerDetails.drivers.forEach((driver)=>{ %>
+                            <tr>
+                                <td><%= driver.name %></td>
+                                <td><%= user.gender %></td>
+                                <td><%= driver.email %></td>
+                                <td><%= driver.contact_no %></td>
+                                <td><button class="btn btn-primary"><a href="/user/ownerremovedriver?driverid=<%= driver._id %>" class="text-decoration-none text-light">Delete</a></button></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <% } %>
+                <div class="row mx-1 my-2">
+                    <div class="offset-md-1 col-lg-5 col-md-6 col-sm-12">
+                        <button class="btn btn-primary w-75 m-4 fw-bold" data-bs-toggle="modal" data-bs-target="#reservedDriverRegistrationForm"> Add Driver</button>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <button class="btn btn-primary w-75 m-4 fw-bold">Update Driver </button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- Owner Drivers List -->
+
+
+        <!--History Start -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 bg-white" id="my-vehicle-booking-history" >
+                <h4 class="text-center fw-bold mt-2 ">History</h4>
+            <div class="table-responsive">
+            
+                <table class="table table-striped">
+                    <thead>
+                        <th>S.No.</th>
+                        <th>Date</th>
+                        <th>Driver Name</th>
+                        <th>Passenger Name</th>
+                        <th>Passenger Contact</th>
+                        <th> Charges</th>
+                    </thead>
+                    <tbody>
+                        <!-- Table Data Fill Here -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- History End -->
+
+            
+        <!--My Vehicle Bookings Start -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-booking-request" >
+            <h4 class="text-center fw-bold m-2 ">History</h4>
+            <div class="table-responsive" id="my-booking-request-data"></div>
+        </div>
+        <!-- My Vehicle Bookigs End -->
+        
     </div>
-
-
+</div>
+        
      <!-- adding footer -->
     <%- include('../partials/footer') %>
+
+    <script>
+        $(document).ready(function() {
+        // prevent page from jumping to top from  # href link
+        $('.menu-parent li.menu-child > a').click(function(e) {
+            e.preventDefault();
+        });
+
+        // remove link from menu items that have children
+        $(".menu-parent li.menu-child > a").attr("href", "#");
+
+        //  function to open / close menu items
+        $(".menu-parent a").click(function() {
+            var link = $(this);
+            var closest_ul = link.closest("ul");
+            var parallel_active_links = closest_ul.find(".active")
+            var closest_li = link.closest("li");
+            var link_status = closest_li.hasClass("active");
+            var count = 0;
+
+            closest_ul.find("ul").slideUp(function() {
+            if (++count == closest_ul.find("ul").length)
+            parallel_active_links.removeClass("active");
+            });
+
+            if (!link_status) {
+            closest_li.children("ul").slideDown();
+            closest_li.addClass("active");
+            }
+        })
+        })
+</script>
     <!-- Bootstrap cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+O8q3D6Ors2aT1l0cC+2g1/CeZzA/J5fet5pG2i5oV5z5e5bB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="/js/user_dashboard.js"></script>
 </body>
+<script src="/js/user_dashboard.js"></script>
 
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </html>

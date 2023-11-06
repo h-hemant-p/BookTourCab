@@ -7,31 +7,33 @@
     <!-- Bootstrap CSS Link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/admin_dashboard.css">
+    <link rel="stylesheet" href="css/formValidation.css">
 </head>
 <body>
     <!-- adding navbar -->
-    <%- include('../partials/navbar')%>
+    <%#- include('../partials/navbar')%>
     <div class="container">
         <div class="row">
             <!-- Main Menu -->
-            <div class=" col-lg-4 col-md-12 col-sm-12 col-xs-12 mt-4 myDashboardCard " style="background-color:#535Af8">
+            <div class=" col-lg-3 col-md-12 col-sm-12 col-xs-12 mt-4 myDashboardCard " style="background-color:#535Af8">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-user-circle text-light display-2 m-4"></i>
                     <p class="my-4 text-light">Hemant Prajapati User<br>9879875678</p>
                 </div>
                 <div class="mx-5 fw-bold text-light">
                      <span class="dashboard-links" onclick="showDetails('adminaccount-details')" >Account Details</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('allusers-details')" >User's List</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('allblockusers-details')" >Blocked Users</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('vehicles-details')" >Vehicle's List</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('allblockvehicles-details')" >Blocked Vehicles</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('allusers-details');" id="allusers">User's List</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('allblockusers-details')" id="allblockedusers">Blocked Users</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('vehicles-details')"  id="allvehicles" > Vehicle List</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('allblockvehicles-details')" id="allblockedvehicle" >Blocked Vehicles</span><br><br>
                      <span class="dashboard-links" onclick="showDetails('change-password')" >Change Password</span><br><br>
+                     <span class="dashboard-links" onclick="showDetails('log-out')" ><a href="/admin/adminlogout" class="text-light fw-bold text-decoration-none">Log Out</a></span><br><br>
                 </div>
             </div>
             <!-- Main Menu -->
 
             <!-- Admin Profile Detail -->
-            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="adminaccount-details" >
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="adminaccount-details" >
                 <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
                     <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3 ps-5">
@@ -51,268 +53,87 @@
       <!-- Admin Profile Detail -->
 
       <!-- All User Details -->
-      <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="allusers-details">
+      <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allusers-details">
         <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-            <div class="table-responsive">
-                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">User's List</h4>
+            <h4 class="text-center fw-bold m-2 " style="background-color: white; width: 98%;">User's List</h4>
+            <!--Search Filter user Start  -->
+            <div class="bg-light m-2 " style="background-color: white; width: 98%;"><br>
+            <select id="filterSelect" name="selectvalue">
+                <option value="name">Search by Name</option>
+                <option value="role">Search by Role</option>
+                <option value="email">Search by Email</option>
+                <option value="address">Search by Address</option>
+                <option value="usercontact">Search by Contect Number</option>
+            </select>
+            <input id="queryInput" type="text" placeholder="Enter search term" name="query">
+            <button class="btn btn-primary" onclick="searchUserFilter()">Search Data</button><br><br>
+        </div>
+            <!--Search Filter user End  -->
+
+            <div class="table-responsive" id="user-data">
                 <br>
-                <table class="table table-striped" style="background-color: white;">
-                    <thead>
-                        <th>Profile Image</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact No</th>
-                        <th>Address</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <!-- Table Data Fill Here -->
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#" class="btn btn-danger">Block</a></td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
 <!-- All User Details -->
 
 <!-- All Blocked User Details -->
-<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="allblockusers-details">
+<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allblockusers-details">
     <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-        <div class="table-responsive">
-            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked User's</h4>
+        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked User's</h4>
+        <!--Search Blocked user Filter Start  -->
+        <div class="bg-light m-2 " style="background-color: white; width: 98%;"><br>
+        <select id="filterBlockedUserSelect" name="filterBlockedUserSelect">
+            <option value="name">Search by Name</option>
+            <option value="role">Search by Role</option>
+            <option value="email">Search by Email</option>
+            <option value="address">Search by Address</option>
+            <option value="usercontact">Search by Contect Number</option>
+        </select>
+        <input id="queryBlockedUserInput" type="text" placeholder="Enter search term" name="queryBlockedUserInput">
+        <button class="btn btn-primary" onclick="searchBlockedUserFilter()">Search Data</button><br><br>
+        </div>
+        <!--Search Blocked user Filter End  -->
+
+      
+        <div class="table-responsive"  id="blocked-user-data">
+            
             <br>
-            <table class="table table-striped" style="background-color: white;">
-                <thead>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Contact No</th>
-                    <th>Address</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    <!-- Table Data Fill Here -->
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
 <!-- All Blocked User Details -->
 
 <!-- All Vehicles Details -->
-<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="vehicles-details">
+<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="vehicles-details">
     <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-        <div class="table-responsive">
-            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Vehicles List</h4>
+
+        <!--Search Filter Start  -->
+        <select id="VehicleFilterSelect" name="VehicleFilterSelect">
+            <option value="registration_no">Search By Registration Number</option>
+            <option value="company">Search by Company Name</option>
+            <option value="model">Search by Model</option>
+            <option value="insurance">Search by Insurance</option>
+        </select>
+        <input id="vehicleQueryInput" type="text" placeholder="Enter search term" name="vehicleQueryInput">
+        <button class="btn btn-primary" onclick="searchVehicleFilter()">Search Data</button>
+        <!--Search Filter End  -->
+
+        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Vehicles List</h4>
+        <div class="table-responsive" id="vehicle-data">
             <br>
-            <table class="table table-striped" style="background-color: white;">
-                <thead>
-                    <th>Registration No</th>
-                    <th>Company</th>
-                    <th>Model</th>
-                    <th>Class</th>
-                    <th>Insurance</th>
-                    <th>Image</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    <!-- Table Data Fill Here -->
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-danger">Block</a></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
 <!-- All Vehicles Details -->
 
 <!-- All Blocked Vehicle's Details -->
-<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="allblockvehicles-details">
+<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allblockvehicles-details">
     <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-        <div class="table-responsive">
-            <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked Vehicle's</h4>
+        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked Vehicle's</h4>
+        <div class="table-responsive" id="blocked-vehicle-data">
             <br>
-            <table class="table table-striped" style="background-color: white;">
+            <!-- <table class="table table-striped" style="background-color: white;">
                 <thead>
                     <th>Registration No</th>
                     <th>Company</th>
@@ -321,7 +142,7 @@
                     <th>Action</th>
                 </thead>
                 <tbody>
-                    <!-- Table Data Fill Here -->
+                    
                     <tr>
                         <td></td>
                         <td></td>
@@ -372,43 +193,46 @@
                         <td><a href="#" class="btn btn-primary">Unblock</a></td>
                     </tr>
                 </tbody>
-            </table>
+            </table> -->
         </div>
     </div>
 </div>
 <!-- All Blocked Vehicle's Details -->
 
 
-<!-- User Change Password -->
-<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="change-password">
-    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-        <h4 class="text-center fw-bold my-2 m-2 " style="background-color: white;">Change Password</h4>
-        <div class="m-2" style="background-color: white;">
-            
-            <div class="text-center" style="background-color: white;">
-                <div class="">
-                    <label class=" fw-bold fs-5 mt-3" for="oldpassword">Old Password</label><br>
-                    <input type="password" class="w-50 text-start border-dark " placeholder="Enter Old Password" id="oldpassword">
-                </div>
-                <div class="my-5">
-                    <label class="fw-bold fs-5 " for="newpassword">New Password</label><br>
-                    <input type="password" class="w-50 text-start border-dark " placeholder="Enter Old Password" id="newpassword">
-                </div>
-                <div class="my-5">
-                    <label class="fw-bold fs-5  " for="confirmpassword">Confirm Password</label><br>
-                    <input type="password" class="w-50 text-start border-dark " placeholder="Enter Old Password" id="confirmpassword">
-                </div>
-                <div class="mt-5">
-                   <button class="btn btn-primary w-25 fs-5 fw-bold form-control"  onsubmit="return validatePassword()">Submit</button><br><br>
-                </div>
-                <br>
+    <!-- Admin Change Password -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" >
+            <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
+              <h4 class="text-center fw-bold my-2 m-2 h-100 " style="background-color: white; width: 98%;">Change Password</h4>
+               <div class="m-2" style="background-color: white; width: 98%;">   
+                 <form action="/admin/changepassword" onsubmit=" return submitchangepassword7()" method="post">
+                    <div align="center" style="background-color: white;">
+                       <div class="form-field">
+                          <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
+                          <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass7()">
+                          <small></small>
+                       </div>
+                       <div class="mt-4 form-field">
+                          <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
+                          <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass7()">
+                          <small></small>
+                       </div>
+                       <div class="mt-4 form-field">
+                          <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
+                          <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass7()">
+                          <small></small>
+                       </div>
+                       <div class="my-5">
+                           <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
+                       </div><br>
+                    </div>
+                 </form>
+               </div>
             </div>
-           
-        </div>
+        </div>    
+    <!-- Admin Change Password -->          
+
     </div>
-</div>    
-<!-- User Change Password -->          
-</div>
 </div>
 <!-- adding footerr -->
 <%- include('../partials/footer')%>

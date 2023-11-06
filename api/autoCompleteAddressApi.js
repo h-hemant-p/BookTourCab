@@ -1,6 +1,7 @@
 var datavalue1;
 var datavalue2;
 
+/* --------- Pickup  Location AutoComplete Start--------- */
 function addressAutocomplete1(containerElement, callback, options) {
     var inputElement = document.getElementById("pickuplocation")
     var currentItems;
@@ -186,17 +187,10 @@ addressAutocomplete1(document.getElementById("autocomplete-container-city"), (da
     placeholder: "Enter a city name here"
 });
 
+/* --------- Pickup Location AutoComplete Start--------- */
 
 
-
-
-
-
-
-
-
-
-
+/* --------- Drop Location AutoComplete Start--------- */
 function addressAutocomplete2(containerElement, callback, options) {
     var inputElement = document.getElementById("droplocation")
     var currentItems;
@@ -218,28 +212,27 @@ function addressAutocomplete2(containerElement, callback, options) {
                 url += `&type=${options.type}`;
             }
             fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        response.json().then(data => resolve(data));
-                    } else {
-                        response.json().then(data => reject(data));
-                    }
-                });
-        });
-        promise.then((data) => {
+              .then(response => {
+                  if (response.ok) {
+                      response.json().then(data => resolve(data));
+                  } else {
+                      response.json().then(data => reject(data));
+                  }
+              });
+        });       promise.then((data) => {
             currentItems = data.features;
             var autocompleteItemsElement = document.createElement("div");
             autocompleteItemsElement.setAttribute("class", "autocomplete-items");
             containerElement.appendChild(autocompleteItemsElement);
             data.features.forEach((feature, index) => {
-                var itemElement = document.createElement("DIV");
-                itemElement.innerHTML = feature.properties.formatted;
-                itemElement.addEventListener("click", function (e) {
-                    inputElement.value = currentItems[index].properties.formatted;
-                    callback(currentItems[index]);
-                    closeDropDownList();
-                });
-                autocompleteItemsElement.appendChild(itemElement);
+              var itemElement = document.createElement("DIV");
+              itemElement.innerHTML = feature.properties.formatted;
+              itemElement.addEventListener("click", function (e) {
+                  inputElement.value = currentItems[index].properties.formatted;
+                  callback(currentItems[index]);
+                  closeDropDownList();
+              });
+              autocompleteItemsElement.appendChild(itemElement);
             });
         }, (err) => {
             if (!err.canceled) {
@@ -263,13 +256,13 @@ function addressAutocomplete2(containerElement, callback, options) {
                 url += `&type=${options.type}`;
             }
             fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        response.json().then(data => resolve(data));
-                    } else {
-                        response.json().then(data => reject(data));
-                    }
-                });
+              .then(response => {
+                if (response.ok) {
+                    response.json().then(data => resolve(data));
+                } else {
+                    response.json().then(data => reject(data));
+                }
+              });
         });
         promise.then((data) => {
             currentItems = data.features;
@@ -277,14 +270,14 @@ function addressAutocomplete2(containerElement, callback, options) {
             autocompleteItemsElement.setAttribute("class", "autocomplete-items");
             containerElement.appendChild(autocompleteItemsElement);
             data.features.forEach((feature, index) => {
-                var itemElement = document.createElement("DIV");
-                itemElement.innerHTML = feature.properties.formatted;
-                itemElement.addEventListener("click", function (e) {
-                    inputElement.value = currentItems[index].properties.formatted;
-                    callback(currentItems[index]);
-                    closeDropDownList();
-                });
-                autocompleteItemsElement.appendChild(itemElement);
+              var itemElement = document.createElement("DIV");
+              itemElement.innerHTML = feature.properties.formatted;
+              itemElement.addEventListener("click", function (e) {
+                  inputElement.value = currentItems[index].properties.formatted;
+                  callback(currentItems[index]);
+                  closeDropDownList();
+              });
+              autocompleteItemsElement.appendChild(itemElement);
             });
         }, (err) => {
             if (!err.canceled) {
@@ -337,7 +330,6 @@ function addressAutocomplete2(containerElement, callback, options) {
         if (autocompleteItemsElement) {
             containerElement.removeChild(autocompleteItemsElement);
         }
-
         focusedItemIndex = -1;
     }
 
@@ -381,8 +373,11 @@ addressAutocomplete2(document.getElementById("autocomplete-container-city-2"), (
     placeholder: "Enter a city name here"
 });
 
+/* --------- Drop Location AutoComplete End--------- */
 
-async function getDistance(){
+
+/* -------- Calculate Distance / Hours Start ---------- */
+async function getDistance() {
     console.log(datavalue1);
     console.log(datavalue2);
 
@@ -391,60 +386,55 @@ async function getDistance(){
     var lon1 = "";
     var lon2 = "";
 
-    if(datavalue1 == undefined){
-        console.log("Inside Datavalue1 undefined");
-        let locationName = document.getElementById('pickuplocation').value;
-
-        await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`)
+    if (datavalue1 == undefined) {
+      console.log("Inside Datavalue1 undefined");
+      let locationName = document.getElementById('pickuplocation').value;
+      await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`)
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
-                var latitude = data[0].lat;
-                var longitude = data[0].lon;
-                lat1 =  parseFloat(latitude);
-                console.log(lat1);
-                lon1 =  parseFloat(longitude);
-                console.log(lon1);
+               var latitude = data[0].lat;
+               var longitude = data[0].lon;
+               lat1 = parseFloat(latitude);
+               console.log(lat1);
+               lon1 = parseFloat(longitude);
+               console.log(lon1);
             }
-        })
+          })
         .catch(error => {
-            console.error('Error:', error);
+             console.error('Error:', error);
         });
-    }else{
+    } else {
         lat1 = datavalue1.properties.lat;
         lon1 = datavalue1.properties.lon;
     }
-    if(datavalue2 == undefined){
+    if (datavalue2 == undefined) {
         console.log("Inside Datavalue2 undefined");
         let locationName = document.getElementById('droplocation').value;
         await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
+            .then(response => response.json())
+            .then(data => {
+              if (data.length > 0) {
                 var latitude = data[0].lat;
                 var longitude = data[0].lon;
-                lat2 =  parseFloat(latitude);
+                lat2 = parseFloat(latitude);
                 console.log(lat2);
-                lon2 =  parseFloat(longitude);
+                lon2 = parseFloat(longitude);
                 console.log(lon2);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }else{
+              }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    } else {
         lat2 = datavalue2.properties.lat;
         lon2 = datavalue2.properties.lon;
     }
-        console.log(lat1);
-        console.log(lon1);
-        console.log(lat2);
-        console.log(lon2);
 
     const R = 6371; // Radius of the Earth in kilometers
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *   Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
@@ -455,25 +445,21 @@ async function getDistance(){
     if (!isNaN(startDate) && !isNaN(endDate)) {
         const timeDifference = Math.abs(endDate - startDate);
         totalHours = Math.floor(timeDifference / (1000 * 60 * 60)); // Hours
-        
-        const totalMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)); // Minutes
-        if(totalMinutes > 30){
-            totalHours = totalHours+1;
-        }
-        
-        document.getElementById('hours').textContent = totalHours;
 
+        const totalMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)); // Minutes
+        if (totalMinutes > 30) {
+            totalHours = totalHours + 1;
+        }
+        document.getElementById('hours').textContent = totalHours;
     }
 
-    console.log(totalHours);
-
-    console.log("Distance : "+distance);
-    document.getElementById('distance').textContent = (distance.toFixed(2))+"KM";
-    document.getElementById('amount').textContent = (parseInt(totalHours)*18)+"₹";
+    console.log("Total Hours : " + totalHours);
+    console.log("Distance : " + distance);
+    document.getElementById('distance').textContent = (distance.toFixed(2)) + "KM";
+    document.getElementById('amount').textContent = (parseInt(totalHours) * 18) + "₹";
 }
 
-// asign the form to form variable
 const formdata = document.getElementById('form');
-// 
-// call the submitForm() function when submitting the form
 formdata.addEventListener('submit', getDistance);
+
+/* -------- Calculate Distance / Hours End ---------- */

@@ -390,12 +390,8 @@ export const userSearchVehicleDetailsController = async (request, response) => {
         .catch(error => {
             console.error('Error:', error);
         });
-    // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    // console.log(res);
-    // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    for (var i = 0; i < res.length; i++) {
 
-        //  find owner address latitude longitude 
+    for (var i = 0; i < res.length; i++) {
         await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${res[i].address}`)
             .then(response => response.json())
             .then(data => {
@@ -495,6 +491,7 @@ export const userBookNowVehicleController = async (request, response) => {
         let bookingdate = new Date();
         let bookingtime = bookingdate.toTimeString();
         let driver_status = splitedDataArray[12];
+        let booking_status = splitedDataArray[13];
 
 
         var user = await users.findOne({ email: request.session.log.email });
@@ -516,7 +513,8 @@ export const userBookNowVehicleController = async (request, response) => {
             total_charges: totalamount,
             total_time: totalHours,
             bookingpin: userGetOtp,
-            driver_status: driver_status
+            driver_status: driver_status,
+            booking_status :booking_status
         });
         
 
@@ -548,18 +546,18 @@ export const userAddInsuranceController = async (request, response) => {
             coverage_amount: request.body.coverageamount
         });
 
-        var vehicalsDetails = await ownerDetails.findOne({ _id: ownerId }, { vehicles: 1 });
+        // var vehicalsDetails = await ownerDetails.findOne({ _id: ownerId }, { vehicles: 1 });
         await ownerDetails.updateOne({
             "vehicles": {
                 $elemMatch: { "reg_number": reg_number }
             }
         },
-            {
-                $set: {
-                    "vehicles.$.have_insurance": true,
-                    "vehicles.$.insurance_details": insurance._id
-                }
-            });
+        {
+            $set: {
+                "vehicles.$.have_insurance": true,
+                "vehicles.$.insurance_details": insurance._id
+            }
+        });
 
         console.log("Vehicle Insurance Added Successfully.. ");
         response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails, result: "" });
@@ -779,5 +777,20 @@ export const userVehicleBookingsController = async (request, response) => {
         response.json({ vehiclebookings: userbookings })
     } catch (err) {
         console.log("Error while fetching the owner vehicle booking data." + err);
+    }
+}
+
+
+
+export const userUpdateUserDataController = async(request,response) => {
+    console.log("user Update User Data Controller ");
+    
+    console.log(request.body.id);
+    try{
+        var user = await users.findOne({_id : request.body.id});
+        response.json({data : user});
+
+    }catch(err){
+        console.log("Error While Update User Profile Data Controller");
     }
 }

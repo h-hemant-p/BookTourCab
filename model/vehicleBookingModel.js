@@ -93,12 +93,13 @@ var vehicleBookingModel = mongoose.Schema({
    },
     booking_status : {
         type : String,
-        enum : ["Pending","Confirm","Rejected","Cancelled","Running","Completed"]
+        enum : ["Pending","Confirm","Rejected","Cancelled","Running","Completed"],
+        required : true
    },
     driver_status : {
         type : Boolean,
         required : true
-   }
+    }
 });
 
 

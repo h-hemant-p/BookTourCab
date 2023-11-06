@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleCOntroller,userRemoveOwnerDriverController,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingsController} from "../controller/userController.js";
+import {userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleCOntroller,userRemoveOwnerDriverController,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingsController,userUpdateUserDataController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -64,7 +64,8 @@ router.get('/deletevehicle',userDeleteVehicleCOntroller);
 router.get('/ownerremovedriver',userRemoveOwnerDriverController)
 router.post('/updateinsurance',userUpdateInsuranceController);
 router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
-router.get('/ownervehiclebooking',userVehicleBookingsController)
+router.get('/ownervehiclebooking',userVehicleBookingsController);
+router.post('/updateuserdata',userUpdateUserDataController);
 export default router;
 
 

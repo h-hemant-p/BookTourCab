@@ -118,7 +118,7 @@ form1.addEventListener('submit', function postData(e) {
         //  console.log("Normal Object");
         //  console.log(responseData[index]);
 
-        var obj =  responseData[index].amount +"$$"+responseData[index].droplocation+"$$"+responseData[index].enddate+"$$"+responseData[index].endtime+"$$"+responseData[index].ownerobjid+"$$"+responseData[index].pickuplocation+"$$"+responseData[index].startdate+"$$"+responseData[index].starttime+"$$"+responseData[index].vehicleobjid+"$$"+responseData[index].totalamount+"$$"+responseData[index].gst+"$$"+responseData[index].totalHours+"$$"+responseData[index].havedriver;
+        var obj =  responseData[index].amount +"$$"+responseData[index].droplocation+"$$"+responseData[index].enddate+"$$"+responseData[index].endtime+"$$"+responseData[index].ownerobjid+"$$"+responseData[index].pickuplocation+"$$"+responseData[index].startdate+"$$"+responseData[index].starttime+"$$"+responseData[index].vehicleobjid+"$$"+responseData[index].totalamount+"$$"+responseData[index].gst+"$$"+responseData[index].totalHours+"$$"+responseData[index].havedriver+"$$"+"Pending";
 
         
         if(responseData[index].automatic){

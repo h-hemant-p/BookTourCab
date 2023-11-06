@@ -497,3 +497,46 @@ async function ownerVerifyPin(id){
     }
 
 }
+
+/* Update Details start */
+$(document).ready(function () {
+    console.log("hyy");
+    $('.open-modal-user').click(function () {
+        // var _id = $(this).data('user_details'); // Correct the data attribute name
+        // console.log("Id=>", _id);
+        console.log("User Profile");
+
+        var _id = $(this).data('user_details'); // Correct the data attribute name
+        console.log("Id=>", _id);
+
+        var postData = {
+            id: _id
+        };
+        $.ajax({
+            url: '/user/updateuserdata',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            contentType: 'application/json',
+            dataType: 'json', // Specify the expected data type
+            success: function (response) {
+                console.log('Success:', response);
+
+                // Update the input fields with the received data
+             
+                $('#username').val(response.data.name);
+                $('#useraddress').val(response.data.address);
+                $('#userpincode').val(response.data.pin_code);
+                $('#userupdatestate').val(response.data.state).change();
+                $('#userupdatecity').val(response.data.city);
+                $('#useraadharnumber').val(response.data.aadhar_number);
+            
+                $('#userpannumber').val(response.data.pan_number);
+              
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+    });
+});
+/* Update Details end  */

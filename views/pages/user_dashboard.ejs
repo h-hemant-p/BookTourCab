@@ -12,9 +12,9 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
      <link rel="stylesheet" href="css/user_dashboard.css">
      <link rel="stylesheet" href="css/formValidation.css">
-    <script src="/js/driver_registration_form.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script src="/js/driver_registration_form.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="/js/state_city.js"></script>
 </head>
 <body>
 
@@ -47,70 +47,70 @@
                                 </div>
                             </li>
                             <li class="menu-child">
-                                <a href="#" class="dashboard-links" onclick="dashboardChoices('my-profile')" ><i class="fas fa-user text-light fs-6"></i> &nbsp;My Profile</a>
+                                <a class="dashboard-links" onclick="dashboardChoices('my-profile')" ><i class="fas fa-user text-light fs-6"></i> &nbsp;My Profile</a>
                               </li>
                           <li class="menu-child">
-                            <a href="#" class="dashboard-links"><i class="fa fa-tachometer"></i> User Dashboard</a>
+                            <a href="#"><i class="fa fa-tachometer"></i> User Dashboard</a>
                             <ul>
-                              <li> <a href="#" class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Current Bookings</a></li>
-                              <li> <a href="#" class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Booking History</a></li>
+                              <li> <a class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Current Bookings</a></li>
+                              <li> <a class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Booking History</a></li>
                             </ul>
                           </li>
                           <% if(user.is_driver){ %>
                           <li class="menu-child">
-                            <a href="#" class="dashboard-links"><i class="fa fa-tachometer"></i> Driver Dashboard</a>
+                            <a href="#"><i class="fa fa-tachometer"></i> Driver Dashboard</a>
                             <ul>
-                               <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</a></li>
+                               <li> <a class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</a></li>
                             </ul>
                           </li>
                           <% }%>
                           
                           <% if(user.is_owner){ %>
                           <li class="menu-child">
-                            <a href="#" class="dashboard-links"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
+                            <a href="#"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
                             <ul>
-                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</a></li>
-                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</a></li>
-                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-current-bookings')">My Current Bookings</a></li>
-                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-vehicle-booking-history')">My Vehicle Bookings History</a></li>
-                                <li> <a href="#" class="dashboard-links" onclick="dashboardChoices('my-booking-request')" id="vehicles-bookings-request">My Booking Requests</a></li>
+                                <li><a class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</a></li>
+                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</a></li>
+                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-current-bookings')">My Current Bookings</a></li>
+                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-vehicle-booking-history')">My Vehicle Bookings History</a></li>
+                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-booking-request')" id="vehicles-bookings-request">My Booking Requests</a></li>
                             </ul>
                           </li>
                           <% }%>
                     
                           <li class="menu-child">
-                            <a href="#" class="dashboard-links" onclick="dashboardChoices('my-wallet')"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
+                            <a class="dashboard-links" onclick="dashboardChoices('my-wallet')"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
                           </li>
                           <li class="menu-child">
                             <% if(!user.password){%>
-                                <a href="#" class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Create Password</a>
+                                <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Create Password</a>
                             <%}else{%>
-                                <a href="#" class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
+                                <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
                              <%}%>
                           </li>
 
                         <%if(!user.is_driver && user.is_complete){%>
                             <li class="menu-child">
-                                <a href="#" class="dashboard-links text-light" data-bs-toggle="modal" data-bs-target="#driverRegistrationForm" style="background-color: #d8d6e3;" ><i class="bi bi-person-video"></i> Become Driver</a>
+                                <a class="dashboard-links text-light" data-bs-toggle="modal" data-bs-target="#driverRegistrationForm" style="background-color: #d8d6e3;" ><i class="bi bi-person-video"></i> Become Driver</a>
                             </li>   
                         <%}else if(!user.is_driver && !user.is_complete){%>
                             <li class="menu-child">
-                                <a href="#" class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm"><i class="bi bi-person-video"></i> Become Driver</button>
+                                <a class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm"><i class="bi bi-person-video"></i> Become Driver</button>
                             </li>
                         <% } %>
 
                         <% if(!user.is_owner && user.is_complete){%>  
-                            <li >
-                                <a href="/user/registerowner" class="dashboard-links">Become Owner</a> 
+                            <li class="">
+                                <a  class="dashboard-links" href="/user/registerowner">Become Owner</a> 
                             </li>
                         <%}else if(!user.is_owner && !user.is_complete){%>
                             <li class="menu-child">
-                                <a href="#" class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Beacome Owner</a>
+                                <a class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Become Owner</a>
                             </li>
                         <%}%>
 
-                            <li >
-                                <a href="/user/logoutuser" class="dashboard-links"><i class="fa fa-sign-out"></i> Logout</a>
+                            <li class="">
+                                <a href="/user/logoutuser"><i class="fa fa-sign-out"></i> Logout</a>
                             </li>
                         </ul>
                       </div>
@@ -153,7 +153,8 @@
                             <label for="name" class="fw-bold fs-5 my-1">Pan Number : </label><span class="fs-6 fw-bold ms-2"><%= user.pan_number %></span><br>
                         <%}%>
                         <% if(user.is_complete){%>
-                            <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
+                            <!-- <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button> -->
+                            <button class="open-modal-user btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;" data-bs-toggle="modal" data-bs-target="#userDetailsUpdateForm" data-user_details="<%=user._id%>">Update Details</button>
                         <% } else{%>
                             <button class="btn btn-primary button-shadow w-50 ms-2 mt-5" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Complete Profile</button>
                         <%}%>
@@ -161,7 +162,108 @@
                 </div>
             </div>
           <!-- User Details -->
-
+            <!-- User Update Modal Start -->
+            <!-- Modal for Update Profile Details Start-Changes are running  -->
+          <div class="modal fade" id="userDetailsUpdateForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalTitleId">User Details Update Form </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+          
+                <div class="modal-body">
+                  <form   class="form" enctype="multipart/form-data">
+                  <div class="container ">
+                    <div class="border bg-primary">
+                      <h5 class="m-2 fw-bold text-center text-light">USER PROFILE UPDATE FORM</h5>
+                    </div>
+                  </div>
+                  <div class="container"><br>
+                    <div class="row">
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-name" class=" form-label fw-bold">Name</label>
+                        <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="name" id="username" onkeyup="checkUsername3()" autocomplete="off">
+                        <small></small>
+                      </div>
+                      <div class="mb-3 col-lg-6"><br>
+                          <label for="gender" class=" form-label fw-bold ">Gender</label>
+                          <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+                          <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+                          <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+                        </div>
+                      </div>
+                    <div class=" row ">
+                      
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-address" class="form-label fw-bold ">Address</label>
+                        <input type="text" class="form-control  w-75 " placeholder="Enter Address" id="useraddress" name="address" aria-describedby="address" onkeyup="checkAddress3()">
+                        <small></small>
+                      </div>
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="pincode" class=" form-label fw-bold ">Pincode</label>
+                        <input type="text" class="form-control w-75 " placeholder="Enter Pincode" id="userpincode" name="pincode" aria-describedby="ride" onkeyup="checkPincode3()">
+                        <small></small>
+                      </div>
+                    </div>
+          
+                    <div class=" row">
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-state" class=" form-label fw-bold ">State</label>
+                        <select onchange="print_city('userupdatecity', this.selectedIndex);" id="userupdatestate" name ="state" class="form-control  w-75"></select>
+                        <small></small>
+                      </div>
+          
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-city" class=" form-label fw-bold ">City</label>
+                        <select id ="userupdatecity" class="form-control w-75" name="city" ></select>
+                        <script language="javascript">print_state("userupdatestate");</script>
+                        <small></small>
+                      </div>
+                    </div>
+          
+                    <div class=" row ">
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-aadhar-number" class=" form-label fw-bold ">Aadhar Number</label>
+                        <input type="text" class="form-control  w-75 " placeholder="Enter Aadhar Number" id="useraadharnumber" name="aadharnumber" aria-describedby="ride" onkeyup="checkAadharNumber3()">
+                        <small></small>
+                      </div>
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-aadhar-img" class=" form-label fw-bold">Upload Aadhar Image</label>
+                        <input type="file" class="form-control w-75" placeholder="Upload Aadhar image here" id="useraadharimg" name="aadharimg" aria-describedby="ride" accept="image/*" onchange="checkAadharImage3()">
+                        <small></small>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-pan-number" class=" form-label fw-bold ">Pan Card Number (optional)</label>
+                        <input type="text" class="form-control w-75 " placeholder="Enter Pancard Number" name="pannumber" id="userpannumber" onkeyup="checkPanCardNumber3()" aria-describedby="ride">
+                        <small></small>
+                      </div>
+                      <div class="mb-3 col-lg-6 form-field">
+                        <label for="user-pancard-image" class=" form-label fw-bold">Upload Pan Card Image (optional)</label>
+                        <input type="file" class="form-control w-75" placeholder="UploadPan Card image here" name="panimg" id="userpancardimage" accept="image/*" onchange="checkPanCardImage3()" aria-describedby="ride">
+                        <small></small>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="row mt-2">
+                    <div class="mb-3 col-lg-6 form-field">
+                      <input type="button" class="btn btn-secondary w-75 ms-2" value="cancel" data-bs-dismiss="modal">
+                    </div>
+                    <div class="mb-3 col-lg-6 form-field">
+                      <input type="submit" class="btn btn-primary w-75" value="Submit">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Modal for Update Profile Details End -->
+            <!-- User Update Modal End  -->
 
            <!-- Booking History -->
             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-bookings">
@@ -401,7 +503,7 @@
                                 <% if(!vehicle.have_insurance){%>
                                     <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" onclick="setRegistrationNumber('<%= vehicle.reg_number %>','<%=ownerDetails._id %>')">Insurance</button></td>
                                 <%}else{%>
-                                    <td><button  data-bs-toggle="modal" data-bs-target="#exampleModal" class="open-modal btn btn-warning text-light" data-insurance_details="<%= vehicle.insurance_details %>">Update</button></td>
+                                    <td><button  data-bs-toggle="modal" data-bs-target="#updateinsurance" class="open-modal btn btn-warning text-light" data-insurance_details="<%= vehicle.insurance_details %>">Update</button></td>
                                 <%}%>
                                     <td><button  class=" btn btn-danger " data-insurance_details=""><a href="/user/deletevehicle?reg_number=<%=vehicle.reg_number %>" class="text-decoration-none text-light">Delete</a></button></td>
                                 </tr>
@@ -410,7 +512,7 @@
                     </tbody>
                 </table>
                 <!-- Insurance Update Modal start  -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="updateinsurance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -629,6 +731,7 @@
     <script src="/js/user_dashboard.js"></script>
 </body>
 <script src="/js/user_dashboard.js"></script>
+
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

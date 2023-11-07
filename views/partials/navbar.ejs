@@ -20,10 +20,10 @@
         </div>
         <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4 d-none d-md-block text-end">
              <% if(!user){%>
-                <button class="btn btn-primary mt-3" id="signInButton" data-bs-toggle="modal" data-bs-target="#signinmodal" >SignIn</button> 
-                <button class="btn mt-3 ms-4" id="signUpButton" type="button" data-bs-toggle="modal" data-bs-target="#signupmodal">SignUp</button>
+                <button class="btn btn-primary mt-3" style="position: relative;" id="signInButton" data-bs-toggle="modal" data-bs-target="#signinmodal" >SignIn</button> 
+                <button class="btn mt-3 ms-4" style="position: relative;" id="signUpButton" type="button" data-bs-toggle="modal" data-bs-target="#signupmodal">SignUp</button>
              <%}else{%>
-                <button class="btn mt-3" id="logout-btn"><a class="text-light fw-bold text-decoration-none"  href="/user/logoutuser">Logout</a></button>                 
+                <button class="btn mt-3" style="position: relative;" id="logout-btn"><a class="text-light fw-bold text-decoration-none"  href="/user/logoutuser">Logout</a></button>                 
             <%}%>   
         </div>
     </div>

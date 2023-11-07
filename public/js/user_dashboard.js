@@ -677,6 +677,8 @@ async function checkVerifyPin(bookingid){
         if(responseData1.message==true){
             document.getElementById("warning-msg").style.display="none";
             document.getElementById("success-msg").style.display = "block";
+            document.getElementById('verifypin').style.display="none";
+            document.getElementById('verifybtn').style.display="none";
         }else{
             document.getElementById("warning-msg").style.display="block";
             document.getElementById("success-msg").style.display = "none";

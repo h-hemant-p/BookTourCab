@@ -6,8 +6,6 @@
 <!-- adding contact_us_form partial -->
 <%- include('../partials/contact_us_form')%>
 
-<!-- adding sign -->
-<%- include('../partials/sign') %>
 
  <!-- top header -->
  <div class="container">
@@ -20,8 +18,8 @@
         </div>
         <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4 d-none d-md-block text-end">
              <% if(!user){%>
-                <button class="btn btn-primary mt-3" style="position: relative;" id="signInButton" data-bs-toggle="modal" data-bs-target="#signinmodal" >SignIn</button> 
-                <button class="btn mt-3 ms-4" style="position: relative;" id="signUpButton" type="button" data-bs-toggle="modal" data-bs-target="#signupmodal">SignUp</button>
+                <button class="btn btn-primary mt-3" style="position: relative;" id="signInButton"><a href="/sign" style="text-decoration: none; color:white; font-weight: bold;">Sign In</a></button> 
+                <!-- <button class="btn mt-3 ms-4" style="position: relative;" id="signUpButton" type="button" data-bs-toggle="modal" data-bs-target="#signupmodal">SignUp</button> -->
              <%}else{%>
                 <button class="btn mt-3" style="position: relative;" id="logout-btn"><a class="text-light fw-bold text-decoration-none"  href="/user/logoutuser">Logout</a></button>                 
             <%}%>   
@@ -82,7 +80,7 @@
 
                 <% if(!user){%>
                    <button class="btn btn-primary w-75 ms-4 mt-3" id="signInButton" data-bs-toggle="modal" data-bs-target="#signinmodal" >SignIn</button> 
-                   <button class="btn w-75 ms-4 mt-3" id="signUpButton" data-bs-toggle="modal" data-bs-target="#signupmodal">SignUp</button>
+                   <!-- <button class="btn w-75 ms-4 mt-3" id="signUpButton" data-bs-toggle="modal" data-bs-target="#signupmodal">SignUp</button> -->
                 <%}else{%>
                    <button class="btn w-75 ms-4 mt-3" id="logout-btn"><a class="text-light fw-bold text-decoration-none"  href="/index/logoutuser">Logout</a></button> 
                 <%}%>

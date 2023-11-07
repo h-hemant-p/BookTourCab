@@ -261,3 +261,7 @@ export const indexGetOtpController = (request, response) => {
         }
     });
 }
+
+export const indexRenderSignController = (request,response)=>{
+    response.render('./pages/sign',{user : request.session.log});
+}

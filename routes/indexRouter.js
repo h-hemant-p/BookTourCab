@@ -1,10 +1,9 @@
 "use strict"
 
 import express from 'express';
-import { indexSignupUserController,indexSigninUserController,indexGetOtpController} from  '../controller/indexController.js';
+import { indexSignupUserController,indexSigninUserController,indexGetOtpController,indexRenderSignController} from  '../controller/indexController.js';
 import {aunthicateJWT,authorizeUser} from "../middleware/jwtVerification.js";
 import {signInReloadController} from "../controller/userController.js";
-
 let router = express.Router();
 
 router.use(express.static('public'));
@@ -31,7 +30,7 @@ router.get('/services',function (req,res){
 /*   --------------- pages routes----------------- */
 
 router.get('/',aunthicateJWT,authorizeUser);
-
+router.get('/sign',indexRenderSignController);
 router.post('/signup',indexSignupUserController);
 router.post('/signin',signInReloadController,indexSigninUserController);
 router.post('/getotp',indexGetOtpController);

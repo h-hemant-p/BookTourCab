@@ -3,6 +3,4 @@ var normal_user_profile_referenece = document.getElementById("normal-user-profil
 normal_user_profile_referenece.addEventListener("click",()=>{
     console.log("User Dashboard ");
     window.location.href = "/user/userdashboard";
-    // window.location.href = "/user/driver_dashboard";//temparary
-    // window.location.href = "/user/owner_dashboard";//temparary
 })

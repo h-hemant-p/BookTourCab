@@ -492,8 +492,7 @@ export const userBookNowVehicleController = async (request, response) => {
         let bookingtime = bookingdate.toTimeString();
         let driver_status = splitedDataArray[12];
         let booking_status = splitedDataArray[13];
-
-
+        
         var user = await users.findOne({ email: request.session.log.email });
 
         await bookings.create({
@@ -519,7 +518,7 @@ export const userBookNowVehicleController = async (request, response) => {
         
 
         response.render("./pages/index", { user: user });
-        console.log("====================Booking Successfull=======================");
+        console.log("===============Booking Successfull===================");
     }
     catch (err) {
         console.log("Error While Booking A Vehicle .. " + err);
@@ -575,40 +574,33 @@ export const userViewBookingHistoryController = async (request, response) => {
 
         for (var i = 0; i < bookingsdata.length; i++) {
             var ownerid = bookingsdata[i].owner;
-            // console.log("Length : ",bookingsdata[i]);
+            var vehicleid = bookingsdata[i].vehicle;
             var ownerdata = await users.findOne({ owner_details: ownerid });
-            // console.log("OwnerData : ",ownerdata.name);
 
-            var vehicledata = ownerDetails.aggregate([
-                {
-                    $unwind: "$vehicles"
-                },
-                {
-                    $replaceRoot: { newRoot: "$vehicles" }
-                },
-                {
-                    $match: {
-                        _id: bookingsdata[i].vehicle // Convert the string to ObjectId
-                    }
-                }
-            ]);
-
+            var vehicledata = await ownerDetails.findOne({
+                "_id": ownerid,
+                "vehicles._id":  vehicleid
+            },
+            {
+                "vehicles.$": 1
+            });
 
             var obj = {
                 start_date: bookingsdata[i].start_date,
                 end_date: bookingsdata[i].end_date,
+                vehicle_reg_no : vehicledata.vehicles[0].reg_number,
                 booking_date: bookingsdata[i].booking_date,
                 start_time: bookingsdata[i].start_time,
                 end_time: bookingsdata[i].end_time,
                 booking_time: bookingsdata[i].booking_time,
-                pickup_location: bookingsdata[i].pickup_location,
-                destination_location: bookingsdata[i].destination_location,
                 total_time: bookingsdata[i].total_time,
                 booking_charges: bookingsdata[i].booking_charges,
                 gst_charges: bookingsdata[i].gst_charges,
                 total_charges: bookingsdata[i].total_charges,
                 ownercontact: ownerdata.contact_no,
-                bookingpin: bookingsdata[i].bookingpin
+                owneraddress : ownerdata.address,
+                bookingpin: bookingsdata[i].bookingpin,
+                booking_status: bookingsdata[i].booking_status
             }
             bookingarray.push(obj)
         }
@@ -735,13 +727,17 @@ export const userUpdateVehicleInsuranceDetailsController = async (request, respo
 export const userVehicleBookingsController = async (request, response) => {
     try {
         var userbookings = [];
-        console.log("hiiii ........ ");
-        console.log(request.session.log);
+        // console.log(request.session.log);
         var res = request.session.log.owner_details;
-        console.log(res);
+        // console.log(res);
 
-        var vehiclebookings = await bookings.find({ owner: res });
-        console.log(vehiclebookings);
+        var vehiclebookings = await bookings.find({
+            $and : [
+                { owner: res },
+                {booking_status : "Pending"}
+            ]
+        });
+        // console.log(vehiclebookings);
 
 
         for (var i = 0; i < vehiclebookings.length; i++) {
@@ -792,5 +788,91 @@ export const userUpdateUserDataController = async(request,response) => {
 
     }catch(err){
         console.log("Error While Update User Profile Data Controller");
+    }
+}
+
+export const userAcceptOwnerBookingController = async(request,response) => {
+    try {
+        await bookings.updateOne({_id : request.body.id
+        },
+        {$set : {
+            booking_status : "Confirm"
+        }
+    })
+    } catch (error) {
+        console.log("Error While Owner Accept Booking Controller");
+    }
+}
+
+
+export const userOwnerViewCurrentBookingController = async(request,response) => {
+    try {
+        var userbookings = [];
+        // console.log(request.session.log);
+        var res = request.session.log.owner_details;
+        // console.log(res);
+
+        var currentbookings = await bookings.find({
+            $and : [
+                { owner: res },
+                {booking_status : "Confirm"}
+            ]
+        });
+        
+        for (var i = 0; i < currentbookings.length; i++) {
+            var userid = currentbookings[i].customer;
+            var ownerid = currentbookings[i].owner;
+            var vehicleid = currentbookings[i].vehicle;
+
+            var userdetails = await users.findOne({_id : userid});
+
+            const ownerDetailsDocument = await ownerDetails.findOne({ _id: ownerid });
+
+            if (ownerDetailsDocument) {
+                const specificVehicle = ownerDetailsDocument.vehicles.find(vehicle => vehicle._id.toString() === vehicleid.toString());
+            
+            var obj = { 
+                username : userdetails.name,
+                usercontact : userdetails.contact_no,
+                total_time : currentbookings[i].total_time,
+                startdate :  currentbookings[i].start_date,
+                start_time : currentbookings[i].start_time,
+                endDate :  currentbookings[i].end_date,
+                end_time : currentbookings[i].end_time,
+                vehicle_reg_no : specificVehicle.reg_number,
+                company_name : specificVehicle.company,
+                modelname : specificVehicle.model,
+                manufacture_year : specificVehicle.manufacture_year,
+
+                totalamount :  currentbookings[i].total_charges,
+                bookingid : currentbookings[i]._id,
+
+            }
+            userbookings.push(obj);
+        }
+    }
+        response.json({ bookings: userbookings })
+    } catch (err) {
+        console.log("Error While Fetching Current Booking Controller"+err);
+    }
+}
+
+
+export const userVerifyBookingStartPinController = async(request,response)=>{
+    try{
+        var bookingDetail = await bookings.findOne({_id : request.body.bookingid});
+        if(bookingDetail.bookingpin==request.body.pin){
+            await bookings.updateOne({_id : request.body.bookingid
+            },
+            {$set : {
+                booking_status : "Running"
+            }
+        })
+            response.json({message: true});
+        }else{
+            response.json({message : false});
+        }
+    }catch(error){
+        console.log(error);
     }
 }

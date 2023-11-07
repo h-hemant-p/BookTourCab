@@ -71,7 +71,7 @@
                             <ul>
                                 <li><a class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</a></li>
                                 <li> <a class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</a></li>
-                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-current-bookings')">My Current Bookings</a></li>
+                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-current-bookings')" id="current-bookings">My Current Bookings</a></li>
                                 <li> <a class="dashboard-links" onclick="dashboardChoices('my-vehicle-booking-history')">My Vehicle Bookings History</a></li>
                                 <li> <a class="dashboard-links" onclick="dashboardChoices('my-booking-request')" id="vehicles-bookings-request">My Booking Requests</a></li>
                             </ul>
@@ -687,6 +687,14 @@
         </div>
         <!-- My Vehicle Bookigs End -->
         
+        <!-- My Current Bookings Start -->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-current-bookings" >
+            <h4 class="text-center fw-bold m-2 ">History</h4>
+            <div id="current-bookigs-data"></div>
+            
+        </div>
+        <!-- My Current Bookings End  -->
+
     </div>
 </div>
         

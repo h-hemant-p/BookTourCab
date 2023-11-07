@@ -12,6 +12,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'none';
     }
     else if (option === "my-bookings") {
         document.getElementById('my-profile').style.display = 'none'
@@ -23,7 +24,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
-
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'change-password') {
         document.getElementById('my-bookings').style.display = "none";
@@ -35,6 +36,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'my-wallet') {
         document.getElementById('my-bookings').style.display = "none";
@@ -46,6 +48,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'my-driving-history') {
         document.getElementById('my-bookings').style.display = "none";
@@ -57,6 +60,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'my-vehicles') {
         document.getElementById('my-bookings').style.display = "none";
@@ -68,6 +72,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'my-drivers') {
         document.getElementById('my-bookings').style.display = "none";
@@ -79,6 +84,7 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'block'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'my-vehicle-booking-history') {
         document.getElementById('my-bookings').style.display = "none";
@@ -89,7 +95,8 @@ function dashboardChoices(option) {
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'block'
-        document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-booking-request').style.display = 'none';
+        document.getElementById('my-current-bookings').style.display = 'none'
     }
     else if (option === 'my-booking-request') {
         document.getElementById('my-bookings').style.display = "none";
@@ -101,7 +108,19 @@ function dashboardChoices(option) {
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
         document.getElementById('my-booking-request').style.display = 'block'
-        
+        document.getElementById('my-current-bookings').style.display = 'none'
+    }
+    else if (option === 'my-current-bookings') {
+        document.getElementById('my-bookings').style.display = "none";
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('change-password').style.display = 'none'
+        document.getElementById('my-wallet').style.display = 'none'
+        document.getElementById('my-driving-history').style.display = 'none'
+        document.getElementById('my-vehicles').style.display = 'none'
+        document.getElementById('my-drivers').style.display = 'none'
+        document.getElementById('my-vehicle-booking-history').style.display = 'none'
+        document.getElementById('my-booking-request').style.display = 'none'
+        document.getElementById('my-current-bookings').style.display = 'block'
     }
 }
 
@@ -329,16 +348,17 @@ document.getElementById('user-booking-history').addEventListener('click', async 
    
     var table = "";
     table += ` <table class="table table-striped" style="background-color: white; font-weight : 500; overflow-y:scroll; height:600px; display:block;">
-              <thead>
-                <th>Booking Date</th>
-                <th>Start date</th>
-                <th>Pickup location</th>
-                <th>Drop location</th>
-                <th>Vehicle Reg.No.</th>
-                <th>Owner Contact</th>
-                <th>Total Hours</th>
-                <th>Total</th>
-                <th>Get OTP</th>
+              <thead >
+                <th align="center" >Booking Date</th>
+                <th align="center" >Start date</th>
+                <th align="center" >Vehicle Reg.No.</th>
+                <th align="center" >Vehicle Address</th>
+                <th align="center" >Owner Contact</th>
+                <th align="center" >Total Hours</th>
+                <th align="center" >Total</th>
+                <th align="center" > OTP</th>
+                <th align="center" > Booking Status</th>
+                <th align="center" >Cancel Booking</th>
               </thead>
             <tbody> `
     userbooking.forEach(element => {
@@ -359,15 +379,16 @@ document.getElementById('user-booking-history').addEventListener('click', async 
         const startDate = `${day2}-${month2}-${year2}`
 
         table += `<tr>
-            <td>${bookingDate}</td>
-            <td>${startDate}</td>
-            <td>${element.pickup_location}</td>
-            <td>${element.destination_location}</td>
-            <td>${element.booking_charges}</td>
-            <td>${element.ownercontact}</td>
-            <td>${element.total_time}</td>
-            <td>${element.total_charges}</td>
-            <td>${element.bookingpin}</td>
+            <td align="center">${bookingDate}</td>
+            <td align="center">${startDate}</td>
+            <td align="center">${element.vehicle_reg_no}</td>
+            <td align="center">${element.owneraddress}</td>
+            <td align="center">${element.ownercontact}</td>
+            <td align="center">${element.total_time}</td>
+            <td align="center">${element.total_charges}</td>
+            <td align="center">${element.bookingpin}</td>
+            <td align="center">${element.booking_status}</td>
+            <td align="center"><button class= "btn btn-danger">Cancel Booking</button></td>
 
     </tr>`
     });
@@ -432,7 +453,6 @@ $(document).ready(function () {
 /* owner vehicle bookinigs start */
 document.getElementById('vehicles-bookings-request').addEventListener('click', async function(e){
     e.preventDefault();
-    console.log("Vehicle List ");
 
     const response = await fetch('/user/ownervehiclebooking')
     console.log("server response",response);
@@ -475,7 +495,7 @@ document.getElementById('vehicles-bookings-request').addEventListener('click', a
                     <td align="center">${element.total_time} hr</td>
                     <td align="center">${element.vehicle_reg_no}</td>
                     <td align="center">&#8377;${element.totalamount}</td>
-                    <td align="center"><button class="btn btn-success text-light" onclick = "">Accept</button></td>
+                    <td align="center"><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}')">Accept</button></td>
                     <td align="center"><button class="btn btn-danger text-light" onclick = "">Decline</button></td>
         
             </tr>`
@@ -487,24 +507,26 @@ document.getElementById('vehicles-bookings-request').addEventListener('click', a
 /* owner vehicle bookinigs end  */
 
 
-async function ownerVerifyPin(id){
-    console.log(id);
-    if(id == "" || id == undefined ){
-        console.log("invalid id ");
+async function ownerAcceptRequest(id){
+    console.log("Inside Owner Accept request");
+    var obj = { 
+        id : id
     }
-    var obj = {
-        bookingid : id
-    }
+
+    var response = await fetch('/user/acceptbooking', {
+        method: 'POST',
+        body: JSON.stringify(obj),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      });
+
 
 }
 
 /* Update Details start */
 $(document).ready(function () {
-    console.log("hyy");
     $('.open-modal-user').click(function () {
-        // var _id = $(this).data('user_details'); // Correct the data attribute name
-        // console.log("Id=>", _id);
-        console.log("User Profile");
 
         var _id = $(this).data('user_details'); // Correct the data attribute name
         console.log("Id=>", _id);
@@ -540,3 +562,127 @@ $(document).ready(function () {
     });
 });
 /* Update Details end  */
+
+document.getElementById('current-bookings').addEventListener('click', async function(){
+    var bookingdata = "";
+    const response = await fetch('/user/viewcurrentbooking')
+    console.log("server response",response);
+    const data = await response.json();
+    // console.log(data);
+    var currentbookings = data.bookings;
+    console.log(currentbookings);
+    bookingdata+= `  <div class="bg-white border rounded-5">
+
+    <section class="w-100  p-4" style="background-color: #eee; border-radius: .5rem .5rem 0 0;">
+        <style>
+            @media (max-width: 767.98px) {
+                .border-sm-start-none {
+                    border-left: none !important;
+                }
+            }
+        </style>
+`;
+
+    currentbookings.forEach((element) => {
+        var manufacture = new Date(element.manufacture_year).getFullYear();
+        const start_date = element.startdate;
+                const date3 = new Date(start_date);
+                const day3 = date3.getDate().toString().padStart(2, '0');
+                const month3 = (date3.getMonth() + 1).toString().padStart(2, '0');
+                const year3 = date3.getFullYear();
+        
+                // Format the date as "dd-mm-yyyy"
+                const startDate3 = `${day3}-${month3}-${year3}`
+
+                const date4 = new Date(element.endDate);
+                const day4 = date4.getDate().toString().padStart(2, '0');
+                const month4 = (date4.getMonth() + 1).toString().padStart(2, '0');
+                const year4 = date4.getFullYear();
+        
+                // Format the date as "dd-mm-yyyy"
+                const endDate3 = `${day3}-${month3}-${year3}`
+        bookingdata += `
+                <div class="row ">
+                <div class="col-md-12">
+                    <div class="card shadow-0 border rounded-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 ">
+                                    <h5>${element.username}</h5>
+                                    <span>${element.usercontact}</span>
+                                    <div class="row">
+                                        <div class="mt-1 mb-0 text-muted small">
+                                            <label for="">Reg No. </label>
+                                            <span>${element.vehicle_reg_no}</span><br>
+                                        
+                                            <span class=""> ${element.company_name} ${element.modelname}  (${manufacture}) </span><br>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4  border-sm-start-none border-start">
+                                    <div class="row">
+                                        <div class=""> <span class="text-dark">Start Date : ${startDate3}  ${element.start_time}</span></div>
+                                        <div class=""> <span class="text-dark">End Date  : ${endDate3} ${element.end_time}</span></div>
+                                    <select class="form-control w-75 m-2" name="" id="">
+                                        <option value="">Select Driver</option>
+                                        <option value="">options</option>
+                                        <option value="">options</option>
+                                        <option value="">options</option>
+                                        <option value="">options</option>
+                                    </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 border-sm-start-none border-start">
+                                    <div class="d-flex flex-row align-items-center mb-1">
+                                        <input type="text" class="form-control" style="display:block;" placeholder="Enter Pin" name = "verifypin" id="verifypin">
+                                        <br><button class="btn btn-outline-success w-100 mt-2 fw-bold border border-3" id = "verifybtn" onclick="checkVerifyPin('${element.bookingid}')">Verify</button>
+                                        <br><span class="text-danger" style="display:none;" id="warning-msg" >Invalid Pin</span>
+                                        <br><span class="text-success" style="display:none;" id="success-msg" >Booking Started Successfully</span>
+                                    </div>
+                                </div>      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        });
+        bookingdata += ` </section>
+        </div>`;
+        document.getElementById('current-bookigs-data').innerHTML = bookingdata;
+})
+
+async function checkVerifyPin(bookingid){
+    var pin = document.getElementById('verifypin').value;
+    console.log(pin);
+    console.log(bookingid);
+    var data = {
+        pin : pin,
+        bookingid : bookingid
+    }
+   var response =  await fetch('/user/verifybookingstartpin', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+    }).then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    }).then(responseData1 => {
+        console.log('Server response:', responseData1.message);
+        if(responseData1.message==true){
+            document.getElementById("warning-msg").style.display="none";
+            document.getElementById("success-msg").style.display = "block";
+        }else{
+            document.getElementById("warning-msg").style.display="block";
+            document.getElementById("success-msg").style.display = "none";
+        }
+    });
+
+    
+}
+

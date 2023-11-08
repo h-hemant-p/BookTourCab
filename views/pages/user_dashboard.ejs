@@ -28,10 +28,10 @@
     <%- include('../partials/vehicle_insurance_form') %>
     <%- include('../partials/delete_form_modal') %>
 
-     <div class="container-fluid">
-          <div class="row">
-               <!-- Main Menu -->
-               <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="background: #5359E2;"> 
+        <div class="container-fluid">
+            <div class="row">
+            <!-- Main Menu -->
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="background: #5359E2;"> 
                     <div id="accordian" class="menu-parent style1">
                         <ul class="menu">
                             <li class="menu-child">
@@ -48,651 +48,510 @@
                             </li>
                             <li class="menu-child">
                                 <a class="dashboard-links" onclick="dashboardChoices('my-profile')" ><i class="fas fa-user text-light fs-6"></i> &nbsp;My Profile</a>
-                              </li>
-                          <li class="menu-child">
-                            <a href="#"><i class="fa fa-tachometer"></i> User Dashboard</a>
-                            <ul>
-                              <li> <a class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Current Bookings</a></li>
-                              <li> <a class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Booking History</a></li>
-                            </ul>
-                          </li>
-                          <% if(user.is_owner){ %>
-                          <li class="menu-child">
-                            <a href="#"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
-                            <ul>
-                                <li><a class="dashboard-links" onclick="dashboardChoices('my-vehicles')">My Vehicles</a></li>
-                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-drivers')">My Drivers</a></li>
-                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-current-bookings')" id="current-bookings">My Current Bookings</a></li>
-                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-vehicle-booking-history')">My Vehicle Bookings History</a></li>
-                                <li> <a class="dashboard-links" onclick="dashboardChoices('my-booking-request')" id="vehicles-bookings-request">My Booking Requests</a></li>
-                            </ul>
-                          </li>
-                          <% }%>
-                    
-                          <li class="menu-child">
-                            <a class="dashboard-links" onclick="dashboardChoices('my-wallet')" id="wallet-dashboard"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
-                          </li>
-                          <li class="menu-child">
-                            <% if(!user.password){%>
-                                <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Create Password</a>
-                            <%}else{%>
-                                <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
-                             <%}%>
-                          </li>
-
-                        <% if(!user.is_owner && user.is_complete){%>  
-                            <li class="">
-                                <a  class="dashboard-links" href="/user/registerowner">Become Owner</a> 
                             </li>
-                        <%}else if(!user.is_owner && !user.is_complete){%>
                             <li class="menu-child">
-                                <a class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Become Owner</a>
+                                <a href="#"><i class="fa fa-tachometer"></i> User Dashboard</a>
+                                <ul>
+                                    <li> 
+                                        <a class="dashboard-links" onclick="dashboardChoices('user-current-bookings')" >Current Bookings</a>
+                                    </li>
+                                    <li> 
+                                        <a class="dashboard-links" onclick="dashboardChoices('user-requested-bookings')" >Requested Bookings</a>
+                                    </li>
+                                    <li>
+                                        <a class="dashboard-links" onclick="dashboardChoices('user-booking-history')" >Booking History</a>
+                                    </li>
+                                </ul>
                             </li>
-                        <%}%>
+                            <% if(user.is_owner){ %>
+                                <li class="menu-child">
+                                    <a href="#"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
+                                    <ul>
+                                        <li><a class="dashboard-links" onclick="dashboardChoices('owner-vehicles')">My Vehicles</a></li>
+                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-drivers')">My Drivers</a></li>
+                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-current-bookings')" id="current-bookings">Current Bookings</a></li>
+                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-booking-request')" id="vehicles-bookings-request">Booking Requests</a></li>
+                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-vehicle-booking-history')">Bookings History</a></li>
+                                    </ul>
+                                </li>
+                            <% }%>
+                    
+                            <li class="menu-child">
+                                <a class="dashboard-links" onclick="dashboardChoices('my-wallet')" id="wallet-dashboard"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
+                            </li>
+                            <li class="menu-child">
+                                <% if(!user.password){%>
+                                    <a class="dashboard-links" onclick="dashboardChoices('create-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Create Password</a>
+                                <%}else{%>
+                                    <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
+                                <%}%>
+                            </li>
+
+                            <% if(!user.is_owner && user.is_complete){%>  
+                                <li class="">
+                                    <a  class="dashboard-links" href="/user/registerowner">Become Owner</a> 
+                                </li>
+                            <%}else if(!user.is_owner && !user.is_complete){%>
+                                <li class="menu-child">
+                                    <a class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Become Owner</a>
+                                </li>
+                            <%}%>
 
                             <li class="">
                                 <a href="/user/logoutuser"><i class="fa fa-sign-out"></i> Logout</a>
                             </li>
                         </ul>
-                      </div>
-                </div>
-          <!-- Main Menu -->
-
-           <!-- User Details -->
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " id="my-profile" >
-                <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
-                    <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
-                        <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
-                        <i class="fa-solid fa-pen-to-square" style="margin-left: 12%; margin-top: 0;" onclick="uploadProfileImage()"></i><br>
-                        <%if(user.name){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
-                        <%}%>
-                        <%if(user.gender){%>
-                            <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= user.gender %></span><br>
-                        <%}%>
-                        <%if(user.email){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= user.email %></span><br>
-                        <%}%>
-                        <%if(user.contact_no){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Contact : </label><span class="fs-6 fw-bold ms-2"><%= user.contact_no%></span><br>
-                        <%}%>
-                        <%if(user.address){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Address : </label><span class="fs-6 fw-bold ms-2"><%= user.address %></span><br>
-                        <%}%>
-                        <%if(user.city){%>
-                            <label for="name" class="fw-bold fs-5 my-1">City : </label><span class="fs-6 fw-bold ms-2"><%= user.city %></span><br>
-                        <%}%>
-                        <%if(user.state){%>
-                            <label for="name" class="fw-bold fs-5 my-1">State : </label><span class="fs-6 fw-bold ms-2"><%= user.state %></span><br>
-                        <%}%>
-                        <%if(user.pin_code){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Pincode : </label><span class="fs-6 fw-bold ms-2"><%= user.pin_code %></span><br>
-                        <%}%>
-                        <%if(user.aadhar_number){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Aadhar Number : </label><span class="fs-6 fw-bold ms-2"><%= user.aadhar_number %></span><br>
-                        <%}%>
-                        <%if(user.pan_number){%>
-                            <label for="name" class="fw-bold fs-5 my-1">Pan Number : </label><span class="fs-6 fw-bold ms-2"><%= user.pan_number %></span><br>
-                        <%}%>
-                        <% if(user.is_complete){%>
-                            <!-- <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button> -->
-                            <button class="open-modal-user btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;" data-bs-toggle="modal" data-bs-target="#userDetailsUpdateForm" data-user_details="<%=user._id%>">Update Details</button>
-                        <% } else{%>
-                            <button class="btn btn-primary button-shadow w-50 ms-2 mt-5" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Complete Profile</button>
-                        <%}%>
                     </div>
                 </div>
-            </div>
-          <!-- User Details -->
-            <!-- User Update Modal Start -->
-            <!-- Modal for Update Profile Details Start-Changes are running  -->
-          <div class="modal fade" id="userDetailsUpdateForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalTitleId">User Details Update Form </h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-          
-                <div class="modal-body">
-                  <form   class="form" enctype="multipart/form-data">
-                  <div class="container ">
-                    <div class="border bg-primary">
-                      <h5 class="m-2 fw-bold text-center text-light">USER PROFILE UPDATE FORM</h5>
-                    </div>
-                  </div>
-                  <div class="container"><br>
-                    <div class="row">
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-name" class=" form-label fw-bold">Name</label>
-                        <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="name" id="username" onkeyup="checkUsername3()" autocomplete="off">
-                        <small></small>
-                      </div>
-                      <div class="mb-3 col-lg-6"><br>
-                          <label for="gender" class=" form-label fw-bold ">Gender</label>
-                          <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
-                          <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
-                          <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
-                        </div>
-                      </div>
-                    <div class=" row ">
-                      
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-address" class="form-label fw-bold ">Address</label>
-                        <input type="text" class="form-control  w-75 " placeholder="Enter Address" id="useraddress" name="address" aria-describedby="address" onkeyup="checkAddress3()">
-                        <small></small>
-                      </div>
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="pincode" class=" form-label fw-bold ">Pincode</label>
-                        <input type="text" class="form-control w-75 " placeholder="Enter Pincode" id="userpincode" name="pincode" aria-describedby="ride" onkeyup="checkPincode3()">
-                        <small></small>
-                      </div>
-                    </div>
-          
-                    <div class=" row">
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-state" class=" form-label fw-bold ">State</label>
-                        <select onchange="print_city('userupdatecity', this.selectedIndex);" id="userupdatestate" name ="state" class="form-control  w-75"></select>
-                        <small></small>
-                      </div>
-          
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-city" class=" form-label fw-bold ">City</label>
-                        <select id ="userupdatecity" class="form-control w-75" name="city" ></select>
-                        <script language="javascript">print_state("userupdatestate");</script>
-                        <small></small>
-                      </div>
-                    </div>
-          
-                    <div class=" row ">
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-aadhar-number" class=" form-label fw-bold ">Aadhar Number</label>
-                        <input type="text" class="form-control  w-75 " placeholder="Enter Aadhar Number" id="useraadharnumber" name="aadharnumber" aria-describedby="ride" onkeyup="checkAadharNumber3()">
-                        <small></small>
-                      </div>
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-aadhar-img" class=" form-label fw-bold">Upload Aadhar Image</label>
-                        <input type="file" class="form-control w-75" placeholder="Upload Aadhar image here" id="useraadharimg" name="aadharimg" aria-describedby="ride" accept="image/*" onchange="checkAadharImage3()">
-                        <small></small>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-pan-number" class=" form-label fw-bold ">Pan Card Number (optional)</label>
-                        <input type="text" class="form-control w-75 " placeholder="Enter Pancard Number" name="pannumber" id="userpannumber" onkeyup="checkPanCardNumber3()" aria-describedby="ride">
-                        <small></small>
-                      </div>
-                      <div class="mb-3 col-lg-6 form-field">
-                        <label for="user-pancard-image" class=" form-label fw-bold">Upload Pan Card Image (optional)</label>
-                        <input type="file" class="form-control w-75" placeholder="UploadPan Card image here" name="panimg" id="userpancardimage" accept="image/*" onchange="checkPanCardImage3()" aria-describedby="ride">
-                        <small></small>
-                      </div>
-                    </div>
-                  </div>
-          
-                  <div class="row mt-2">
-                    <div class="mb-3 col-lg-6 form-field">
-                      <input type="button" class="btn btn-secondary w-75 ms-2" value="cancel" data-bs-dismiss="modal">
-                    </div>
-                    <div class="mb-3 col-lg-6 form-field">
-                      <input type="submit" class="btn btn-primary w-75" value="Submit">
-                    </div>
-                  </div>
-                </form>
-              </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Modal for Update Profile Details End -->
-            <!-- User Update Modal End  -->
-
-           <!-- Booking History -->
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-bookings">
-                <h4 class="text-center fw-bold m-2 " style="background-color: white;">View Booking History</h4>
-                <div class="table-responsive" id="user-booking"></div>
-            </div>
-          <!-- Booking History -->
-
-        <!-- User Create Password Start -->
-        <%if(!user.password ){%>
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password">
-            <h4 class="text-center fw-bold my-2 m-2 " style="background-color: white; width: 98%;">Create Password</h4>
-            <div align="center" style="background-color: white;">
-                <form action="/user/createpassword" method="post" onsubmit="return submitCreateFormData()">
-                    <div class="my-5 form-field">
-                        <label class="fw-bold fs-5 " for="newpassword">Enter Password*</label>
-                        <input type="password" class="w-75 form-control" placeholder="Enter password" id="createnewpass" name="newpassword" onkeyup="createCheckNewPass4()">
-                        <small></small>
-                    </div>
-                    <div class="my-5 form-field">
-                        <label class="fw-bold fs-5" for="createconfirmpass">Confirm Password*</label>
-                        <input type="password" class="w-75 form-control" placeholder="Enter confirm password" id="createconfirmpass" name="createconfirmpass" onkeyup="createCheckCnfPass4()">
-                        <small></small>
-                    </div>
-                    <div class="mt-5">
-                        <input type="submit" class="btn btn-primary w-75 fs-5 fw-bold form-control" value="Create">
-                    </div><br><br>
-                </form>
-            </div>
-        </div>    
-        <!-- User Create Password End -->
-        <%}else{%>
-        <!-- User Change Password  Start-->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" >
-            <div class="row  ms-lg-1 mt-4">
-                <h4 class="text-center fw-bold my-2 m-2 ">Change Password</h4>
-                <div class="m-2" style="background-color: white; width: 98%;"> 
-                    <form action="/user/changepassword" onsubmit=" return submitchangepassword()" method="post">
-                        <div align="center" style="background-color: white;">
-                            <div class="form-field">
-                                <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
-                                <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass4()">
-                                <small></small>
-                            </div>
-                            <div class="mt-4 form-field">
-                                <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
-                                <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass4()">
-                                <small></small>
-                            </div>
-                            <div class="mt-4 form-field">
-                                <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
-                                <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass4()">
-                                <small></small>
-                            </div>
-                            <div class="my-5">
-                                <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>    
-        <%}%>
-        <!-- User Change Password End -->
+            <!-- Main Menu -->
 
 
-        <!-- User Wallet -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-wallet">
-            <div class="row mt-4">
-                <div>
-                    <h4 class="text-center fw-bold mt-2 bg-light">WALLET</h4>
-                <div class="bg-light "><br>
-                        <span class="fs-4  ms-5 fw-bold">Wallet Amount: &#8377; <span id="wallet-amount"></span> </span>
-                    <div class="row mx-1 my-1 bg-light">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <button class="btn btn-primary btn-md m-4 w-75">Add Amount</button>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <button class="btn btn-primary btn-md m-4 w-75">View History</button>
+            <!-- User Profile Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " id="my-profile" >
+                    <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
+                        <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
+                            
+                            <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
+                            <i class="fa-solid fa-pen-to-square" style="margin-left: 12%; margin-top: 0;" onclick="uploadProfileImage()"></i><br>
+                            
+                            <%if(user.name){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
+                            <%}%>
+                            <%if(user.gender){%>
+                                <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= user.gender %></span><br>
+                            <%}%>
+                            <%if(user.email){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= user.email %></span><br>
+                            <%}%>
+                            <%if(user.contact_no){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Contact : </label><span class="fs-6 fw-bold ms-2"><%= user.contact_no%></span><br>
+                            <%}%>
+                            <%if(user.address){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Address : </label><span class="fs-6 fw-bold ms-2"><%= user.address %></span><br>
+                            <%}%>
+                            <%if(user.city){%>
+                                <label for="name" class="fw-bold fs-5 my-1">City : </label><span class="fs-6 fw-bold ms-2"><%= user.city %></span><br>
+                            <%}%>
+                            <%if(user.state){%>
+                                <label for="name" class="fw-bold fs-5 my-1">State : </label><span class="fs-6 fw-bold ms-2"><%= user.state %></span><br>
+                            <%}%>
+                            <%if(user.pin_code){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Pincode : </label><span class="fs-6 fw-bold ms-2"><%= user.pin_code %></span><br>
+                            <%}%>
+                            <%if(user.aadhar_number){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Aadhar Number : </label><span class="fs-6 fw-bold ms-2"><%= user.aadhar_number %></span><br>
+                            <%}%>
+                            <%if(user.pan_number){%>
+                                <label for="name" class="fw-bold fs-5 my-1">Pan Number : </label><span class="fs-6 fw-bold ms-2"><%= user.pan_number %></span><br>
+                            <%}%>
+                            <% if(user.is_complete){%>
+                                <!-- <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button> -->
+                                <button class="open-modal-user btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;" data-bs-toggle="modal" data-bs-target="#userDetailsUpdateForm" data-user_details="<%=user._id%>">Update Details</button>
+                            <% } else{%>
+                                <button class="btn btn-primary button-shadow w-50 ms-2 mt-5" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm">Complete Profile</button>
+                            <%}%>
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                
-                    <table class="table table-striped" style="background-color: white;">
-                        <thead>
-                            <th>S.No.</th>
-                            <th>Date</th>
-                            <th> Amount</th>
-                        </thead>
-                        <tbody>
-                            <!-- Table Data Fill Here -->
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-            </div>
-        </div>
-        <!-- User Wallet -->
-           
-           
-        <!-- Owner Vehicles List Start -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-vehicles">
-            <div class="table-responsive">
-                <h4 class="text-center fw-bold mt-2 ">Vehicle List</h4><br>
-                <table class="table" >
-                    <thead>
-                        <th>Registration Number</th>
-                        <th>Vehicle Class</th>
-                        <th>Fuel Type</th>
-                        <th>Add/Update Insurance</th>
-                        <th>Delete Vehicle</th>
-                    </thead>
-                    <tbody>
-                        <%  if(ownerDetails.vehicles){
-                            ownerDetails.vehicles.forEach((vehicle)=> { %>  
-                                <tr>
-                                <td id="vehichleReegistrationno"><%= vehicle.reg_number %></td>
-                                <td><%= vehicle.vehicle_class %></td>
-                                <td><%= vehicle.fuel_type %></td>
-                                <% if(!vehicle.have_insurance){%>
-                                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" onclick="setRegistrationNumber('<%= vehicle.reg_number %>','<%=ownerDetails._id %>')">Insurance</button></td>
-                                <%}else{%>
-                                    <td><button  data-bs-toggle="modal" data-bs-target="#updateinsurance" class="open-modal btn btn-warning text-light" data-insurance_details="<%= vehicle.insurance_details %>">Update</button></td>
-                                <%}%>
-                                    <td><button  class=" btn btn-danger " data-insurance_details=""><a href="/user/deletevehicle?reg_number=<%=vehicle.reg_number %>" class="text-decoration-none text-light">Delete</a></button></td>
-                                </tr>
-                            <%});
-                        }%>
-                    </tbody>
-                </table>
-                <!-- Insurance Update Modal start  -->
-                <div class="modal fade" id="updateinsurance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- User Profile End -->
+
+            <!-- User Profile Update Modal Start -->
+                <div class="modal fade" id="userDetailsUpdateForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Update Insurance Form</h5>
+                                <h5 class="modal-title" id="modalTitleId">User Details Update Form </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                    
                             <div class="modal-body">
-                            <form action="/user/updateinsurancedetails" method="post">
-                                <div class="container ">
-                                    <div class="border bg-primary">
-                                    <h5 class="m-2 fw-bold text-center text-light">VEHICLE INSURANCE FORM</h5>
-                                    </div>
-                                </div>
-                                <div class="container"><br>
-                                    <div class="row">
-                                        <div class="mb-3 col-lg-6">
-                                            <input type="hidden" id="insuranceid" name="insuranceid" value="">
-                                            <label for="policy_number" class=" form-label fw-bold">Policy Number </label><br>
-                                            <input type="text" class="form-control border-dark w-75 " placeholder="Enter Policy Number" id="policynumber" name="policynumber" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="policy-number-span"></span>
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="policy_holder_name" class=" form-label fw-bold">Policy Holder Name</label><br>
-                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Name" id="policyholdername" name="policyholdername" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="policy-holder-name-span"></span>
+                                <form   class="form" enctype="multipart/form-data">
+                                    <div class="container ">
+                                        <div class="border bg-primary">
+                                            <h5 class="m-2 fw-bold text-center text-light">USER PROFILE UPDATE FORM</h5>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="policy_holder_contact" class=" form-label fw-bold">Policy Holder Contact </label><br>
-                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Contact" id="policyholdercontact" name="policyholdercontact" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="policy-holder-contact-span"></span>
+                                    <div class="container"><br>
+                                        <div class="row">
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-name" class=" form-label fw-bold">Name</label>
+                                                <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="name" id="username" onkeyup="checkUsername3()" autocomplete="off">
+                                                <small></small>
+                                            </div>
+                                            <div class="mb-3 col-lg-6"><br>
+                                                <label for="gender" class=" form-label fw-bold ">Gender</label>
+                                                <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+                                                <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+                                                <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+                                            </div>
                                         </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="policy_holder_aadhar" class=" form-label fw-bold ">Policy Holder Aadhar Number</label><br>
-                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Aadhar Number" id="policyholderaadhar" name="policyholderaadhar" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="policy-holder-aadhar-span"></span>
+                                        <div class=" row ">
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-address" class="form-label fw-bold ">Address</label>
+                                                <input type="text" class="form-control  w-75 " placeholder="Enter Address" id="useraddress" name="address" aria-describedby="address" onkeyup="checkAddress3()">
+                                                <small></small>
+                                            </div>
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="pincode" class=" form-label fw-bold ">Pincode</label>
+                                                <input type="text" class="form-control w-75 " placeholder="Enter Pincode" id="userpincode" name="pincode" aria-describedby="ride" onkeyup="checkPincode3()">
+                                                <small></small>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class=" row">
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="coverage_start_date" class=" form-label fw-bold">Coverage Start Date</label><br>
-                                            <input type="date" class="form-control border-dark w-75" id="coveragestartdate" name="coveragestartdate" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="coverage-start-date-span"></span>
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="coverage_end_date" class=" form-label fw-bold ">Coverage End Date</label><br>
-                                            <input type="date" class="form-control border-dark w-75 " id="coverageenddate" name="coverageenddate" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="coverage-end-date-span"></span>
-                                        </div>
-                                    </div>
-                                    <div class=" row ">
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="insurance_premium_amount" class=" form-label fw-bold">Insurance Premium Amount</label><br>
-                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Insurance Premium Amount" id="insurancepremiumamount" name="insurancepremiumamount" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="insurance-premium-amount-span"></span>
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="coverage_amount" class=" form-label fw-bold">Coverage Amount</label><br>
-                                            <input type="text" class="form-control border-dark w-75" placeholder="Enter Coverage Amount" id="coverageamount" name="coverageamount" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="coverage-amount-span"></span>
-                                        </div>
-                                    </div>
                             
-                                    <div class="row">
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="insurance_provider" class=" form-label fw-bold ">Insurance Provider</label><br>
-                                            <input type="text" class="form-control border-dark w-75 " placeholder="Enter Insurace Provider" id="insuranceprovider" name="insuranceprovider" aria-describedby="ride">
-                                            <span class="text-danger ms-4" id="insurance-provider-span"></span>
+                                        <div class=" row">
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-state" class=" form-label fw-bold ">State</label>
+                                                <select onchange="print_city('userupdatecity', this.selectedIndex);" id="userupdatestate" name ="state" class="form-control  w-75"></select>
+                                                <small></small>
+                                            </div>
+                            
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-city" class=" form-label fw-bold ">City</label>
+                                                <select id ="userupdatecity" class="form-control w-75" name="city" ></select>
+                                                <script language="javascript">print_state("userupdatestate");</script>
+                                                <small></small>
+                                            </div>
+                                        </div>
+                        
+                                        <div class=" row ">
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-aadhar-number" class=" form-label fw-bold ">Aadhar Number</label>
+                                                <input type="text" class="form-control  w-75 " placeholder="Enter Aadhar Number" id="useraadharnumber" name="aadharnumber" aria-describedby="ride" onkeyup="checkAadharNumber3()">
+                                                <small></small>
+                                            </div>
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-aadhar-img" class=" form-label fw-bold">Upload Aadhar Image</label>
+                                                <input type="file" class="form-control w-75" placeholder="Upload Aadhar image here" id="useraadharimg" name="aadharimg" aria-describedby="ride" accept="image/*" onchange="checkAadharImage3()">
+                                                <small></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-pan-number" class=" form-label fw-bold ">Pan Card Number (optional)</label>
+                                                <input type="text" class="form-control w-75 " placeholder="Enter Pancard Number" name="pannumber" id="userpannumber" onkeyup="checkPanCardNumber3()" aria-describedby="ride">
+                                                <small></small>
+                                            </div>
+                                            <div class="mb-3 col-lg-6 form-field">
+                                                <label for="user-pancard-image" class=" form-label fw-bold">Upload Pan Card Image (optional)</label>
+                                                <input type="file" class="form-control w-75" placeholder="UploadPan Card image here" name="panimg" id="userpancardimage" accept="image/*" onchange="checkPanCardImage3()" aria-describedby="ride">
+                                                <small></small>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                    <div class="mb-3 col-lg-6 form-field">
-                                        <input type="button" class="btn btn-secondary w-75 fw-bold ms-2" value="cancel" data-bs-dismiss="modal">
+                        
+                                    <div class="row mt-2">
+                                        <div class="mb-3 col-lg-6 form-field">
+                                            <input type="button" class="btn btn-secondary w-75 ms-2" value="cancel" data-bs-dismiss="modal">
+                                        </div>
+                                        <div class="mb-3 col-lg-6 form-field">
+                                            <input type="submit" class="btn btn-primary w-75" value="Submit">
+                                        </div>
                                     </div>
-                                    <div class="mb-3 col-lg-6 form-field">
-                                        <input type="submit" class="btn btn-primary w-75 fw-bold" value="Submit">
-                                    </div>
-                                    </div><br>
-                                </div>
-                            </form>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mx-1 my-2">
-                <div class="offset-md-1 col-lg-5 col-md-6 col-sm-12">
-                    <button class="btn btn-primary w-75 m-4 fw-bold"  data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Add Vehicle</button>
+            <!-- Update Profile Details Modal End -->
+
+            <!-- My Current Bookings Dashboard Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="user-current-bookings" >
+                    <h4 class="text-center fw-bold m-2 ">Current Bookings</h4>
+                    <div id="user-current-bookigs-data"></div>
                 </div>
-            </div>
-        </div>
-        <!-- Insurance Update Modal End -->
-        <!-- Owner Vehicles List End -->
+            <!-- My Current Bookings End  -->
 
+            <!-- My Requested Bookings Dashboard Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="user-requested-bookings" >
+                    <h4 class="text-center fw-bold m-2 ">Requested Bookings</h4>
+                    <div id="requested-booking-data"></div>
+                </div>
+            <!-- My Requested Bookings End  -->
 
-        <!-- Owner Drivers List -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-drivers">
-            <div class="table-responsive">
-                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Driver List</h4><br>
-                <% if(ownerDetails.drivers) { %>
-                <table class="table table-striped" style="background-color: white;">
-                    <thead>
-                        <th>Driver Name</th>
-                        <th>Gender</th>
+            <!-- My Bookings History Dashboard Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="user-booking-history" >
+                    <h4 class="text-center fw-bold m-2 ">Booking History</h4>
+                    <div id="booking-history-data"></div>
+                </div>
+            <!-- My Requested Bookings End  -->
+            
+            <!-- Owner Vehicles List Dashboard Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="owner-vehicles">
+                    <div class="table-responsive">
+                        <h4 class="text-center fw-bold mt-2 ">Vehicle List</h4><br>
+                        <div id="owner-vehicle-list-data"></div>
                         
-                        <th>Driver Email</th>
-                        <th>Driver Contact</th>
-                        <th>Delete</th>
-                    </thead>
-                    <tbody>
-                        <% ownerDetails.drivers.forEach((driver)=>{ %>
-                            <tr>
-                                <td><%= driver.name %></td>
-                                <td><%= user.gender %></td>
-                                <td><%= driver.email %></td>
-                                <td><%= driver.contact_no %></td>
-                                <td><button class="btn btn-primary"><a href="/user/ownerremovedriver?driverid=<%= driver._id %>" class="text-decoration-none text-light">Delete</a></button></td>
-                            </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <% } %>
-                <div class="row mx-1 my-2">
-                    <div class="offset-md-1 col-lg-5 col-md-6 col-sm-12">
-                        <button class="btn btn-primary w-75 m-4 fw-bold" data-bs-toggle="modal" data-bs-target="#reservedDriverRegistrationForm"> Add Driver</button>
+                        <!-- Insurance Update Modal start  -->
+                        <div class="modal fade" id="updateinsurance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Update Insurance Form</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/user/updateinsurancedetails" method="post">
+                                            <div class="container ">
+                                                <div class="border bg-primary">
+                                                    <h5 class="m-2 fw-bold text-center text-light">VEHICLE INSURANCE FORM</h5>
+                                                </div>
+                                            </div>
+                                            <div class="container"><br>
+                                                <div class="row">
+                                                    <div class="mb-3 col-lg-6">
+                                                        <input type="hidden" id="insuranceid" name="insuranceid" value="">
+                                                        <label for="policy_number" class=" form-label fw-bold">Policy Number </label><br>
+                                                        <input type="text" class="form-control border-dark w-75 " placeholder="Enter Policy Number" id="policynumber" name="policynumber" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="policy-number-span"></span>
+                                                    </div>
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="policy_holder_name" class=" form-label fw-bold">Policy Holder Name</label><br>
+                                                        <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Name" id="policyholdername" name="policyholdername" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="policy-holder-name-span"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="policy_holder_contact" class=" form-label fw-bold">Policy Holder Contact </label><br>
+                                                        <input type="text" class="form-control border-dark w-75" placeholder="Enter Policy Holder Contact" id="policyholdercontact" name="policyholdercontact" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="policy-holder-contact-span"></span>
+                                                    </div>
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="policy_holder_aadhar" class=" form-label fw-bold ">Policy Holder Aadhar Number</label><br>
+                                                        <input type="text" class="form-control border-dark w-75" placeholder="Enter Aadhar Number" id="policyholderaadhar" name="policyholderaadhar" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="policy-holder-aadhar-span"></span>
+                                                    </div>
+                                                </div>
+                                                <div class=" row">
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="coverage_start_date" class=" form-label fw-bold">Coverage Start Date</label><br>
+                                                        <input type="date" class="form-control border-dark w-75" id="coveragestartdate" name="coveragestartdate" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="coverage-start-date-span"></span>
+                                                    </div>
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="coverage_end_date" class=" form-label fw-bold ">Coverage End Date</label><br>
+                                                        <input type="date" class="form-control border-dark w-75 " id="coverageenddate" name="coverageenddate" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="coverage-end-date-span"></span>
+                                                    </div>
+                                                </div>
+                                                <div class=" row ">
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="insurance_premium_amount" class=" form-label fw-bold">Insurance Premium Amount</label><br>
+                                                        <input type="text" class="form-control border-dark w-75" placeholder="Enter Insurance Premium Amount" id="insurancepremiumamount" name="insurancepremiumamount" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="insurance-premium-amount-span"></span>
+                                                    </div>
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="coverage_amount" class=" form-label fw-bold">Coverage Amount</label><br>
+                                                        <input type="text" class="form-control border-dark w-75" placeholder="Enter Coverage Amount" id="coverageamount" name="coverageamount" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="coverage-amount-span"></span>
+                                                    </div>
+                                                </div>
+                                    
+                                                <div class="row">
+                                                    <div class="mb-3 col-lg-6">
+                                                        <label for="insurance_provider" class=" form-label fw-bold ">Insurance Provider</label><br>
+                                                        <input type="text" class="form-control border-dark w-75 " placeholder="Enter Insurace Provider" id="insuranceprovider" name="insuranceprovider" aria-describedby="ride">
+                                                        <span class="text-danger ms-4" id="insurance-provider-span"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-lg-6 form-field">
+                                                        <input type="button" class="btn btn-secondary w-75 fw-bold ms-2" value="cancel" data-bs-dismiss="modal">
+                                                    </div>
+                                                    <div class="mb-3 col-lg-6 form-field">
+                                                        <input type="submit" class="btn btn-primary w-75 fw-bold" value="Submit">
+                                                    </div>
+                                                </div><br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Insurance Update Modal End -->
                     </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12">
-                        <button class="btn btn-primary w-75 m-4 fw-bold">Update Driver </button>
-                    </div> 
+                    <div class="row mx-1 my-2">
+                        <div class="offset-md-1 col-lg-5 col-md-6 col-sm-12">
+                            <button class="btn btn-primary w-75 m-4 fw-bold"  data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Add Vehicle</button>
+                        </div>
+                    </div>
                 </div>
+            <!-- Owner Vehicles List End -->
+
+            <!-- Owner Drivers List -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-drivers">
+                    <div id="owner-driver-list-data"></div>
+                </div>
+            <!-- Owner Drivers List -->
+
+            <!-- My Current Bookings Dashboard Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="owner-current-bookings" >
+                    <!-- <h4 class="text-center fw-bold m-2 ">Current Bookings</h4> -->
+                    <div id="owner-current-bookigs-data"></div>
+                </div>
+            <!-- My Current Bookings End  -->
+
+            <!--My Vehicle Booking Request Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="owner-booking-request" >
+                    <!-- <h4 class="text-center fw-bold m-2 ">History</h4> -->
+                    <div class="table-responsive" id="owner-booking-request-data"></div>
+                </div>
+            <!-- My Vehicle Bookig Request End -->
+
+            <!-- Owner Booking History start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="owner-booking-history">
+                    <!-- <h4 class="text-center fw-bold m-2 " style="background-color: white;">View Booking History</h4> -->
+                    <div class="table-responsive" id="owner-booking-history-data"></div>
+                </div>
+            <!-- Owner Booking History end -->
+
+            <!-- User Password Dashboard Start -->
+                <!-- <%if(!user.password ){%> -->
+                    <!-- User Create Password Start -->
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="create-password">
+                        <h4 class="text-center fw-bold my-2 m-2 " style="background-color: white; width: 98%;">Create Password</h4>
+                        <div align="center" style="background-color: white;">
+                            <form action="/user/createpassword" method="post" onsubmit="return submitCreateFormData()">
+                                <div class="my-5 form-field">
+                                    <label class="fw-bold fs-5 " for="newpassword">Enter Password*</label>
+                                    <input type="password" class="w-75 form-control" placeholder="Enter password" id="createnewpass" name="newpassword" onkeyup="createCheckNewPass4()">
+                                    <small></small>
+                                </div>
+                                <div class="my-5 form-field">
+                                    <label class="fw-bold fs-5" for="createconfirmpass">Confirm Password*</label>
+                                    <input type="password" class="w-75 form-control" placeholder="Enter confirm password" id="createconfirmpass" name="createconfirmpass" onkeyup="createCheckCnfPass4()">
+                                    <small></small>
+                                </div>
+                                <div class="mt-5">
+                                    <input type="submit" class="btn btn-primary w-75 fs-5 fw-bold form-control" value="Create">
+                                </div><br><br>
+                            </form>
+                        </div>
+                    </div>    
+                    <!-- User Create Password End -->
+                <!-- <%}else{%> -->
+                    <!-- User Change Password  Start-->
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" >
+                        <div class="row  ms-lg-1 mt-4">
+                            <h4 class="text-center fw-bold my-2 m-2 ">Change Password</h4>
+                            <div class="m-2" style="background-color: white; width: 98%;"> 
+                                <form action="/user/changepassword" onsubmit=" return submitchangepassword()" method="post">
+                                    <div align="center" style="background-color: white;">
+                                        <div class="form-field">
+                                            <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
+                                            <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass4()">
+                                            <small></small>
+                                        </div>
+                                        <div class="mt-4 form-field">
+                                            <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
+                                            <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass4()">
+                                            <small></small>
+                                        </div>
+                                        <div class="mt-4 form-field">
+                                            <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
+                                            <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass4()">
+                                            <small></small>
+                                        </div>
+                                        <div class="my-5">
+                                            <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>    
+                    <!-- User Change Password End -->
+                <!-- <%}%> -->
+            <!-- User Password Dashboard End -->
+
+            <!-- User Wallet Dashboard Start -->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-wallet">
+                    <div class="row mt-4">
+                        <div>
+                            <h4 class="text-center fw-bold mt-2 bg-light">WALLET</h4>
+                            <div class="bg-light "><br>
+                                <div class="row mx-1 my-1 bg-light text-center">
+                                    <span class="fs-4  ms-5 fw-bold">Wallet Amount :<span id="wallet-amount" class="text-success"></span> </span>
+                                </div>
+                                <div class="row mx-1 my-1 bg-light">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <button class="btn btn-primary btn-md m-4 w-75">Add Amount</button>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <button class="btn btn-primary btn-md m-4 w-75">Withdraw Amount</button>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <button class="btn btn-primary btn-md m-4 w-75">Transaction History</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped" style="background-color: white;">
+                                    <thead>
+                                        <th>S.No.</th>
+                                        <th>Date</th>
+                                        <th> Amount</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- User Wallet Dashboard End -->
             </div>
         </div>
-        <!-- Owner Drivers List -->
-
-
-        <!--History Start -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 bg-white" id="my-vehicle-booking-history" >
-                <h4 class="text-center fw-bold mt-2 ">History</h4>
-            <div class="table-responsive">
-            
-                <table class="table table-striped">
-                    <thead>
-                        <th>S.No.</th>
-                        <th>Date</th>
-                        <th>Driver Name</th>
-                        <th>Passenger Name</th>
-                        <th>Passenger Contact</th>
-                        <th> Charges</th>
-                    </thead>
-                    <tbody>
-                        <!-- Table Data Fill Here -->
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- History End -->
-
-            
-        <!--My Vehicle Bookings Start -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-booking-request" >
-            <h4 class="text-center fw-bold m-2 ">History</h4>
-            <div class="table-responsive" id="my-booking-request-data"></div>
-        </div>
-        <!-- My Vehicle Bookigs End -->
-        
-        <!-- My Current Bookings Start -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-current-bookings" >
-            <h4 class="text-center fw-bold m-2 ">History</h4>
-            <div id="current-bookigs-data"></div>
-            
-        </div>
-        <!-- My Current Bookings End  -->
-
-    </div>
-</div>
         
      <!-- adding footer -->
     <%- include('../partials/footer') %>
 
     <script>
         $(document).ready(function() {
-        // prevent page from jumping to top from  # href link
-        $('.menu-parent li.menu-child > a').click(function(e) {
-            e.preventDefault();
-        });
-
-        // remove link from menu items that have children
-        $(".menu-parent li.menu-child > a").attr("href", "#");
-
-        //  function to open / close menu items
-        $(".menu-parent a").click(function() {
-            var link = $(this);
-            var closest_ul = link.closest("ul");
-            var parallel_active_links = closest_ul.find(".active")
-            var closest_li = link.closest("li");
-            var link_status = closest_li.hasClass("active");
-            var count = 0;
-
-            closest_ul.find("ul").slideUp(function() {
-            if (++count == closest_ul.find("ul").length)
-            parallel_active_links.removeClass("active");
+            // prevent page from jumping to top from  # href link
+            $('.menu-parent li.menu-child > a').click(function(e) {
+                e.preventDefault();
             });
 
-            if (!link_status) {
-            closest_li.children("ul").slideDown();
-            closest_li.addClass("active");
-            }
-        })
-        })
-</script>
+            // remove link from menu items that have children
+            $(".menu-parent li.menu-child > a").attr("href", "#");
+
+            //  function to open / close menu items
+            $(".menu-parent a").click(function() {
+                var link = $(this);
+                var closest_ul = link.closest("ul");
+                var parallel_active_links = closest_ul.find(".active")
+                var closest_li = link.closest("li");
+                var link_status = closest_li.hasClass("active");
+                var count = 0;
+
+                closest_ul.find("ul").slideUp(function() {
+                if (++count == closest_ul.find("ul").length)
+                    parallel_active_links.removeClass("active");
+                });
+
+                if (!link_status) {
+                    closest_li.children("ul").slideDown();
+                    closest_li.addClass("active");
+                }
+            });
+        });
+    </script>
+
     <!-- Bootstrap cdn -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+O8q3D6Ors2aT1l0cC+2g1/CeZzA/J5fet5pG2i5oV5z5e5bB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="/js/user_dashboard.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
-<script src="/js/user_dashboard.js"></script>
-
-
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </html>

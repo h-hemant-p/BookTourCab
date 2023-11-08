@@ -111,14 +111,16 @@ h1 {
   /* color: rgba(30, 47, 100, 0.664); */
 }
 
-#my-bookings,
-#my-driving-history,
-#change-password,
+#user-current-bookings,
+#user-requested-bookings,
+#user-booking-history,
+#owner-vehicles,
+#owner-drivers,
+#owner-current-bookings,
+#owner-booking-request,
+#owner-vehicle-booking-history,
 #my-wallet,
-#my-vehicles,
-#my-drivers,
-#my-vehicles-history,
-#my-vehicle-booking-history,
-#my-booking-request {
+#create-password,
+#change-password {
   display: none;
 }

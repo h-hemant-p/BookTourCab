@@ -4,103 +4,171 @@
 function dashboardChoices(option) {
     if (option === "my-profile") {
         document.getElementById('my-profile').style.display = 'block'
-        document.getElementById('my-bookings').style.display = "none";
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none';
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === "my-bookings") {
+    else if (option === "user-current-bookings") {
         document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('my-bookings').style.display = "block";
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "block";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === 'change-password') {
-        document.getElementById('my-bookings').style.display = "none";
+    else if (option === 'user-requested-bookings') {
         document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'block'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'block'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+    }
+    else if (option === 'user-booking-history') {
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'block'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+    }
+    else if (option === 'owner-vehicles') {
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'block'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+    }
+    else if (option === 'owner-drivers') {
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'block'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+    }
+    else if (option === 'owner-current-bookings') {
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'block'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+    }
+    else if (option === 'owner-booking-request') {
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'block'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+    }
+    else if (option === 'owner-vehicle-booking-history') {
+        document.getElementById('my-profile').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'block';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
     }
     else if (option === 'my-wallet') {
-        document.getElementById('my-bookings').style.display = "none";
         document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'block'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'block';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === 'my-vehicles') {
-        document.getElementById('my-bookings').style.display = "none";
+    else if (option === 'create-password') {
         document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'block'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'block';
+        document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === 'my-drivers') {
-        document.getElementById('my-bookings').style.display = "none";
+    else if (option === 'change-password') {
         document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'block'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none'
-    }
-    else if (option === 'my-vehicle-booking-history') {
-        document.getElementById('my-bookings').style.display = "none";
-        document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'block'
-        document.getElementById('my-booking-request').style.display = 'none';
-        document.getElementById('my-current-bookings').style.display = 'none'
-    }
-    else if (option === 'my-booking-request') {
-        document.getElementById('my-bookings').style.display = "none";
-        document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'block'
-        document.getElementById('my-current-bookings').style.display = 'none'
-    }
-    else if (option === 'my-current-bookings') {
-        document.getElementById('my-bookings').style.display = "none";
-        document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'block'
+        document.getElementById('user-current-bookings').style.display = "none";
+        document.getElementById('user-requested-bookings').style.display = 'none'
+        document.getElementById('user-booking-history').style.display = 'none'
+        document.getElementById('owner-vehicles').style.display = 'none'
+        document.getElementById('owner-drivers').style.display = 'none'
+        document.getElementById('owner-current-bookings').style.display = 'none'
+        document.getElementById('owner-booking-request').style.display = 'none'
+        document.getElementById('owner-vehicle-booking-history').style.display = 'none';
+        document.getElementById('my-wallet').style.display = 'none';
+        document.getElementById('create-password').style.display = 'none';
+        document.getElementById('change-password').style.display = 'block';
     }
 }
 
@@ -669,14 +737,12 @@ async function checkVerifyPin(bookingid){
 }
 
 document.getElementById("wallet-dashboard").addEventListener("click",async()=>{
-    console.log('hiiii');
+    // console.log('hiiii');
     var walletdata = await fetch('/user/walletdata');
     var data = await walletdata.json();
-    console.log(data);
-    
-    document.getElementById("wallet-amount").innerText = data.wallet.wallet_amount;
-
-    console.log("wallet data",data.wallet);
+    // console.log(data);
+    document.getElementById("wallet-amount").innerHTML = ' &#8377; '+data.wallet.wallet_amount;
+    // console.log("wallet data",data.wallet);
 });
 
 var uploadProfileImage = ()=>{

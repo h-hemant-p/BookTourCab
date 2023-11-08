@@ -24,10 +24,6 @@ var userModel = mongoose.Schema({
         type : String,
         required : false
     },
-    is_driver:{
-        type:Boolean,
-        default:false
-    },
     is_owner:{
         type:Boolean,
         default:false
@@ -79,11 +75,6 @@ var userModel = mongoose.Schema({
     owner_details:{
         type : mongoose.Schema.Types.ObjectId,
         ref:'ownerDetails',
-        required : false
-    },
-    driving_details : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'drivingDetails',
         required : false
     },
     wallet:{

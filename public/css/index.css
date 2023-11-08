@@ -35,7 +35,8 @@ p{
     .inner-circle {
         width: 163px;
         height: 168px;
-        background-color: #e1ecf3;
+        /* background-color: #61b5e9; */
+        border: 2px solid white;
         border-radius: 50%;
         position: absolute;
         top: 50%;
@@ -165,3 +166,5 @@ p{
 #know-more-btn:hover{
     background-color: #193d74;
 }
+
+

@@ -7,7 +7,6 @@ function dashboardChoices(option) {
         document.getElementById('my-bookings').style.display = "none";
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -19,7 +18,6 @@ function dashboardChoices(option) {
         document.getElementById('my-bookings').style.display = "block";
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -31,7 +29,6 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'block'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -43,19 +40,7 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'block'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
-        document.getElementById('my-drivers').style.display = 'none'
-        document.getElementById('my-vehicle-booking-history').style.display = 'none'
-        document.getElementById('my-booking-request').style.display = 'none'
-        document.getElementById('my-current-bookings').style.display = 'none'
-    }
-    else if (option === 'my-driving-history') {
-        document.getElementById('my-bookings').style.display = "none";
-        document.getElementById('my-profile').style.display = 'none'
-        document.getElementById('change-password').style.display = 'none'
-        document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'block'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -67,7 +52,6 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'block'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -79,7 +63,6 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'block'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -91,7 +74,6 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'block'
@@ -103,7 +85,6 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -115,7 +96,6 @@ function dashboardChoices(option) {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('change-password').style.display = 'none'
         document.getElementById('my-wallet').style.display = 'none'
-        document.getElementById('my-driving-history').style.display = 'none'
         document.getElementById('my-vehicles').style.display = 'none'
         document.getElementById('my-drivers').style.display = 'none'
         document.getElementById('my-vehicle-booking-history').style.display = 'none'
@@ -166,6 +146,7 @@ function checkChangeNewPass4() {
 }
 
 function checkChangeCnfPass4() {
+
     let newpassword = document.getElementById('changenewpassword');
     let cnfpassword = document.getElementById('changecnfpassword');
 
@@ -208,8 +189,9 @@ function submitchangepassword() {
     }
 }
 /*--------------------Change Password End ---------------------------- */
-/*--------------------Create Password Start ---------------------------- */
 
+
+/*--------------------Create Password Start ---------------------------- */
 function createCheckNewPass4() {
     let newpass = document.getElementById('createnewpass');
     console.log("hi..");
@@ -684,7 +666,19 @@ async function checkVerifyPin(bookingid){
             document.getElementById("success-msg").style.display = "none";
         }
     });
-
-    
 }
 
+document.getElementById("wallet-dashboard").addEventListener("click",async()=>{
+    console.log('hiiii');
+    var walletdata = await fetch('/user/walletdata');
+    var data = await walletdata.json();
+    console.log(data);
+    
+    document.getElementById("wallet-amount").innerText = data.wallet.wallet_amount;
+
+    console.log("wallet data",data.wallet);
+});
+
+var uploadProfileImage = ()=>{
+    
+}

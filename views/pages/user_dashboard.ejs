@@ -56,15 +56,6 @@
                               <li> <a class="dashboard-links" id="user-booking-history" onclick="dashboardChoices('my-bookings')" >My Booking History</a></li>
                             </ul>
                           </li>
-                          <% if(user.is_driver){ %>
-                          <li class="menu-child">
-                            <a href="#"><i class="fa fa-tachometer"></i> Driver Dashboard</a>
-                            <ul>
-                               <li> <a class="dashboard-links" onclick="dashboardChoices('my-driving-history')">My Driving History</a></li>
-                            </ul>
-                          </li>
-                          <% }%>
-                          
                           <% if(user.is_owner){ %>
                           <li class="menu-child">
                             <a href="#"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
@@ -79,7 +70,7 @@
                           <% }%>
                     
                           <li class="menu-child">
-                            <a class="dashboard-links" onclick="dashboardChoices('my-wallet')"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
+                            <a class="dashboard-links" onclick="dashboardChoices('my-wallet')" id="wallet-dashboard"><i class="fa-solid fa-wallet" style="color: #ffffff;"></i>&nbsp; My Wallet</a>
                           </li>
                           <li class="menu-child">
                             <% if(!user.password){%>
@@ -88,16 +79,6 @@
                                 <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
                              <%}%>
                           </li>
-
-                        <%if(!user.is_driver && user.is_complete){%>
-                            <li class="menu-child">
-                                <a class="dashboard-links text-light" data-bs-toggle="modal" data-bs-target="#driverRegistrationForm" style="background-color: #d8d6e3;" ><i class="bi bi-person-video"></i> Become Driver</a>
-                            </li>   
-                        <%}else if(!user.is_driver && !user.is_complete){%>
-                            <li class="menu-child">
-                                <a class="dashboard-links" id="book-vehicle-page-btn" data-bs-toggle="modal" data-bs-target="#userRegistrationForm"><i class="bi bi-person-video"></i> Become Driver</button>
-                            </li>
-                        <% } %>
 
                         <% if(!user.is_owner && user.is_complete){%>  
                             <li class="">
@@ -122,6 +103,7 @@
                 <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
                     <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
                         <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
+                        <i class="fa-solid fa-pen-to-square" style="margin-left: 12%; margin-top: 0;" onclick="uploadProfileImage()"></i><br>
                         <%if(user.name){%>
                             <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
                         <%}%>
@@ -272,37 +254,6 @@
             </div>
           <!-- Booking History -->
 
-
-          <!-- View Driver Booking History Start  -->
-          <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="my-driving-history" >
-            <div class="table-responsive">
-                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Booking History</h4><br>
-                <table class="table table-striped" style="background-color: white;">
-                <thead>
-                    <th>Booking Date</th>
-                    <th>Booking Days</th>
-                    <th>Vehicle Number</th>
-                    <th>Passenger Name</th>
-                    <th>Passenger Contact</th>
-                    <th>Income</th>
-                </thead>
-                <tbody>
-                <!-- Table Data Fill Here -->
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>  
-                    </tbody>
-                </table>  
-            </div>
-        </div>
-         <!-- View Driver Booking History End  -->
-
-
         <!-- User Create Password Start -->
         <%if(!user.password ){%>
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password">
@@ -367,7 +318,7 @@
                 <div>
                     <h4 class="text-center fw-bold mt-2 bg-light">WALLET</h4>
                 <div class="bg-light "><br>
-                        <span class="fs-4  ms-5 fw-bold">Wallet Amount: $ 300</span>
+                        <span class="fs-4  ms-5 fw-bold">Wallet Amount: &#8377; <span id="wallet-amount"></span> </span>
                     <div class="row mx-1 my-1 bg-light">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <button class="btn btn-primary btn-md m-4 w-75">Add Amount</button>

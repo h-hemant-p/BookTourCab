@@ -6,6 +6,7 @@ import drivingDetails from '../model/drivingDetailModel.js';
 import vehicles from '../model/vehicleModel.js';
 import bookings from '../model/vehicleBookingModel.js';
 import vehiclesInsurance from '../model/vehicleInsuranceModel.js'
+import wallets from '../model/walletModel.js';
 import crypto from 'crypto';
 import swal from 'sweetalert';
 import session from 'express-session';
@@ -71,7 +72,7 @@ export const userCreatePasswordController = async (request, response) => {
         await users.updateOne(
             {
                 email: request.session.log.email
-            }, {
+            },{
             $set: {
                 password: password
             }
@@ -872,6 +873,16 @@ export const userVerifyBookingStartPinController = async(request,response)=>{
         }else{
             response.json({message : false});
         }
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const userWalletDataController = async(request,response)=>{
+    try{
+        var walletdata = await wallets.findOne({_id:request.session.log.wallet});
+        console.log(walletdata)
+        response.json({wallet : walletdata});
     }catch(error){
         console.log(error);
     }

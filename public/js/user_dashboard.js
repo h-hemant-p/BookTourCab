@@ -58,7 +58,7 @@ function dashboardChoices(option) {
         document.getElementById('create-password').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === 'owner-vehicles') {
+    else if (option == 'owner-vehicles') {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('user-current-bookings').style.display = "none";
         document.getElementById('user-requested-bookings').style.display = 'none'
@@ -142,7 +142,7 @@ function dashboardChoices(option) {
         document.getElementById('create-password').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === 'create-password') {
+    else if (option == 'create-password') {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('user-current-bookings').style.display = "none";
         document.getElementById('user-requested-bookings').style.display = 'none'
@@ -156,7 +156,7 @@ function dashboardChoices(option) {
         document.getElementById('create-password').style.display = 'block';
         document.getElementById('change-password').style.display = 'none';
     }
-    else if (option === 'change-password') {
+    else if (option == 'change-password') {
         document.getElementById('my-profile').style.display = 'none'
         document.getElementById('user-current-bookings').style.display = "none";
         document.getElementById('user-requested-bookings').style.display = 'none'

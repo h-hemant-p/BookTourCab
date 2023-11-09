@@ -571,7 +571,10 @@ export const userAddInsuranceController = async (request, response) => {
 export const userViewBookingHistoryController = async (request, response) => {
     try {
         var bookingarray = [];
-        var bookingsdata = await bookings.find({ customer: request.session.log._id });
+        var bookingsdata = await bookings.find({ 
+            customer: request.session.log._id,
+            booking_status : "Completed"
+        });
 
         for (var i = 0; i < bookingsdata.length; i++) {
             var ownerid = bookingsdata[i].owner;
@@ -587,6 +590,10 @@ export const userViewBookingHistoryController = async (request, response) => {
             });
 
             var obj = {
+                manufacture_year : vehicledata.manufacture_year,
+                vehicle_image : vehicledata.images[0],
+                vehicle_company : vehicledata.company,
+                vehicle_model : vehicledata.model,
                 start_date: bookingsdata[i].start_date,
                 end_date: bookingsdata[i].end_date,
                 vehicle_reg_no : vehicledata.vehicles[0].reg_number,
@@ -598,16 +605,13 @@ export const userViewBookingHistoryController = async (request, response) => {
                 booking_charges: bookingsdata[i].booking_charges,
                 gst_charges: bookingsdata[i].gst_charges,
                 total_charges: bookingsdata[i].total_charges,
+                owner_name : ownerdata.name,
                 ownercontact: ownerdata.contact_no,
                 owneraddress : ownerdata.address,
-                bookingpin: bookingsdata[i].bookingpin,
-                booking_status: bookingsdata[i].booking_status
             }
             bookingarray.push(obj)
         }
         response.json({ bookings: bookingarray });
-
-
     } catch (err) {
         console.log("Error While user view Booking History Controller" + err);
     }
@@ -656,27 +660,18 @@ export const userDeleteVehicleCOntroller = async (request, response) => {
 }
 
 
-export const userRemoveOwnerDriverController = async (request, response) => {
-    var id = request.query.driverid;
+export const userDeleteDriverController = async (request, response) => {
+    console.log('inside userDeleteDriverController');
+    
+    var id = request.body.driverid;
 
     try {
         await ownerDetails.updateOne(
-            { email: request.session.log.email },
+            { _id: request.session.log.owner_details},
             { $pull: { drivers: { _id: id } } }
-        )
-
-        var loggedUser = await users.findOne({ email: request.session.log.email });
-        var loggedOwnerDetails = await ownerDetails.findOne({
-            _id: loggedUser.owner_details
-        });
-        request.session.log = loggedUser;
-        request.session.ownerDetails = loggedOwnerDetails;
-        request.session.role = "user";
-        request.session.save();
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        );
     } catch (error) {
-        console.log("Error While Register." + error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        console.log(error)
     }
 }
 
@@ -725,7 +720,7 @@ export const userUpdateVehicleInsuranceDetailsController = async (request, respo
 }
 
 
-export const userVehicleBookingsController = async (request, response) => {
+export const userVehicleBookingRequestDataController = async (request, response) => {
     try {
         var userbookings = [];
         // console.log(request.session.log);
@@ -806,55 +801,72 @@ export const userAcceptOwnerBookingController = async(request,response) => {
 }
 
 
-export const userOwnerViewCurrentBookingController = async(request,response) => {
+export const userOwnerCurrentBookingDataController = async(request,response) => {
     try {
         var userbookings = [];
-        // console.log(request.session.log);
-        var res = request.session.log.owner_details;
-        // console.log(res);
+        var ownerid = request.session.log.owner_details;
 
         var currentbookings = await bookings.find({
-            $and : [
-                { owner: res },
-                {booking_status : "Confirm"}
+            $or:[ 
+                {
+                    $and : [
+                        {   
+                            owner: ownerid 
+                        },
+                        {   
+                            booking_status : "Confirm"
+                        }
+                    ]
+                },
+                {
+                    $and : [
+                        {   
+                            owner: ownerid 
+                        },
+                        {   
+                            booking_status : "Running"
+                        }
+                    ]
+                }
             ]
         });
         
+        var ownerDetail = await ownerDetails.findOne({ _id: ownerid });
         for (var i = 0; i < currentbookings.length; i++) {
-            var userid = currentbookings[i].customer;
-            var ownerid = currentbookings[i].owner;
+            var customerid = currentbookings[i].customer;
             var vehicleid = currentbookings[i].vehicle;
 
-            var userdetails = await users.findOne({_id : userid});
+            var customerDetails = await users.findOne({_id : customerid});
 
-            const ownerDetailsDocument = await ownerDetails.findOne({ _id: ownerid });
-
-            if (ownerDetailsDocument) {
-                const specificVehicle = ownerDetailsDocument.vehicles.find(vehicle => vehicle._id.toString() === vehicleid.toString());
-            
-            var obj = { 
-                username : userdetails.name,
-                usercontact : userdetails.contact_no,
-                total_time : currentbookings[i].total_time,
-                startdate :  currentbookings[i].start_date,
-                start_time : currentbookings[i].start_time,
-                endDate :  currentbookings[i].end_date,
-                end_time : currentbookings[i].end_time,
-                vehicle_reg_no : specificVehicle.reg_number,
-                company_name : specificVehicle.company,
-                modelname : specificVehicle.model,
-                manufacture_year : specificVehicle.manufacture_year,
-
-                totalamount :  currentbookings[i].total_charges,
-                bookingid : currentbookings[i]._id,
-
+            if (ownerDetail) {
+                var specificVehicle = ownerDetail.vehicles.find(vehicle => vehicle._id.toString() === vehicleid.toString());
+                var obj = { 
+                    username : customerDetails.name,
+                    usercontact : customerDetails.contact_no,
+                    total_time : currentbookings[i].total_time,
+                    startdate :  currentbookings[i].start_date,
+                    start_time : currentbookings[i].start_time,
+                    endDate :  currentbookings[i].end_date,
+                    end_time : currentbookings[i].end_time,
+                    vehicle_reg_no : specificVehicle.reg_number,
+                    company_name : specificVehicle.company,
+                    modelname : specificVehicle.model,
+                    manufacture_year : specificVehicle.manufacture_year,
+                    rent : specificVehicle.rent,
+                    booking_status : currentbookings[i].booking_status,
+                    totalamount :  currentbookings[i].total_charges,
+                    bookingid : currentbookings[i]._id,
+                    havedriver : specificVehicle.driver,
+                    drivers : ownerDetail.drivers,
+                    completion_pin : currentbookings[i].completion_pin,
+                    payment_status : currentbookings[i].payment_status
+                }
+                userbookings.push(obj);
             }
-            userbookings.push(obj);
         }
-    }
         response.json({ bookings: userbookings })
     } catch (err) {
-        console.log("Error While Fetching Current Booking Controller"+err);
+        console.log("Error While Fetching Current Booking Controller. \n"+err);
     }
 }
 
@@ -887,3 +899,44 @@ export const userWalletDataController = async(request,response)=>{
         console.log(error);
     }
 }
+
+export const userOwnerDriverDataController = async(request,response)=>{
+    try{
+        var ownerDetail = await ownerDetails.findOne({_id:request.session.log.owner_details});
+        console.log(ownerDetail.drivers)
+        response.json({drivers : ownerDetail.drivers});
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const userStartBookingController = async(request,response)=>{
+    var min = 1000; 
+    var max = 9999;
+    var completionPin = Math.floor(Math.random() * (max - min + 1)) + min;
+    try{
+        await bookings.updateOne(
+            {
+                _id:request.body.bookingid
+            },{
+                $set :{
+                    booking_status : "Running",
+                    completion_pin : completionPin
+                }
+            }
+        );
+        console.log('Booking Started Successfully.');
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const userOwnerVehicleDataController = async(request,response)=>{
+    try{
+        var ownerDetail = await ownerDetails.findOne({_id:request.session.log.owner_details});
+        console.log(ownerDetail.vehicles)
+        response.json({vehicles : ownerDetail.vehicles});
+    }catch(error){
+        console.log(error);
+    }
+};

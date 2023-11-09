@@ -1,6 +1,6 @@
 "use strict"
 import express from 'express';
-import {adminUserListController,adminVehicleListController,adminChangePasswordController,adminBlockUserController,adminBlockedUsersListController,adminUnBlockUserController,adminLogOutController,adminBlockVehicleController,adminBlockVehicleListController,adminUnBlockVehicleController,adminFilterUserController, adminFilterBlockedUserController, adminFilterVehicleController} from '../controller/adminController.js'
+import {adminUserListController,adminVehicleListController,adminChangePasswordController,adminBlockUserController,adminBlockedUsersListController,adminUnBlockUserController,adminLogOutController,adminBlockVehicleController,adminBlockVehicleListController,adminUnBlockVehicleController,adminContactUsListController} from '../controller/adminController.js'
 
 let adminRouter = express.Router();
 
@@ -19,8 +19,5 @@ adminRouter.get('/adminlogout',adminLogOutController);
 adminRouter.post('/blockvehicle',adminBlockVehicleController);
 adminRouter.get('/blockvehiclelist',adminBlockVehicleListController);
 adminRouter.post('/unblockvehicle',adminUnBlockVehicleController);
-/* Filter By Aarti  */
-adminRouter.post('/filterusers',adminFilterUserController);
-adminRouter.post('/filterblockedusers',adminFilterBlockedUserController);
-adminRouter.post('/filtervehicle',adminFilterVehicleController);
+adminRouter.get('/contactuslist',adminContactUsListController);
 export default adminRouter;

@@ -4,238 +4,257 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
     <!-- Bootstrap CSS Link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="css/admin_dashboard.css">
     <link rel="stylesheet" href="css/formValidation.css">
+   
 </head>
+
 <body>
     <!-- adding navbar -->
     <%#- include('../partials/navbar')%>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <!-- Main Menu -->
-            <div class=" col-lg-3 col-md-12 col-sm-12 col-xs-12 mt-4 myDashboardCard " style="background-color:#535Af8">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-user-circle text-light display-2 m-4"></i>
-                    <p class="my-4 text-light">Hemant Prajapati User<br>9879875678</p>
-                </div>
-                <div class="mx-5 fw-bold text-light">
-                     <span class="dashboard-links" onclick="showDetails('adminaccount-details')" >Account Details</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('allusers-details');" id="allusers">User's List</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('allblockusers-details')" id="allblockedusers">Blocked Users</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('vehicles-details')"  id="allvehicles" > Vehicle List</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('allblockvehicles-details')" id="allblockedvehicle" >Blocked Vehicles</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('change-password')" >Change Password</span><br><br>
-                     <span class="dashboard-links" onclick="showDetails('log-out')" ><a href="/admin/adminlogout" class="text-light fw-bold text-decoration-none">Log Out</a></span><br><br>
-                </div>
+            <div class=" col-lg-3 col-md-12 col-sm-12 col-xs-12" style="background-color:#535Af8">
+                <div id="accordian" class="menu-parent style1">
+                    <ul class="menu">
+                        <li class="menu-child">
+                            <div class="text-center">
+                                <i class="fas fa-user-circle text-light display-2 m-4"></i><br>
+                                <% if(admin.name){ %>
+                                    <span class="text-light fw-bold"><%= admin.name %></span><br>
+                                    <span class="text-light fw-bold"><%= admin.contact_no %></span>
+                                <% }else{ %>
+                                    <span class="text-light fw-bold"><%= admin.email %></span><br>
+                                    <span class="text-light fw-bold"><%= admin.contact_no %></span>
+                                <% } %>
+                            </div>
+                        </li>       
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('adminaccount-details')"><i class="fas fa-user text-light fs-6"></i> &nbsp; My Profile</a>
+                        </li>
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('allusers-details');" id="allusers"><i class="fa fa-list text-light" aria-hidden="true" ></i> &nbsp; User's List</a>
+                        </li>
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('allblockusers-details')" id="allblockedusers"><i class="fa-solid fa-ban text-light"></i>&nbsp; Blocked Users</a>
+                        </li>
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('vehicles-details')"  id="allvehicles"><i class="fa fa-list" style="color: #ffffff;"></i>&nbsp; Vehicle List</a>
+                        </li>
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('allblockvehicles-details')" id="allblockedvehicle"><i class="fa-solid fa-ban" style="color: #ffffff;"></i>&nbsp; Blocked Vehicles</a>
+                        </li>
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('admin-contact-us')" id="admin-contactus"><i class="fa-solid fa-phone" style="color: #ffffff;"></i>&nbsp; Contact Us Query</a>
+                        </li>
+                        <li class="menu-child">
+                            <a class="dashboard-links" onclick="showDetails('change-password')"><i class="fa-solid fa-key" style="color: #ffffff;"></i>  &nbsp; Change Password </a>
+                        </li>
+                        <li>
+                            <a href="/admin/adminlogout"><i class="fa fa-sign-out"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>  
             </div>
             <!-- Main Menu -->
 
             <!-- Admin Profile Detail -->
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="adminaccount-details" >
-                <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-                    <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3 ps-5">
-                            <!-- <i class="fa-solid fa-circle-user m-4  display-1 text-secondary" style="color: #1f2551; height: fit-content;"></i> -->
-                            <img src="images/profilePic.jpeg" height="auto" width="50%" alt="" style="border-radius: 50%;">
-                          </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" >
-                            <label for="name" class="fw-bold fs-5 my-4">Name : </label><span> Andrew Anderson</span><br>
-                            <label for="gender" class="fw-bold fs-5 my-4">Gender : </label><span> Male</span><br>
-                            <label for="email" class="fw-bold fs-5 my-4">E-mail : </label><span> andrewanderson@gmail.com</span><br>
-                            <label for="Address" class="fw-bold fs-5 my-4">Contact No : </label><span> 9879875678</span><br>
-                            <button class="btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;">Update Details</button>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " id="my-profile" >
+                <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
+                    <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
+                        
+                        <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
+                        <i class="fa-solid fa-pen-to-square" style="margin-left: 12%; margin-top: 30px;" onclick="uploadProfileImage()"></i><br>
+                        
+                        <%if(admin.name){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= admin.name %></span><br>
+                        <%}%>
+                        <%if(admin.gender){%>
+                            <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= admin.gender %></span><br>
+                        <%}%>
+                        <%if(admin.email){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= admin.email %></span><br>
+                        <%}%>
+                        <%if(admin.contact_no){%>
+                            <label for="name" class="fw-bold fs-5 my-1">Contact : </label><span class="fs-6 fw-bold ms-2"><%= admin.contact_no%></span><br>
+                        <%}%>
+                        <button class="open-modal-user btn btn-primary btn-md my-5 w-50 " style="background-color: #5647F9;" data-bs-toggle="modal" data-bs-target="#userDetailsUpdateForm" data-admin_details="<%=admin._id%>">Update Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Admin Profile Detail -->
+
+            <!-- Owner Update Profile Update Modal Start -->
+            <div class="modal fade" id="userDetailsUpdateForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitleId">Admin Update Details Form </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                
+                        <div class="modal-body">
+                            <form   class="form" enctype="multipart/form-data">
+                                <div class="container ">
+                                    <div class="border bg-primary">
+                                        <h5 class="m-2 fw-bold text-center text-light">ADMIN PROFILE UPDATE FORM</h5>
+                                    </div>
+                                </div>
+                                <div class="container"><br>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6 form-field">
+                                            <label for="user-name" class=" form-label fw-bold">Name*</label>
+                                            <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="name" id="username" onkeyup="checkUsername3()" autocomplete="off">
+                                            <small></small>
+                                        </div>
+                                        <div class="mb-3 col-lg-6"><br>
+                                            <label for="gender" class=" form-label fw-bold ">Gender*</label>
+                                            <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+                                            <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+                                            <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6 form-field">
+                                            <label for="user-pan-number" class=" form-label fw-bold ">Email*</label>
+                                            <input type="email" class="form-control w-75 " placeholder="Enter Email" name="email" id="email" onkeyup="" aria-describedby="ride">
+                                            <small></small>
+                                        </div>
+                                        <div class="mb-3 col-lg-6 form-field">
+                                            <label for="user-pancard-image" class=" form-label fw-bold">Contact No*</label>
+                                            <input type="text" class="form-control w-75" placeholder="contact_no" name="admincontact" id="admincontact" onchange="" aria-describedby="ride">
+                                            <small></small>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row mt-2">
+                                    <div class="mb-3 col-lg-6 form-field">
+                                        <input type="button" class="btn btn-secondary w-75 ms-2" value="cancel" data-bs-dismiss="modal">
+                                    </div>
+                                    <div class="mb-3 col-lg-6 form-field">
+                                        <input type="submit" class="btn btn-primary w-75" value="Submit">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-      <!-- Admin Profile Detail -->
+        <!-- Owner Update Profile Modal End -->
 
-      <!-- All User Details -->
-      <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allusers-details">
-        <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-            <h4 class="text-center fw-bold m-2 " style="background-color: white; width: 98%;">User's List</h4>
-            <!--Search Filter user Start  -->
-            <div class="bg-light m-2 " style="background-color: white; width: 98%;"><br>
-            <select id="filterSelect" name="selectvalue">
-                <option value="name">Search by Name</option>
-                <option value="role">Search by Role</option>
-                <option value="email">Search by Email</option>
-                <option value="address">Search by Address</option>
-                <option value="usercontact">Search by Contect Number</option>
-            </select>
-            <input id="queryInput" type="text" placeholder="Enter search term" name="query">
-            <button class="btn btn-primary" onclick="searchUserFilter()">Search Data</button><br><br>
-        </div>
-            <!--Search Filter user End  -->
 
-            <div class="table-responsive" id="user-data">
-                <br>
+            <!-- All User Details -->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allusers-details">
+                <h4 class="text-center fw-bold m-2 " style="background-color: white; width: 98%;">User's List</h4>
+                <div class="table-responsive" id="user-data"></div>
             </div>
-        </div>
-    </div>
-<!-- All User Details -->
+            <!-- All User Details -->
 
-<!-- All Blocked User Details -->
-<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allblockusers-details">
-    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked User's</h4>
-        <!--Search Blocked user Filter Start  -->
-        <div class="bg-light m-2 " style="background-color: white; width: 98%;"><br>
-        <select id="filterBlockedUserSelect" name="filterBlockedUserSelect">
-            <option value="name">Search by Name</option>
-            <option value="role">Search by Role</option>
-            <option value="email">Search by Email</option>
-            <option value="address">Search by Address</option>
-            <option value="usercontact">Search by Contect Number</option>
-        </select>
-        <input id="queryBlockedUserInput" type="text" placeholder="Enter search term" name="queryBlockedUserInput">
-        <button class="btn btn-primary" onclick="searchBlockedUserFilter()">Search Data</button><br><br>
-        </div>
-        <!--Search Blocked user Filter End  -->
+            <!-- All Blocked User Details -->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allblockusers-details">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked User's</h4>
+                <div class="table-responsive"  id="blocked-user-data"></div>
+            </div>
+            <!-- All Blocked User Details -->
 
-      
-        <div class="table-responsive"  id="blocked-user-data">
-            
-            <br>
-        </div>
-    </div>
-</div>
-<!-- All Blocked User Details -->
+            <!-- All Vehicles Details -->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="vehicles-details">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Vehicles List</h4>
+                <div class="table-responsive" id="vehicle-data"></div>
+            </div>
+            <!-- All Vehicles Details -->
 
-<!-- All Vehicles Details -->
-<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="vehicles-details">
-    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-
-        <!--Search Filter Start  -->
-        <select id="VehicleFilterSelect" name="VehicleFilterSelect">
-            <option value="registration_no">Search By Registration Number</option>
-            <option value="company">Search by Company Name</option>
-            <option value="model">Search by Model</option>
-            <option value="insurance">Search by Insurance</option>
-        </select>
-        <input id="vehicleQueryInput" type="text" placeholder="Enter search term" name="vehicleQueryInput">
-        <button class="btn btn-primary" onclick="searchVehicleFilter()">Search Data</button>
-        <!--Search Filter End  -->
-
-        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Vehicles List</h4>
-        <div class="table-responsive" id="vehicle-data">
-            <br>
-        </div>
-    </div>
-</div>
-<!-- All Vehicles Details -->
-
-<!-- All Blocked Vehicle's Details -->
-<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allblockvehicles-details">
-    <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-        <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked Vehicle's</h4>
-        <div class="table-responsive" id="blocked-vehicle-data">
-            <br>
-            <!-- <table class="table table-striped" style="background-color: white;">
-                <thead>
-                    <th>Registration No</th>
-                    <th>Company</th>
-                    <th>Model</th>
-                    <th>Class</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#" class="btn btn-primary">Unblock</a></td>
-                    </tr>
-                </tbody>
-            </table> -->
-        </div>
-    </div>
-</div>
-<!-- All Blocked Vehicle's Details -->
+            <!-- All Blocked Vehicle's Details -->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="allblockvehicles-details">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">All Blocked Vehicle's</h4>
+                <div class="table-responsive" id="blocked-vehicle-data"></div>
+            </div>
+            <!-- All Blocked Vehicle's Details -->
 
 
-    <!-- Admin Change Password -->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" >
-            <div class="row  ms-lg-1 mt-4 myDashboardCard " style="background-color: rgb(195, 194, 194);">
-              <h4 class="text-center fw-bold my-2 m-2 h-100 " style="background-color: white; width: 98%;">Change Password</h4>
-               <div class="m-2" style="background-color: white; width: 98%;">   
-                 <form action="/admin/changepassword" onsubmit=" return submitchangepassword7()" method="post">
-                    <div align="center" style="background-color: white;">
-                       <div class="form-field">
-                          <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
-                          <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass7()">
-                          <small></small>
-                       </div>
-                       <div class="mt-4 form-field">
-                          <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
-                          <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass7()">
-                          <small></small>
-                       </div>
-                       <div class="mt-4 form-field">
-                          <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
-                          <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass7()">
-                          <small></small>
-                       </div>
-                       <div class="my-5">
-                           <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
-                       </div><br>
+            <!-- All Blocked Vehicle's Details -->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="admin-contact-us">
+                <h4 class="text-center fw-bold mt-2 " style="background-color: white;">Contact Us Query's</h4>
+                <div class="table-responsive" id="contact-us-data"></div>
+            </div>
+            <!-- All Blocked Vehicle's Details -->
+
+            <!-- Admin Change Password -->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="change-password" >
+                <div class="row  ms-lg-1 mt-4">
+                    <h4 class="text-center fw-bold my-2 m-2 h-100 " style="background-color: white; width: 98%;">Change Password</h4>
+                    <div class="m-2" style="background-color: white; width: 98%;">   
+                        <form action="/admin/changepassword" onsubmit=" return submitchangepassword7()" method="post">
+                            <div align="center" style="background-color: white;">
+                                <div class="form-field">
+                                    <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Old Password</label>
+                                    <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass7()">
+                                    <small></small>
+                                </div>
+                                <div class="mt-4 form-field">
+                                    <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
+                                    <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass7()">
+                                    <small></small>
+                                </div>
+                                <div class="mt-4 form-field">
+                                    <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
+                                    <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass7()">
+                                    <small></small>
+                                </div>
+                                <div class="my-5">
+                                    <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change"><br><br>
+                                    <span class="text-center text-primary" onclick="forgetPassword()">Forget Password</span>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                 </form>
-               </div>
-            </div>
-        </div>    
-    <!-- Admin Change Password -->          
-
+                </div>
+            </div>    
+            <!-- Admin Change Password --> 
+            
+            <!-- User Forget Password  Start-->
+             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="admin-forget-password" >
+                <div class="row  ms-lg-1 mt-4">
+                    <h4 class="text-center fw-bold my-2 m-2 ">Forget Password</h4>
+                    <div class="m-2" style="background-color: white; width: 98%;"> 
+                        <form action="/user/changepassword" onsubmit=" return submitchangepassword()" method="post">
+                            <div align="center" style="background-color: white;">
+                                <div class="form-field">
+                                    <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Email</label>
+                                    <input type="email" class="w-50 form-control mt-2" placeholder="Enter Email" id="email" name="email" onkeyup="checkChangeOldPass4()">
+                                    <small></small>
+                                </div>
+                                <div class="my-5">
+                                    <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Get Otp"><br><br>
+                                    <p class="text-center text-primary" onclick="changePassword()">Change Password</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+            <!-- User Forget Password End -->
+        </div>
     </div>
-</div>
-<!-- adding footerr -->
-<%- include('../partials/footer')%>
+
+    <!-- adding footerr -->
+    <%- include('../partials/footer')%>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

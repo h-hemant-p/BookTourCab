@@ -17,6 +17,7 @@ export const aunthicateJWT = (request,response,next)=>{
             jwt.verify(token,SECRET_KEY,(error,payload)=>{//secret key not found
                 if(error){
                     console.log('error inside verify method.');
+                    console.log(error);
                     response.render("./pages/index",{user:""});
                 }else{
                     console.log('verify Successfull');

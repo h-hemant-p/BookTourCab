@@ -121,6 +121,7 @@ h1 {
 #owner-vehicle-booking-history,
 #my-wallet,
 #create-password,
+#forget-password,
 #change-password {
   display: none;
 }

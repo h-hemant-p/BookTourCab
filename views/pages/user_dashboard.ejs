@@ -53,13 +53,13 @@
                                 <a href="#"><i class="fa fa-tachometer"></i> User Dashboard</a>
                                 <ul>
                                     <li> 
-                                        <a class="dashboard-links" onclick="dashboardChoices('user-current-bookings')" >Current Bookings</a>
+                                        <a class="dashboard-links" id="user-current-bookings-btn" onclick="dashboardChoices('user-current-bookings')" >Current Bookings</a>
                                     </li>
                                     <li> 
-                                        <a class="dashboard-links" onclick="dashboardChoices('user-requested-bookings')" >Requested Bookings</a>
+                                        <a class="dashboard-links" id="user-requested-bookings-btn" onclick="dashboardChoices('user-requested-bookings')" >Requested Bookings</a>
                                     </li>
                                     <li>
-                                        <a class="dashboard-links" onclick="dashboardChoices('user-booking-history')" >Booking History</a>
+                                        <a class="dashboard-links" id="user-booking-history-btn" onclick="dashboardChoices('user-booking-history')" >Booking History</a>
                                     </li>
                                 </ul>
                             </li>
@@ -67,10 +67,10 @@
                                 <li class="menu-child">
                                     <a href="#"><i class="fa fa-tachometer"></i> Owner Dashboard</a>
                                     <ul>
-                                        <li><a class="dashboard-links" onclick="dashboardChoices('owner-vehicles')">My Vehicles</a></li>
-                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-drivers')">My Drivers</a></li>
-                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-current-bookings')" id="current-bookings">Current Bookings</a></li>
-                                        <li> <a class="dashboard-links" onclick="dashboardChoices('owner-booking-request')" id="vehicles-bookings-request">Booking Requests</a></li>
+                                        <li><a class="dashboard-links" onclick="showOwnerVehicles(); dashboardChoices('owner-vehicles')">My Vehicles</a></li>
+                                        <li> <a class="dashboard-links" onclick="showOwnerDrivers(); dashboardChoices('owner-drivers')">My Drivers</a></li>
+                                        <li> <a class="dashboard-links" onclick="showOwnerCurrentBookings(); dashboardChoices('owner-current-bookings')" id="owner-current-bookings-btn">Current Bookings</a></li>
+                                        <li> <a class="dashboard-links" onclick="ShowBookingRequestData(); dashboardChoices('owner-booking-request');" id="owner-booking-request-btn">Booking Requests</a></li>
                                         <li> <a class="dashboard-links" onclick="dashboardChoices('owner-vehicle-booking-history')">Bookings History</a></li>
                                     </ul>
                                 </li>
@@ -84,7 +84,6 @@
                                     <a class="dashboard-links" onclick="dashboardChoices('create-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Create Password</a>
                                 <%}else{%>
                                     <a class="dashboard-links" onclick="dashboardChoices('change-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Change Password</a>
-                                    <a class="dashboard-links" onclick="dashboardChoices('forget-password')" ><i class="fa-solid fa-key" style="color: #ffffff;"></i>&nbsp; Forget Password</a>
                                 <%}%>
                             </li>
 
@@ -373,7 +372,7 @@
                         <!-- Insurance Update Modal End -->
                     </div>
                     <div class="row mx-1 my-2">
-                        <div class="offset-md-1 col-lg-5 col-md-6 col-sm-12">
+                        <div class="offset-md-4 col-lg-5 col-md-6 col-sm-12">
                             <button class="btn btn-primary w-75 m-4 fw-bold"  data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Add Vehicle</button>
                         </div>
                     </div>
@@ -384,6 +383,11 @@
                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="owner-drivers">
                     <h4 class="text-center fw-bold m-2 ">Drivers</h4>
                     <div id="owner-driver-list-data"></div>
+                    <div class="row mx-1 my-2">
+                        <div class="offset-md-4 col-lg-5 col-md-6 col-sm-12">
+                            <button class="btn btn-primary w-75 m-4 fw-bold" data-bs-toggle="modal" data-bs-target="#reservedDriverRegistrationForm"> Add Driver</button>
+                        </div>
+                    </div>
                 </div>
             <!-- Owner Drivers List -->
 
@@ -396,7 +400,7 @@
 
             <!--My Vehicle Booking Request Start -->
                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="owner-booking-request" >
-                    <h4 class="text-center fw-bold m-2 ">Booking Requests</h4>
+                    <h4 class="text-center fw-bold m-4 ">Booking Requests</h4>
                     <div class="table-responsive" id="owner-booking-request-data"></div>
                 </div>
             <!-- My Vehicle Bookig Request End -->
@@ -464,38 +468,6 @@
                         </div>
                     </div>    
                 <!-- User Change Password End -->
-
-                <!-- User Forget Password  Start-->
-                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="forget-password" >
-                        <div class="row  ms-lg-1 mt-4">
-                            <h4 class="text-center fw-bold my-2 m-2 ">Forget Password</h4>
-                            <div class="m-2" style="background-color: white; width: 98%;"> 
-                                <form action="/user/changepassword" onsubmit=" return submitchangepassword()" method="post">
-                                    <div align="center" style="background-color: white;">
-                                        <div class="form-field">
-                                            <label class=" fw-bold fs-5 mt-3" for="changeoldpassword">Email</label>
-                                            <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changeoldpassword" name="changeoldpassword" onkeyup="checkChangeOldPass4()">
-                                            <small></small>
-                                        </div>
-                                        <div class="mt-4 form-field">
-                                            <label class="fw-bold fs-5 " for="changenewpassword">New Password</label>
-                                            <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changenewpassword" name="changenewpassword" onkeyup="checkChangeNewPass4()">
-                                            <small></small>
-                                        </div>
-                                        <div class="mt-4 form-field">
-                                            <label class="fw-bold fs-5  " for="changecnfpassword">Confirm Password</label>
-                                            <input type="password" class="w-50 form-control mt-2" placeholder="Enter Old Password" id="changecnfpassword" name="changecnfpassword" onkeyup="checkChangeCnfPass4()">
-                                            <small></small>
-                                        </div>
-                                        <div class="my-5">
-                                            <input type="submit" class="btn btn-primary w-50 fs-5 fw-bold form-control" value="Change">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>    
-                <!-- User Forget Password End -->
                 <%#}%>
             <!-- User Password Dashboard End -->
 

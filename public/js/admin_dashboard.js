@@ -7,6 +7,7 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'none';
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none';  
     }
     else if (option === "allusers-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -15,6 +16,7 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'none';
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none';    
     }
     else if (option === "allblockusers-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -23,6 +25,7 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'none';
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none'; 
     }
     else if (option === "vehicles-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -31,6 +34,7 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'block';
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none'; 
     }
     else if (option === "allblockvehicles-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -39,6 +43,7 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'none';
         document.getElementById('allblockvehicles-details').style.display = 'block';
         document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none';     
     }
     else if (option === "change-password") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -47,8 +52,41 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'none';
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'block';
+        document.getElementById('admin-contact-us').style.display = 'none';
+    }
+    else if (option === "admin-contact-us") {
+        document.getElementById('adminaccount-details').style.display = 'none';
+        document.getElementById('allusers-details').style.display = 'none';
+        document.getElementById('allblockusers-details').style.display = 'none';
+        document.getElementById('vehicles-details').style.display = 'none';
+        document.getElementById('allblockvehicles-details').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'block';
+
     }
 }
+
+function forgetPassword(){
+    document.getElementById('adminaccount-details').style.display = 'none';
+    document.getElementById('allusers-details').style.display = 'none';
+    document.getElementById('allblockusers-details').style.display = 'none';
+    document.getElementById('vehicles-details').style.display = 'none';
+    document.getElementById('allblockvehicles-details').style.display = 'none';
+    document.getElementById('change-password').style.display = 'none';
+    document.getElementById('admin-forget-password').style.display = 'block';
+}
+
+function changePassword(){
+    document.getElementById('adminaccount-details').style.display = 'none';
+    document.getElementById('allusers-details').style.display = 'none';
+    document.getElementById('allblockusers-details').style.display = 'none';
+    document.getElementById('vehicles-details').style.display = 'none';
+    document.getElementById('allblockvehicles-details').style.display = 'none';
+    document.getElementById('change-password').style.display = 'block';
+    document.getElementById('admin-forget-password').style.display = 'none';
+}
+
+
 
 /*  View All User List Start  */
 document.getElementById('allusers').addEventListener('click', function (e) {
@@ -58,7 +96,6 @@ document.getElementById('allusers').addEventListener('click', function (e) {
 
 async function UsersList() {
 
-    // console.log('obj id is : ', obj.userid);
     const response = await fetch('/admin/userslist')
     console.log(response);
     const data = await response.json();
@@ -67,13 +104,13 @@ async function UsersList() {
     console.log(userdata);
     var user_list_table = "";
 
-    user_list_table += `<table class="table table-striped" class="bg-white" style="background-color: white; font-weight : 500">
+    user_list_table += `<table id="viewalluserslist" class="table table-striped bg-white" style="background-color: white; font-weight : 500">
     <thead>
-        <th>Profile Image</th>
         <th>Name</th>
         <th>Email</th>
         <th>Contact No</th>
         <th>Address</th>
+        <th>Aadhar Number</th>
         <th>Role</th>
         <th>Action</th>
     </thead>
@@ -83,22 +120,25 @@ async function UsersList() {
         role = ""
         if (user.user_status)
             role += "User";
-        if (user.is_driver)
-            role += ",Driver";
         if (user.is_owner)
             role += ",Owner";
 
         user_list_table += `<tr>
-            <td>${user.aadhar_number}</td>
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td>${user.contact_no}</td>
             <td>${user.address}</td>
+            <td>${user.aadhar_number}</td>
             <td>${role}</td>
             <td><a class="btn btn-danger" onclick="adminBlockUser('${user._id}')">Block</a></td>
     </tr>`
     });
     document.getElementById('user-data').innerHTML = user_list_table;
+
+    //for filter data (Data Table)
+    $(document).ready(function () {
+        $("#viewalluserslist").DataTable();
+    });
 }
 /*  View All User List End  */
 
@@ -119,18 +159,19 @@ function adminBlockUser(id) {
             'Content-type': 'application/json; charset=UTF-8',
         }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(responseData1 => {
-            console.log('Server response:', responseData1);
-            UsersList();
-        }).catch(error => {
-            console.error('An error occurred while blocking the user:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(responseData1 => {
+        console.log('Server response:', responseData1);
+        UsersList();
+
+    }).catch(error => {
+        console.error('An error occurred while blocking the user:', error);
+    });
 }
 /*  Admin Block user End   */
 
@@ -151,30 +192,42 @@ async function adminblockUserList() {
     console.log(userdata);
     var blocked_user_list_table = "";
 
-    blocked_user_list_table += `<table class="table table-striped" class="bg-white" style="background-color: white; font-weight : 500;">
+    blocked_user_list_table += `<table id="blockuserslist" class="table table-striped" class="bg-white" style="background-color: white; font-weight : 500;">
     <thead>
-        <th>Profile Image</th>
         <th>Name</th>
         <th>Email</th>
         <th>Contact No</th>
         <th>Address</th>
+        <th>Aadhar Number</th>
         <th>Role</th>
         <th>Action</th>
     </thead>
     <tbody>`;
-    var role = "";
+    let role = "";
     userdata.forEach(user => {
+        role = ""
+        if (!user.user_status)
+            role += "User";
+        if (!user.is_owner)
+            role += ",Owner";
+        
         blocked_user_list_table += `<tr>
-            <td>${user.aadhar_number}</td>
+            
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td>${user.contact_no}</td>
             <td>${user.address}</td>
+            <td>${user.aadhar_number}</td>
             <td>${role}</td>
             <td><a class="btn btn-danger" onclick="unBlockedUser('${user._id}')">UnBlock</a></td>
-    </tr>`
+        </tr>`
     })
     document.getElementById('blocked-user-data').innerHTML = blocked_user_list_table;
+
+    //for filter data (Data Table)
+    $(document).ready(function () {
+        $("#blockuserslist").DataTable();
+    });
 }
 /*  Admin View Block User List End  */
 
@@ -192,24 +245,21 @@ async function unBlockedUser(id) {
             'Content-type': 'application/json; charset=UTF-8',
         }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(responseData1 => {
-            // console.log('Server response:', responseData1);
-            adminblockUserList();
-        })
-        .catch(error => {
-            console.error('An error occurred while Unblocking the user:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(responseData1 => {
+        // console.log('Server response:', responseData1);
+        adminblockUserList();
+    })
+    .catch(error => {
+        console.error('An error occurred while Unblocking the user:', error);
+    });
 }
 /*  Admin Unblock User End  */
-
-
-
 
 
 /*  Admin Block Vehicle List Start */
@@ -219,7 +269,7 @@ document.getElementById('allvehicles').addEventListener('click', function (e) {
 });
 
 async function blockVehicleList() {
-
+    // console.log("all vehicles");
     const response = await fetch('/admin/allvehicles')
     console.log(response);
     const data = await response.json();
@@ -229,18 +279,17 @@ async function blockVehicleList() {
     console.log(vehicledata);
 
     var table = "";
-    table += ` <table class="table table-striped" style="background-color: white; font-weight : 500">
-            <thead>
-                <th>Registration No</th>
-                <th>Company</th>
-                <th>Model</th>
-                <th>Class</th>
-                <th>Insurance</th>
-                <th>Image</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-            `
+    table += ` <table id = "allvehicle" class="table table-striped" style="background-color: white; font-weight : 500">
+        <thead>
+            <th>Registration No</th>
+            <th>Company</th>
+            <th>Model</th>
+            <th>Class</th>
+            <th>Insurance</th>
+            <th>Image</th>
+            <th>Action</th>
+        </thead>
+        <tbody>`
     vehicledata.forEach(element => {
         table += `<tr>
             <td>${element.reg_number}</td>
@@ -250,20 +299,25 @@ async function blockVehicleList() {
             <td>${element.have_insurance}</td>
             <td><img src="uploads/${element.images[0]}" height="200px" width="220px" alt="image"> </td>
             <td><a href="#" class="btn btn-danger" onclick="adminBlockVehicle('${element.reg_number}')">Block</a></td>
-    </tr>`
+        </tr>`
     });
     table += " <tbody></table>"
     document.getElementById('vehicle-data').innerHTML = table;
+
+    //for filter data (Data Table)
+    $(document).ready(function () {
+        $("#allvehicle").DataTable();
+    });
 }
 /*  Admin Block Vehicle List End  */
 
 
 /* Admin Block Vehicle Start */
 async function adminBlockVehicle(reg_number) {
+
     var obj = {
         reg_number: reg_number
     }
-
     var res = await fetch('/admin/blockvehicle', {
         method: 'POST',
         body: JSON.stringify(obj),
@@ -271,18 +325,18 @@ async function adminBlockVehicle(reg_number) {
             'Content-type': 'application/json; charset=UTF-8',
         }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(responseData1 => {
-            console.log('Server response:', responseData1);
-            blockVehicleList();
-        }).catch(error => {
-            console.error('An error occurred while blocking the user:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(responseData1 => {
+        console.log('Server response:', responseData1);
+        blockVehicleList();
+    }).catch(error => {
+        console.error('An error occurred while blocking the user:', error);
+    });
 }
 /* Admin Block Vehicle End  */
 
@@ -302,8 +356,7 @@ async function adminblockVehicleList() {
     var userdata = data.message;
     console.log(userdata);
     var blocked_vehicle_list_table = "";
-
-    blocked_vehicle_list_table += ` <table class="table table-striped" style="background-color: white; font-weight : 500">
+    blocked_vehicle_list_table += ` <table id="blockvehiclelist" class="table table-striped" style="background-color: white; font-weight : 500">
     <thead>
         <th>Registration No</th>
         <th>Company</th>
@@ -327,8 +380,12 @@ async function adminblockVehicleList() {
     </tr>`
     })
     blocked_vehicle_list_table += " <tbody></table>";
-
     document.getElementById('blocked-vehicle-data').innerHTML = blocked_vehicle_list_table;
+
+    //for filter data (Data Table)
+    $(document).ready(function () {
+        $("#blockvehiclelist").DataTable();
+    });
 }
 /* Admin Blocked Vehicle List End  */
 
@@ -339,7 +396,6 @@ async function unBlockVehicle(reg_number) {
     var obj = {
         reg_number: reg_number
     }
-
     var res = fetch('/admin/unblockvehicle', {
         method: 'POST',
         body: JSON.stringify(obj),
@@ -347,26 +403,100 @@ async function unBlockVehicle(reg_number) {
             'Content-type': 'application/json; charset=UTF-8',
         }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(responseData1 => {
-            adminblockVehicleList();
-        })
-        .catch(error => {
-            console.error('An error occurred while Unblocking the user:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error while blocking user! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(responseData1 => {
+        adminblockVehicleList();
+    })
+    .catch(error => {
+        console.error('An error occurred while Unblocking the user:', error);
+    });
 }
 /* Admin Unblock Vehicle End  */
 
 
+/* Contact Us Query Start */
+document.getElementById('admin-contactus').addEventListener('click', async function(){
 
-/* ------------------------ Validation Start ------------------------ */
+    const response = await fetch('/admin/contactuslist')
+    const data = await response.json();
+    var contactusdata = data.data;
 
-/*--------------------Change Password Start ------- */
+    var contactus_list = "";
+    contactus_list += ` <table id="contactus" class="table table-striped" style="background-color: white; font-weight : 500">
+    <thead>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact No</th>
+        <th>Role</th>
+        <th>Query</th>
+    </thead>
+    <tbody>`;
+    contactusdata.forEach(element => {
+      contactus_list += `<tr>
+            <td>${element.name}</td>
+            <td>${element.email}</td>
+            <td>${element.contact_no}</td>
+            <td>${element.role}</td>
+            <td>${element.query}</td>
+        </tr>`
+    })
+    contactus_list += " <tbody></table>";
+    document.getElementById('contact-us-data').innerHTML = contactus_list;
+
+    //for filter data (Data Table)
+    $(document).ready(function () {
+        $("#contactus").DataTable();
+    });   
+});
+/* Contact Us Query End */
+
+/* Update Details start */
+$(document).ready(function () {
+    $('.open-modal-admin').click(function () {
+
+        var _id = $(this).data('admin_details'); // Correct the data attribute name
+        console.log("Id=>", _id);
+
+        var postData = {
+            id: _id
+        };
+        $.ajax({
+            url: '/admin/updateadmindata',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            contentType: 'application/json',
+            dataType: 'json', // Specify the expected data type
+            success: function (response) {
+                console.log('Success:', response);
+
+                // Update the input fields with the received data
+             
+                // $('#username').val(response.data.name);
+                // $('#useraddress').val(response.data.address);
+                // $('#userpincode').val(response.data.pin_code);
+                // $('#userupdatestate').val(response.data.state).change();
+                // $('#userupdatecity').val(response.data.city);
+                // $('#useraadharnumber').val(response.data.aadhar_number);
+            
+                // $('#userpannumber').val(response.data.pan_number);
+              
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+    });
+});
+/* Update Details end  */
+
+
+/*  Validation Start  */
+/* Change Password Start  */
 function checkChangeOldPass7() {
     // console.log("hiii");
     let oldpassword = document.getElementById('changeoldpassword');
@@ -449,7 +579,7 @@ function submitchangepassword7() {
     }
 }
 
-/*--------------------Change Password End ------- */
+/*  Change Password End  */
 
 function isRequired7(value) {
     if (value == "")
@@ -459,8 +589,7 @@ function isRequired7(value) {
 }
 
 function isValidPass7(password) {
-    const res = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
-    // console.log('hiiiii : '+password);
+    const res = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
     return res.test(password);
 }
 
@@ -496,203 +625,4 @@ function showSuccess7(input) {
     error.textContent = '';
 }
 
-/* --------- Validation End ----------------- */
-
-
-/* Filter By Aarti Start */
-// ...........................Search User Start filter...............
-function searchUserFilter() {
-    // e.preventDefault();
-
-    var query = document.getElementById('queryInput').value;
-    var filter = document.getElementById('filterSelect').value;
-    console.log(query);
-    console.log(filter);
-
-    var obj = {
-        query: query,
-        filter: filter
-    }
-    console.log('obj  is : ', obj);
-
-    var res = fetch('/admin/filterusers', {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`HTTP error while fetching filtered users! Status: ${response.status}`);
-        }
-        return response.json(); // Parse the response JSON
-    })
-        .then((filteredUsers) => {
-            console.log("This is my filtered user:", filteredUsers);
-
-            var user_list_table = "";
-            user_list_table += `<table class="table table-striped bg-white" style="background-color: white; font-weight: 500">
-            <thead>
-                <th>Aadhar Number</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Contact No</th>
-                <th>Address</th>
-                <th>Role</th>
-                <th>Action</th>
-            </thead>
-            <tbody>`;
-
-            filteredUsers.forEach((user) => {
-                var role = ""; // You need to set the user's role here
-                role = ""
-                if (user.user_status)
-                    role += "User";
-                if (user.is_driver)
-                    role += ",Driver";
-                if (user.is_owner)
-                    role += ",Owner";
-                user_list_table += `<tr>
-                <td>${user.aadhar_number}</td>
-                <td>${user.name}</td>
-                <td>${user.email}</td>
-                <td>${user.contact_no}</td>
-                <td>${user.address}</td>
-                <td>${role}</td>
-                <td><a class="btn btn-danger" onclick="userList('${user._id}')">Block</a></td>
-            </tr>`;
-            });
-
-            document.getElementById('user-data').innerHTML = user_list_table;
-        })
-        .catch((error) => {
-            console.error('An error occurred while filtering users:', error);
-        });
-}
-// ...........................Search User End filter...............
-
-// ...........................Search Blocked User Start filter...............
-function searchBlockedUserFilter() {
-    // e.preventDefault();
-    console.log("searchBlockedUserFilter fuunction called ");
-    var queryBlockedUserInput = document.getElementById('queryBlockedUserInput').value;
-    var filterBlockedUserSelect = document.getElementById('filterBlockedUserSelect').value;
-    console.log("queryBlockedUserInput clg ", queryBlockedUserInput);
-    console.log("filterBlockedUserSelect clg", filterBlockedUserSelect);
-
-    var obj = {
-        queryBlockedUserInput: queryBlockedUserInput,
-        filterBlockedUserSelect: filterBlockedUserSelect
-    }
-    console.log('obj  is : ', obj);
-
-    var res = fetch('/admin/filterblockedusers', {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`HTTP error while fetching filtered users! Status: ${response.status}`);
-        }
-        return response.json(); // Parse the response JSON
-    })
-        .then((filteredUsers) => {
-            console.log("This is my filtered user:", filteredUsers);
-            var blocked_user_list_table = "";
-
-            blocked_user_list_table += `<table class="table table-striped" class="bg-white" style="background-color: white; font-weight : 500;">
-        <thead>
-            <th>Aadhar Number</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Contact No</th>
-            <th>Address</th>
-            <th>Role</th>
-            <th>Action</th>
-        </thead>
-        <tbody>`;
-            var role = "";
-            filteredUsers.forEach(user => {
-                blocked_user_list_table += `<tr>
-                <td>${user.aadhar_number}</td>
-                <td>${user.name}</td>
-                <td>${user.email}</td>
-                <td>${user.contact_no}</td>
-                <td>${user.address}</td>
-                <td>${role}</td>
-                <td><a class="btn btn-danger" onclick="unBlockedUser('${user._id}')">UnBlock</a></td>
-        </tr>`
-            })
-            document.getElementById('blocked-user-data').innerHTML = blocked_user_list_table;
-
-        })
-        .catch((error) => {
-            console.error('An error occurred while filtering users:', error);
-        });
-}
-// ...........................Search Blocked User End filter...............
-
-
-// ...........................Search Vehicle Start filter...............
-function searchVehicleFilter() {
-
-    var vehicleQueryInput = document.getElementById('vehicleQueryInput').value;
-    var VehicleFilterSelect = document.getElementById('VehicleFilterSelect').value;
-    console.log(vehicleQueryInput);
-    console.log(VehicleFilterSelect);
-
-    var obj = {
-        vehicleQueryInput: vehicleQueryInput,
-        VehicleFilterSelect: VehicleFilterSelect
-    }
-    console.log('obj  is : ', obj);
-
-    var res = fetch('/admin/filtervehicle', {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`HTTP error while fetching filtered Vehicles! Status: ${response.status}`);
-        }
-        return response.json(); // Parse the response JSON
-    })
-        .then((filteredVehicles) => {
-            console.log("This is my filtered Vehicles:", filteredVehicles);
-            var table = "";
-            table += ` <table class="table table-striped" style="background-color: white; font-weight : 500">
-                <thead>
-                    <th>Registration No</th>
-                    <th>Company</th>
-                    <th>Model</th>
-                    <th>Class</th>
-                    <th>Insurance</th>
-                    <th>Image</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                `
-            filteredVehicles.forEach(element => {
-                table += `<tr>
-                <td>${element.reg_number}</td>
-                <td>${element.company}</td>
-                <td>${element.model}</td>
-                <td>${element.have_insurance}</td>
-                <td><img src="uploads/${element.images[0]}" height="200px" width="220px" alt="image"> </td>
-                <td><a href="#" class="btn btn-danger">Block</a></td>
-        </tr>`
-            });
-            table += " <tbody></table>"
-            document.getElementById('vehicle-data').innerHTML = table;
-
-        })
-        .catch((error) => {
-            console.error('An error occurred while filtering users:', error);
-        });
-}
-// ...........................Search Vehicle End filter...............
-/* Filter By Aarti End */
+/*  Validation End  */

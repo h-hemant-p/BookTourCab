@@ -173,6 +173,7 @@ function dashboardChoices(option) {
 }
 
 /* ------------------------------ Validation Start ------------------------------------ */
+
 /*--------------------Change Password Start ---------------------------- */
 function checkChangeOldPass4() {
     // console.log("hiii");
@@ -322,9 +323,8 @@ function submitCreateFormData() {
         return false;
     }
 }
-
-
 /*--------------------Create Password End ---------------------------- */
+
 
 function isRequired4(value) {
     if (value == "")
@@ -346,7 +346,6 @@ function isCheckValidCnfPass(newpass, cnfpass) {
         return false;
 }
 
-
 function showError4(input, message) {
     // get the form-field element
     const formField = input.parentElement;
@@ -358,7 +357,6 @@ function showError4(input, message) {
     const error = formField.querySelector('small');
     error.textContent = message;
 }
-
 
 function showSuccess4(input) {
     // get the form-field element
@@ -372,45 +370,22 @@ function showSuccess4(input) {
     const error = formField.querySelector('small');
     error.textContent = '';
 }
-
-
 /* ------------------------------ Validation End -------------------------------------- */
-/*--------------------Vehicle Insurance form ------------------------- */
-function setRegistrationNumber(regNumber, ownerId) {
-    // Set the registration number in the hidden input field
-    document.getElementById('registrationNumber').value = regNumber;
-    document.getElementById('ownerId').value = ownerId;
-    console.log("JHGFDS", regNumber);
-}
-/*  Vehicle Insurance form  */
 
-/*    User Booking History Start   */
-document.getElementById('user-booking-history').addEventListener('click', async function (e) {
+
+/*    User Booking History Start   :::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+document.getElementById('user-booking-history-btn').addEventListener('click', async function (e) {
     e.preventDefault();
     console.log("Vehicle List ");
 
     const response = await fetch('/user/viewbookinghistory')
-    console.log(response);
+    // console.log(response);
     const data = await response.json();
     console.log(data);
 
     var userbooking = data.bookings;
    
-    var table = "";
-    table += ` <table class="table table-striped" style="background-color: white; font-weight : 500; overflow-y:scroll; height:600px; display:block;">
-              <thead >
-                <th align="center" >Booking Date</th>
-                <th align="center" >Start date</th>
-                <th align="center" >Vehicle Reg.No.</th>
-                <th align="center" >Vehicle Address</th>
-                <th align="center" >Owner Contact</th>
-                <th align="center" >Total Hours</th>
-                <th align="center" >Total</th>
-                <th align="center" > OTP</th>
-                <th align="center" > Booking Status</th>
-                <th align="center" >Cancel Booking</th>
-              </thead>
-            <tbody> `
+    var bookingCards = ``;
     userbooking.forEach(element => {
         const bookDate = element.booking_date;
         const date1 = new Date(bookDate);
@@ -428,28 +403,47 @@ document.getElementById('user-booking-history').addEventListener('click', async 
         const bookingDate = `${day1}-${month1}-${year1}`
         const startDate = `${day2}-${month2}-${year2}`
 
-        table += `<tr>
-            <td align="center">${bookingDate}</td>
-            <td align="center">${startDate}</td>
-            <td align="center">${element.vehicle_reg_no}</td>
-            <td align="center">${element.owneraddress}</td>
-            <td align="center">${element.ownercontact}</td>
-            <td align="center">${element.total_time}</td>
-            <td align="center">${element.total_charges}</td>
-            <td align="center">${element.bookingpin}</td>
-            <td align="center">${element.booking_status}</td>
-            <td align="center"><button class= "btn btn-danger">Cancel Booking</button></td>
+        bookingCards += 
+        `<div class="row custom-div" >
+            <div class="col col-lg-2 bg-light">
+                <img src="uploads/${element.vehicle_image}" height="200px" width="220px" alt="image">
+                </div>
+            <div class=" col-lg-7 ">
+                <div class="row mt-3">
+                <p class="offset-lg-1 fs-5 fw-bold"> ${element.vehicle_company} ${element.vehicle_model}<sub>(${element.manufacture_year})</sub></p><br>
+                </div><br>
 
-    </tr>`
+                <div class="row">
+                    <div class="offset-md-1 col-lg-5 col-md-4 col-sm-4"><small class=" text-primary fw-bold "> Booking Start : <span class="text-secondary">${element.start_date}  ${element.start_time}</span></small></div>
+                    <div class="offset-md-1 col-lg-5 col-md-4 col-sm-4"><small class=" text-primary fw-bold "> Booking Start : <span class="text-secondary">${element.end_date}  ${element.end_time}</span></small></div>
+                    
+                </div>
+            </div>
+                <div class=" col-lg-3 ">
+                <p class="fs-3 text-lg-center fw-bold "> &#x20B9; ${element.total_charges}  <span class="text-center fw-bold ms-1 fs-6">(Total Cost)</span> </p>
+                <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${element.booking_charges}  <span class="text-center fw-bold ms-1 fs-6">(Booking Cost)</span> </p>
+                <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${element.gst_charges}  <span class="text-center fw-bold ms-1 fs-6">(GST Cost)</span> </p>
+                <p class="ms-3"><i class="fa-solid fa-check" style="color: #21c076; font-size: 18px; font-weight: bold;"></i><span class="ms-2 text-secondary fw-bold">Free Cancellation</span></p>
+                 
+            </div>
+        </div>`;
     });
-    table += " <tbody></table>"
-    document.getElementById('user-booking').innerHTML = table;
+    document.getElementById('booking-history-data').innerHTML = bookingCards;
 });
-
-
 /*  User Booking History End   */
 
-/* ---------------  Update Insurance Start --------------- */
+
+/*--------------------Vehicle Insurance form start------------------------- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
+function setRegistrationNumber(regNumber, ownerId) {
+    // Set the registration number in the hidden input field
+    document.getElementById('registrationNumber').value = regNumber;
+    document.getElementById('ownerId').value = ownerId;
+    console.log("JHGFDS", regNumber);
+}
+/*--------------------Vehicle Insurance form End ------------------------- */
+
+
+/* ---------------  Update Insurance Start --------------- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
 $(document).ready(function () {
 
     $('.open-modal').click(function () {
@@ -500,20 +494,21 @@ $(document).ready(function () {
 });
 /* ---------------  Update Insurance End   --------------- */
 
-/* owner vehicle bookinigs start */
-document.getElementById('vehicles-bookings-request').addEventListener('click', async function(e){
-    e.preventDefault();
 
-    const response = await fetch('/user/ownervehiclebooking')
+/* -----------------owner vehicle bookinigs Request start ----------------------------*/
+var ShowBookingRequestData = async function(e){
+    // e.preventDefault();
+
+    const response = await fetch('/user/ownervehiclebookingrequestdata')
     console.log("server response",response);
     const data = await response.json();
-    // console.log(data);
     var owner_vehicle_booking = data.vehiclebookings;
-    // console.log(owner_vehicle_booking);
 
     var table = "";
-    table += ` <table class="table table-striped" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;  display:block;">
-              <thead>
+    table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" >`;
+    if(owner_vehicle_booking.length>0){
+        table += `
+            <thead align="center">
                 <th>User Name</th>
                 <th>Contact</th>
                 <th>Start Date</th>
@@ -523,7 +518,7 @@ document.getElementById('vehicles-bookings-request').addEventListener('click', a
                 <th>Estimated Cost</th>
                 <th>Accept Booking</th>
                 <th>Decline Booking</th>
-              </thead>
+            </thead>
             <tbody> `        
 
             owner_vehicle_booking.forEach(element => {
@@ -537,44 +532,146 @@ document.getElementById('vehicles-bookings-request').addEventListener('click', a
                 // Format the date as "dd-mm-yyyy"
                 const startDate1 = `${day2}-${month2}-${year2}`
         
-                table += `<tr>
-                    <td align="center">${element.username}</td>
-                    <td align="center">${element.usercontact}</td>
-                    <td align="center">${startDate1}</td>
-                    <td align="center">${element.start_time}</td>
-                    <td align="center">${element.total_time} hr</td>
-                    <td align="center">${element.vehicle_reg_no}</td>
-                    <td align="center">&#8377;${element.totalamount}</td>
-                    <td align="center"><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}')">Accept</button></td>
-                    <td align="center"><button class="btn btn-danger text-light" onclick = "">Decline</button></td>
-        
-            </tr>`
+                table += 
+                `<tr align="center">
+                    <td >${element.username}</td>
+                    <td >${element.usercontact}</td>
+                    <td >${startDate1}</td>
+                    <td >${element.start_time}</td>
+                    <td >${element.total_time} hr</td>
+                    <td >${element.vehicle_reg_no}</td>
+                    <td >&#8377;${element.totalamount}</td>
+                    <td ><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}');ShowBookingRequestData()">Accept</button></td>
+                    <td ><button class="btn btn-danger text-light" onclick = "">Decline</button></td>
+                </tr>`
             });
-            table += " <tbody></table>"
-            document.getElementById('my-booking-request-data').innerHTML = table;
+            table += " <tbody>";
+    }else{
+        table+=`<tbody><tr><td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Request Found</td></tr></tbody>`;
+    };
+    table += "</table>";
+    document.getElementById('owner-booking-request-data').innerHTML = table;
+}
+/* ---------------------------owner vehicle bookinigs Request end ------------------------------------------ */
 
-})
-/* owner vehicle bookinigs end  */
+
+/* --------------------------- Delete Drivers Start ------------------------------------------ */
+var deleteDrivers = ()=>{
+    //    e.preventDefault();
+    setTimeout(showOwnerDrivers,100);
+}
+ /* --------------------------- Delete Drivers end ------------------------------------------ */
+    
+    
+
+/* ----------------Show owner Drivers start ----------------------------*/
+var showOwnerDrivers = async function(){
+    // e.preventDefault();
+
+    const response = await fetch('/user/ownerdriverdata')
+    const driverData = await response.json();
+    console.log(driverData)
+    var table = "";
+    table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
+    if(driverData.drivers.length>0){
+        table += `
+            <thead  align="center">
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Contact No</th>
+                <th>Email</th>
+                <th>Action</th>
+            </thead>
+            <tbody> `        
+
+            driverData.drivers.forEach(driver => {
+                table += 
+                `<tr align="center">
+                    <td >${driver.name}</td>
+                    <td >${driver.gender}</td>
+                    <td >${driver.contact_no}</td>
+                    <td >${driver.email}</td>
+                    <td >
+                        <form action="/user/deletedriver" method="post">
+                            <input type="text" class="d-none" name="driverid" value="${driver._id}">
+                            <input type="submit" class="btn btn-danger"  value="Delete"  onclick="deleteDrivers();">
+                        </form>
+                    </td>
+                </tr>`
+            });
+            table += " <tbody>";
+    }else{
+        table+=`<tbody><tr><td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Drivers Found</td></tr></tbody>`;
+    };
+    table += "</table>";
+    document.getElementById('owner-driver-list-data').innerHTML = table;
+}
+/* --------------------------- Show owner Drivers end ------------------------------------------ */
 
 
+/* ----------------Show owner Drivers start ----------------------------*/
+var showOwnerVehicles = async function(){
+    // e.preventDefault();
+
+    const response = await fetch('/user/ownervehicledata')
+    const vehicleData = await response.json();
+    console.log(vehicleData)
+    var table = "";
+    table += ` <table class="table table-striped mt-1" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
+    if(vehicleData.vehicles.length>0){
+        table += `
+            <thead  align="center">
+                <th>Reg No</th>
+                <th>Company</th>
+                <th>Model</th>
+                <th>Insurance</th>
+                <th>Action</th>
+            </thead>
+            <tbody> `        
+
+            vehicleData.vehicles.forEach(vehicle => {
+                table += 
+                `<tr align="center">
+                    <td >${vehicle.reg_number}</td>
+                    <td >${vehicle.company}</td>
+                    <td >${vehicle.model}</td>`;
+                    if(vehicle.have_insurance){
+                        table += `<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" >Update</button></td>`;
+                    }else{
+                        table += `<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" >Add</button></td>`;
+                    }
+        table += `<td><button  class=" btn btn-danger ">Delete </button></td>
+                </tr>`
+            });
+            table += " <tbody>";
+    }else{
+        table+=`<tbody><tr><td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Vehicles Found</td></tr></tbody>`;
+    };
+    table += "</table>";
+    document.getElementById('owner-vehicle-list-data').innerHTML = table;
+}
+/* --------------------------- Show owner Drivers end ------------------------------------------ */
+
+
+/* --------- Accept Request start ------------------ */
 async function ownerAcceptRequest(id){
     console.log("Inside Owner Accept request");
     var obj = { 
         id : id
     }
-
+    
     var response = await fetch('/user/acceptbooking', {
         method: 'POST',
         body: JSON.stringify(obj),
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+            'Content-type': 'application/json; charset=UTF-8',
         }
-      });
-
-
+    });
 }
+/* --------- Accept Request end ------------------ */
 
-/* Update Details start */
+
+/* -----------Update Details start ----------;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
 $(document).ready(function () {
     $('.open-modal-user').click(function () {
 
@@ -592,18 +689,13 @@ $(document).ready(function () {
             dataType: 'json', // Specify the expected data type
             success: function (response) {
                 console.log('Success:', response);
-
-                // Update the input fields with the received data
-             
                 $('#username').val(response.data.name);
                 $('#useraddress').val(response.data.address);
                 $('#userpincode').val(response.data.pin_code);
                 $('#userupdatestate').val(response.data.state).change();
                 $('#userupdatecity').val(response.data.city);
                 $('#useraadharnumber').val(response.data.aadhar_number);
-            
                 $('#userpannumber').val(response.data.pan_number);
-              
             },
             error: function (xhr, status, error) {
                 console.error('Error:', status, error);
@@ -611,98 +703,135 @@ $(document).ready(function () {
         });
     });
 });
-/* Update Details end  */
+/* ------------Update Details end-------------  */
 
-document.getElementById('current-bookings').addEventListener('click', async function(){
-    var bookingdata = "";
-    const response = await fetch('/user/viewcurrentbooking')
+
+
+/*------------------------------ howDataAfterBookingStartVerifyPin Start --------------------------------- */
+var showDataAfterBookingStartVerifyPin = ()=>{
+    setTimeout(showOwnerCurrentBookings,100)
+}
+/*------------------------------ howDataAfterBookingStartVerifyPin Start --------------------------------- */
+
+
+
+/*------------------------------ Show Owner Current Booking Start --------------------------------- */
+var showOwnerCurrentBookings =  async function(){
+    var bookingdata = ``;
+    const response = await fetch('/user/ownercurrentbookingdata')
     console.log("server response",response);
     const data = await response.json();
-    // console.log(data);
     var currentbookings = data.bookings;
     console.log(currentbookings);
-    bookingdata+= `  <div class="bg-white border rounded-5">
+    if(bookingdata.length>0){
 
-    <section class="w-100  p-4" style="background-color: #eee; border-radius: .5rem .5rem 0 0;">
-        <style>
-            @media (max-width: 767.98px) {
-                .border-sm-start-none {
-                    border-left: none !important;
-                }
-            }
-        </style>
-`;
+        currentbookings.forEach((element) => {
+            var manufacture = new Date(element.manufacture_year).getFullYear();
+            const start_date = element.startdate;
+            const date3 = new Date(start_date);
+            const day3 = date3.getDate().toString().padStart(2, '0');
+            const month3 = (date3.getMonth() + 1).toString().padStart(2, '0');
+            const year3 = date3.getFullYear();
 
-    currentbookings.forEach((element) => {
-        var manufacture = new Date(element.manufacture_year).getFullYear();
-        const start_date = element.startdate;
-                const date3 = new Date(start_date);
-                const day3 = date3.getDate().toString().padStart(2, '0');
-                const month3 = (date3.getMonth() + 1).toString().padStart(2, '0');
-                const year3 = date3.getFullYear();
-        
-                // Format the date as "dd-mm-yyyy"
-                const startDate3 = `${day3}-${month3}-${year3}`
+            // Format the date as "dd-mm-yyyy"
+            const startDate3 = `${day3}-${month3}-${year3}`
 
-                const date4 = new Date(element.endDate);
-                const day4 = date4.getDate().toString().padStart(2, '0');
-                const month4 = (date4.getMonth() + 1).toString().padStart(2, '0');
-                const year4 = date4.getFullYear();
-        
-                // Format the date as "dd-mm-yyyy"
-                const endDate3 = `${day3}-${month3}-${year3}`
-        bookingdata += `
-                <div class="row ">
+            const date4 = new Date(element.endDate);
+            const day4 = date4.getDate().toString().padStart(2, '0');
+            const month4 = (date4.getMonth() + 1).toString().padStart(2, '0');
+            const year4 = date4.getFullYear();
+
+            // Format the date as "dd-mm-yyyy"
+            const endDate3 = `${day3}-${month3}-${year3}`
+            bookingdata += 
+            `<div class="row ">
                 <div class="col-md-12">
                     <div class="card shadow-0 border rounded-3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 ">
+                                <div class="col-md-3 col-lg-3 ">
                                     <h5>${element.username}</h5>
                                     <span>${element.usercontact}</span>
                                     <div class="row">
                                         <div class="mt-1 mb-0 text-muted small">
                                             <label for="">Reg No. </label>
                                             <span>${element.vehicle_reg_no}</span><br>
-                                        
                                             <span class=""> ${element.company_name} ${element.modelname}  (${manufacture}) </span><br>
-                                        
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-lg-4  border-sm-start-none border-start">
+                                <div class="col-md-3 col-lg-3  border-sm-start-none border-start">
                                     <div class="row">
                                         <div class=""> <span class="text-dark">Start Date : ${startDate3}  ${element.start_time}</span></div>
-                                        <div class=""> <span class="text-dark">End Date  : ${endDate3} ${element.end_time}</span></div>
-                                    <select class="form-control w-75 m-2" name="" id="">
-                                        <option value="">Select Driver</option>
-                                        <option value="">options</option>
-                                        <option value="">options</option>
-                                        <option value="">options</option>
-                                        <option value="">options</option>
-                                    </select>
-
-                                    </div>
+                                        <div class=""> <span class="text-dark">End Date  : ${endDate3} ${element.end_time}</span></div>`;
+                                        if(element.booking_status== "Confirm" && element.drivers && element.havedriver && element.drivers.length>0){
+                                            bookingdata += `<select class="form-control w-75 m-2" name="" id="">
+                                            <option value="">Select Driver</option>`;
+                                            for(let i=0; i< element.drivers.length;i++){
+                                                bookingdata += `<option value="${element.drivers[i]._id}">${element.drivers[i].name}</option>`;
+                                            }
+                                            bookingdata += `</select>`;
+                                        }
+                                        // if(element.booking_status=="Running"){
+                                        //     bookingdata += `<div class=""> <span class="text-dark">Real Start Date : ${element.real_start_date}  ${element.real_start_time}</span></div>
+                                        //     <div class=""> <span class="text-dark">Real End Date  : ${element.real_end_date} ${element.real_end_time}</span></div>`;
+                                        // }
+                    bookingdata += `</div>
                                 </div>
-                                <div class="col-md-4 col-lg-4 border-sm-start-none border-start">
-                                    <div class="d-flex flex-row align-items-center mb-1">
-                                        <input type="text" class="form-control" style="display:block;" placeholder="Enter Pin" name = "verifypin" id="verifypin">
-                                        <br><button class="btn btn-outline-success w-100 mt-2 fw-bold border border-3" id = "verifybtn" onclick="checkVerifyPin('${element.bookingid}')">Verify</button>
-                                        <br><span class="text-danger" style="display:none;" id="warning-msg" >Invalid Pin</span>
-                                        <br><span class="text-success" style="display:none;" id="success-msg" >Booking Started Successfully</span>
-                                    </div>
-                                </div>      
+                                <div class="col-md-3 col-lg-3 border-sm-start-none border-start">
+                                    <div class="d-flex mb-1 flex-column">
+                                        <div>Total Hours   : <span class="text-success fw-bold">&#8377; ${element.total_time}</span></div>
+                                        <div>Per Hour Fare : <span class="text-success fw-bold">&#8377; ${element.rent}</span></div>
+                                        <div>Total Fare    : <span class="text-success fw-bold">&#8377; ${element.totalamount}</span></div>`;
+                                        if(element.payment_status=="Pending"){
+                                            bookingdata += `<div>Payment Status: <span class="text-danger fw-bold">${element.payment_status}</span></div>`;
+                                        }else{
+                                            bookingdata += `<div>Payment Status: <span class="text-success fw-bold">${element.payment_status}</span></div>`;
+                                        }
+                    bookingdata +=` </div>
+                                </div>    
+                                <div class="col-md-3 col-lg-3 border-sm-start-none border-start">
+                                    <div class="d-flex  mb-1 flex-column">`;
+                                    if(element.booking_status=="Confirm"){
+                                        bookingdata += `
+                                        <form class="class="d-flex align-items-center flex-column" action="/user/startbooking" method="post">
+                                            <input type="text" class="form-control d-none" name = "bookingid" value="${element.bookingid}">
+                                            <input type="text" class="form-control" placeholder="Enter Pin" name = "verifypin" id="verifypin">
+                                            <input type="submit" class="btn btn-outline-success w-100 mt-2 fw-bold border border-2" id = "verifybtn" onclick="checkVerifyPin('${element.bookingid}');" value="Verify Pin">
+                                            <span class="text-danger" style="display:none;" id="warning-msg" >Invalid Pin</span>
+                                            <span class="text-success" style="display:none;" id="success-msg" >Booking Started Successfully</span>
+                                        </form>`;
+                                    }else if(element.booking_status=="Running"){
+                                        bookingdata += 
+                                        `<div><span class="text-success fw-bold">Booking Started Successfully.</span></div>
+                                        <div>Booking Status : <span class="text-success fw-bold">Running</span></div>
+                                        <div>Booking Completion Pin : <span class="text-primary">${element.completion_pin}</span></div>`;
+                                    }
+                    bookingdata += `</div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>`;
         });
-        bookingdata += ` </section>
-        </div>`;
-        document.getElementById('current-bookigs-data').innerHTML = bookingdata;
-})
+    }else{
+        bookingdata += `
+        <table class="table table-striped mt-1" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">
+            <tbody>
+                <tr>
+                    <td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Current Booking Found</td>
+                </tr>
+            </tbody>
+        </table>`;
+    }
+    document.getElementById('owner-current-bookigs-data').innerHTML = bookingdata;
+};
+/*------------------------------ Show Owner Current Booking Start --------------------------------- */
 
+
+/*-------- verifyg pin Start --------------------------------- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
 async function checkVerifyPin(bookingid){
     var pin = document.getElementById('verifypin').value;
     console.log(pin);
@@ -729,13 +858,17 @@ async function checkVerifyPin(bookingid){
             document.getElementById("success-msg").style.display = "block";
             document.getElementById('verifypin').style.display="none";
             document.getElementById('verifybtn').style.display="none";
+            showDataAfterBookingStartVerifyPin();
         }else{
             document.getElementById("warning-msg").style.display="block";
             document.getElementById("success-msg").style.display = "none";
         }
     });
 }
+/*-------- verifyg pin Start --------------------------------- */
 
+
+/*-------- wallet dashboard start --------------------------------- */
 document.getElementById("wallet-dashboard").addEventListener("click",async()=>{
     // console.log('hiiii');
     var walletdata = await fetch('/user/walletdata');
@@ -744,6 +877,7 @@ document.getElementById("wallet-dashboard").addEventListener("click",async()=>{
     document.getElementById("wallet-amount").innerHTML = ' &#8377; '+data.wallet.wallet_amount;
     // console.log("wallet data",data.wallet);
 });
+/*-------- wallet dashboard start --------------------------------- */
 
 var uploadProfileImage = ()=>{
     

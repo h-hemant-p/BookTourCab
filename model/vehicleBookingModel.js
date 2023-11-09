@@ -1,17 +1,12 @@
 import mongoose from "mongoose";
-
+//
 var vehicleBookingModel = mongoose.Schema({
     customer : {
         type : mongoose.Schema.Types.ObjectId,
         required : true,
         ref : "users"
     },
-    btc_driver :{
-        type : mongoose.Schema.Types.ObjectId,
-        required : false,
-        ref : "users"
-    },
-    owner_driver:{
+    driver:{
         type : mongoose.Schema.Types.ObjectId,
         required : false,
         ref : "reservedDrivers"
@@ -99,6 +94,14 @@ var vehicleBookingModel = mongoose.Schema({
     driver_status : {
         type : Boolean,
         required : true
+    },
+    completion_pin:{
+        type : Number,
+        required : false
+    },
+    payment_status:{
+        type : String,
+        default : "Pending"
     }
 });
 

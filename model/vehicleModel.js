@@ -31,7 +31,7 @@ var vehicleModel = mongoose.Schema({
     },
     vehicle_class :{
         type : String,
-        enum : ['Car/Taxi','Minibus'],
+        enum : ['Scooty','Bike','Bus','Car','Minibus','Other'],
         required : true
     },
     seating_capacity:{
@@ -90,7 +90,12 @@ var vehicleModel = mongoose.Schema({
         type : Number,
         required : false
     },
-    feedback:[feedbacks.schema]
+    feedback:[feedbacks.schema],
+    vehicle_status :{
+        type : String,
+        required : true,
+        default : "active"
+    }
 });
 
 var vehicles = mongoose.model('vehicles',vehicleModel,'vehicles');

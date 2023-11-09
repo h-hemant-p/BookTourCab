@@ -4,6 +4,7 @@ import ownerDetails from '../model/ownerDetailModel.js'
 import crypto from 'crypto';
 import session from 'express-session';
 import admin from '../model/adminModel.js';
+import contactUs from '../model/contactUs.js'
 
 export const adminUserListController = async (request,response) => {
   
@@ -45,7 +46,7 @@ export const adminVehicleListController = async(request,response) => {
       },
       {
         $match: {
-          vehicle_status: "activate"
+          vehicle_status: "active"
         }
       }
     ]);
@@ -131,7 +132,7 @@ export const adminBlockVehicleController = async (request,response) => {
         },
         {
           $set: {
-            "vehicles.$.vehicle_status": "deactivate"
+            "vehicles.$.vehicle_status": "deactive"
           }
         });
         response.json({message : blockvehicle});
@@ -153,7 +154,7 @@ export const adminBlockVehicleListController = async (request,response) =>{
       },
       {
         $match: {
-          vehicle_status: "deactivate"
+          vehicle_status: "deactive"
         }
       }
     ]);
@@ -173,7 +174,7 @@ export const adminUnBlockVehicleController = async (request,response) => {
     },
     {
       $set: {
-        "vehicles.$.vehicle_status": "activate"
+        "vehicles.$.vehicle_status": "active"
       }
     });
     response.json({message : unblockvehicle});
@@ -192,84 +193,14 @@ export const adminLogOutController = (request,response)=>{
   response.render('./pages/index', { user: "" });
 }
 
-/* Filter By Aarti Start */
-export const adminFilterUserController = async(request,response) =>{
+export const adminContactUsListController = async function(request,response) {
   try {
-    const { filter, query } = request.body;
-    const filterQuery = {};
-
-    if (filter === 'name') {
-      filterQuery.name = query;
-    } else if (filter === 'role') {
-      filterQuery.role = query;
-    } else if (filter === 'email') {
-      filterQuery.email = query;
-    } else if (filter === 'address') {
-      filterQuery.address = query;
-    }else if (filter === 'usercontact') {
-      filterQuery.contact_no = query;
-    }
-
-    const filteredUsers = await users.find(filterQuery);
-    response.json(filteredUsers);
+    console.log("conatct us controller");
+     var contactusdata = await contactUs.find();
+     response.json({data : contactusdata});
   } catch (error) {
-    console.error('Error while filtering users:', error);
-    response.status(500).json({ error: 'An error occurred while filtering users' });
+    console.log("Error While Fetching The Contact Us Data.");
   }
 }
-
-export const adminFilterBlockedUserController = async(request,response) =>{
-  console.log("Inside admin Filter Blocked User Controller ");
-  try {
-    const { filterBlockedUserSelect, queryBlockedUserInput } = request.body;
-    console.log("request.body ",request.body);
-    const filterQuery = {};
-
-    if (filterBlockedUserSelect === 'name') {
-      filterQuery.name = queryBlockedUserInput;
-    } else if (filterBlockedUserSelect === 'role') {
-      filterQuery.role = queryBlockedUserInput;
-    } else if (filterBlockedUserSelect === 'email') {
-      filterQuery.email = queryBlockedUserInput;
-    } else if (filterBlockedUserSelect === 'address') {
-      filterQuery.address = queryBlockedUserInput;
-    }else if (filterBlockedUserSelect === 'usercontact') {
-      filterQuery.contact_no = queryBlockedUserInput;
-    }
-
-    const filteredUsers = await users.find(filterQuery);
-    console.log("filteredUsers ------>",filteredUsers)
-    response.json(filteredUsers);
-  } catch (error) {
-    console.error('Error while filtering users:', error);
-    response.status(500).json({ error: 'An error occurred while filtering users' });
-  }
-}
-
-export const adminFilterVehicleController = async(request,response) =>{
-  console.log("Inside adminFilter Vehicle Controller");
-  try {
-    const { vehicleQueryInput, VehicleFilterSelect } = request.body;
-    const filterQuery = {};
-
-    if (VehicleFilterSelect === 'registration_no') {
-      filterQuery.reg_number = vehicleQueryInput;
-    } else if (VehicleFilterSelect === 'company') {
-      filterQuery.company = vehicleQueryInput;
-    } else if (VehicleFilterSelect === 'model') {
-      filterQuery.model = vehicleQueryInput;
-    } else if (VehicleFilterSelect === 'insurance') {
-      filterQuery.have_insurance = vehicleQueryInput;
-    }
-
-    const filteredVehicles = await ownerDetails.find(filterQuery);
-    console.log("filteredVehicles are ",filteredVehicles);
-    response.json(filteredVehicles);
-  } catch (error) {
-    console.error('Error while filtering Vehicles:', error);
-    response.status(500).json({ error: 'An error occurred while filtering Vehicle' });
-  }
-}
-/* Filter By Aarti End */
 
 /* Admin@123 -->  2b3bdc53a332daaf96dc5afa224c9e86036b9b9c40cba884987835418848a997  */

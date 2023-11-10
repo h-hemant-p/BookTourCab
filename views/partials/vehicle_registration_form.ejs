@@ -89,25 +89,25 @@
           <div class=" row">
             <div class="mb-3 col-lg-6 form-field form-field">
               <label for="total-doors" class=" form-label fw-bold ">Total Doors </label>
-              <input type="text" class="form-control w-75 " placeholder="Enter number of doors" id="total-doors"  name="doors"  aria-describedby="ride">
+              <input type="text" class="form-control w-75 " placeholder="Enter number of doors" id="total-doors"  name="doors" onkeyup="checkVehicleDoors6()" aria-describedby="ride">
               <small></small>
             </div>
-            <div class="mb-3 col-lg-6 form-field form-field">
+            <div class="mb-3 col-lg-6 form-field">
               <label for="air-bags" class=" form-label fw-bold ">Air Bags</label>
-              <input type="text" class="form-control w-75 " placeholder="Enter number of Air Bags" id="air-bags"  name="airbags"  aria-describedby="ride">
+              <input type="text" class="form-control w-75 " placeholder="Enter number of Air Bags" id="air-bags"  name="airbags" onkeyup="checkVehicleAirBags6()" aria-describedby="ride" >
               <small></small>
             </div>    
           </div>
          
         <div class=" row">
-          <div class="mb-3 col-lg-6 form-field form-field">
+          <div class="mb-3 col-lg-6 form-field">
             <label for="mileage" class=" form-label fw-bold ">Mileage</label>
-            <input type="text" class="form-control w-75 " placeholder="Enter Mileage of vehicle" id="mileage"  name="mileage"  aria-describedby="ride">
+            <input type="text" class="form-control w-75 " placeholder="Enter Mileage of vehicle" id="mileage"  name="mileage" onkeyup="checkVeicleMileage6()" aria-describedby="ride">
             <small></small>
           </div>
           <div class="mb-3 col-lg-6 form-field form-field">
             <label for="perhrcost" class=" form-label fw-bold ">Per/hr Cost</label>
-            <input type="text" class="form-control w-75 " placeholder="Enter Per Hour Cost of vehicle" id="perhrcost"  name="rent"  aria-describedby="ride">
+            <input type="text" class="form-control w-75 " placeholder="Enter Per Hour Cost of vehicle" id="perhrcost"  name="rent" onkeyup="checkPerHourVehicleCost6()"  aria-describedby="ride">
             <small></small>
           </div>
           
@@ -120,7 +120,7 @@
           </div>
           <div class="mb-3 col-lg-6 form-field form-field">
             <label for="vehicleimage" class=" form-label fw-bold ">Upload Vehicle Image </label>
-            <input type="file" class="form-control w-75 " placeholder="Upload RC Book Imamge" id="vehicleimage"  name="vehicleimage" accept="image/*" aria-describedby="ride">
+            <input type="file" class="form-control w-75 " placeholder="Upload RC Book Imamge" id="vehicleimage"  name="vehicleimage" accept="image/*" onchange="checkVehicleImage6()" aria-describedby="ride">
             <small></small>
           </div>
         </div>

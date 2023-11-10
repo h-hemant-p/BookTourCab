@@ -11,6 +11,7 @@ import crypto from 'crypto';
 import swal from 'sweetalert';
 import session from 'express-session';
 import { log } from 'console';
+import newsletter from '../model/newsLetterModel.js';
 
 
 
@@ -1053,3 +1054,16 @@ export const userCurrentBookingDataController = async(request,response)=>{
 //     }
 // }
 
+
+export const userNewsLetterController = async(request,response) => {
+    try {
+        var newslett = await newsletter.create({
+            email : request.body.email
+        })
+        console.log("Data Inserted Successfully ");
+        response.render("./pages/index", { user: request.session.log });
+    } catch (error) {
+        console.log("Error While "+error);
+        response.render("./pages/index", { user: request.session.log });
+    }
+}

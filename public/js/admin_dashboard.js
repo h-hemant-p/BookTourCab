@@ -8,6 +8,7 @@ function showDetails(option) {
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none';  
+        document.getElementById('newsletter-request').style.display = 'none';
     }
     else if (option === "allusers-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -16,7 +17,8 @@ function showDetails(option) {
         document.getElementById('vehicles-details').style.display = 'none';
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
-        document.getElementById('admin-contact-us').style.display = 'none';    
+        document.getElementById('admin-contact-us').style.display = 'none';   
+        document.getElementById('newsletter-request').style.display = 'none'; 
     }
     else if (option === "allblockusers-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -26,6 +28,7 @@ function showDetails(option) {
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none'; 
+        document.getElementById('newsletter-request').style.display = 'none';
     }
     else if (option === "vehicles-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -35,6 +38,7 @@ function showDetails(option) {
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none'; 
+        document.getElementById('newsletter-request').style.display = 'none';
     }
     else if (option === "allblockvehicles-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -44,6 +48,7 @@ function showDetails(option) {
         document.getElementById('allblockvehicles-details').style.display = 'block';
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none';     
+        document.getElementById('newsletter-request').style.display = 'none';
     }
     else if (option === "change-password") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -53,6 +58,7 @@ function showDetails(option) {
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'block';
         document.getElementById('admin-contact-us').style.display = 'none';
+        document.getElementById('newsletter-request').style.display = 'none';
     }
     else if (option === "admin-contact-us") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -62,7 +68,17 @@ function showDetails(option) {
         document.getElementById('allblockvehicles-details').style.display = 'none';
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'block';
-
+        document.getElementById('newsletter-request').style.display = 'none';
+    }
+    else if (option === "newsletter-request") {
+        document.getElementById('adminaccount-details').style.display = 'none';
+        document.getElementById('allusers-details').style.display = 'none';
+        document.getElementById('allblockusers-details').style.display = 'none';
+        document.getElementById('vehicles-details').style.display = 'none';
+        document.getElementById('allblockvehicles-details').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none';
+        document.getElementById('newsletter-request').style.display = 'block';
     }
 }
 
@@ -445,7 +461,7 @@ document.getElementById('admin-contactus').addEventListener('click', async funct
             <td>${element.query}</td>
         </tr>`
     })
-    contactus_list += " <tbody></table>";
+    contactus_list += " </tbody></table>";
     document.getElementById('contact-us-data').innerHTML = contactus_list;
 
     //for filter data (Data Table)
@@ -460,13 +476,13 @@ $(document).ready(function () {
     $('.open-modal-admin').click(function () {
 
         var _id = $(this).data('admin_details'); // Correct the data attribute name
-        console.log("Id=>", _id);
-
+        console.log("Admin Id=>", _id);
+        
         var postData = {
             id: _id
         };
         $.ajax({
-            url: '/admin/updateadmindata',
+            url: '/admin/adminprofiledata',
             type: 'POST',
             data: JSON.stringify(postData),
             contentType: 'application/json',
@@ -475,15 +491,10 @@ $(document).ready(function () {
                 console.log('Success:', response);
 
                 // Update the input fields with the received data
-             
-                // $('#username').val(response.data.name);
-                // $('#useraddress').val(response.data.address);
-                // $('#userpincode').val(response.data.pin_code);
-                // $('#userupdatestate').val(response.data.state).change();
-                // $('#userupdatecity').val(response.data.city);
-                // $('#useraadharnumber').val(response.data.aadhar_number);
-            
-                // $('#userpannumber').val(response.data.pan_number);
+                $('#adminname').val(response.data.name);
+                $('#admingender').val(response.data.gender);
+                $('#adminemail').val(response.data.email);
+                $('#admincontact').val(response.data.contact_no);  
               
             },
             error: function (xhr, status, error) {
@@ -493,6 +504,37 @@ $(document).ready(function () {
     });
 });
 /* Update Details end  */
+
+/*  News Letter Requests Start */
+document.getElementById('news-letter-requests').addEventListener('click',async function(){
+    console.log("news letter requests");
+    const response = await fetch('/admin/newsletterlist')
+    const data = await response.json();
+    var newsletterdata = data.data;
+    var newsletterlist = "";
+    newsletterlist += ` <table id="newsletter" class="table table-striped" style="background-color: white; width : 100%; font-weight : 500">
+    <thead align = "center">
+            <th>Email</th>
+            <th>Select</th>
+          
+           
+    </thead>
+    <tbody>`;
+    newsletterdata.forEach(element => {
+        newsletterlist+=`<tr>
+            <td align="center" >${element.email}</td>
+            <td align="center" > <input type="checkbox" id="select" name="select"> </td>
+           
+       </tr>`
+    });
+    newsletterlist += " </tbody></table>";
+    document.getElementById('newsletter-list-data').innerHTML = newsletterlist;
+     //for filter data (Data Table)
+     $(document).ready(function () {
+        $("#newsletter").DataTable();
+    }); 
+});
+/*  News Letter Requests End */
 
 
 /*  Validation Start  */
@@ -516,7 +558,6 @@ function checkChangeOldPass7() {
     }
     return valid;
 }
-
 function checkChangeNewPass7() {
     let newpassword = document.getElementById('changenewpassword');
 
@@ -535,7 +576,6 @@ function checkChangeNewPass7() {
     }
     return valid;
 }
-
 function checkChangeCnfPass7() {
     let newpassword = document.getElementById('changenewpassword');
     let cnfpassword = document.getElementById('changecnfpassword');
@@ -567,7 +607,6 @@ function checkChangeCnfPass7() {
         }
     }
 }
-
 function submitchangepassword7() {
     if (checkChangeOldPass7() && checkChangeNewPass7 && checkChangeCnfPass7) {
         return true;
@@ -578,8 +617,63 @@ function submitchangepassword7() {
         return false;
     }
 }
-
 /*  Change Password End  */
+/*  Check Admin name Start  */
+ function checkUsername7(){
+    let adminname = document.getElementById('adminname');
+    let valid7 = false;
+    const min = 3,
+    max = 25;
+    let adminname_input = adminname.value.trim();
+
+    if(!isRequired7(adminname_input)){
+        showError7(adminname,"Name Cannot be Blank.")
+    }
+    else if(!isBetween7(adminname_input.length,min,max)){
+        showError7(adminname, `Name must be between ${min} and ${max} characters.`)
+    }
+    else{
+        showSuccess7(adminname);
+        valid7 = true;
+    }
+    return valid7;
+ }
+/*  Check Admin name End  */
+
+/*  Check Contact Number Start */
+function checkContactNumber7(){
+    let contact = document.getElementById('admincontact');
+
+    let valid7 = false;
+    let conatct_input = contact.value.trim();
+
+    if(!isRequired7(conatct_input)){
+        showError7(contact,"Contact Cannot Be Blank.");
+    }
+    else if(!isValidContactNumber(conatct_input)){
+        showError7(contact,"Invalid Contact Number");
+    }
+    else{
+        showSuccess7(contact);
+        valid7 = true;
+    }
+    return valid7;
+}
+
+/*  Check Contact Number End  */
+
+function submitFormDetails(){
+    if(checkUsername7() && checkContactNumber7()){
+        return true;
+    }
+    else{
+        checkUsername7();
+        checkContactNumber7();
+        return false;
+    }
+}
+
+
 
 function isRequired7(value) {
     if (value == "")
@@ -587,6 +681,19 @@ function isRequired7(value) {
     else
         return true;
 }
+
+function isBetween7(length, min, max) {
+    if(length < min || length > max) 
+        return false;
+    return true;
+}
+
+function isValidContactNumber(mobile_no_input){
+    console.log("check mobile");
+    const res = /^[6789][0-9]{9}$/;
+    return res.test(mobile_no_input);
+}
+
 
 function isValidPass7(password) {
     const res = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
@@ -624,5 +731,9 @@ function showSuccess7(input) {
     const error = formField.querySelector('small');
     error.textContent = '';
 }
+
+
+
+
 
 /*  Validation End  */

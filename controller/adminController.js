@@ -4,16 +4,20 @@ import ownerDetails from '../model/ownerDetailModel.js'
 import crypto from 'crypto';
 import session from 'express-session';
 import admin from '../model/adminModel.js';
-import contactUs from '../model/contactUs.js'
+import contactUs from '../model/contactUs.js';
+import newsletter from '../model/newsLetterModel.js';
 
-export const adminUserListController = async (request,response) => {
-  
-    var alluser = await users.find({user_status:true});
-    response.json({message : alluser});
+export const adminUserListController = async (request, response) => {
+  try {
+    var alluser = await users.find({ user_status: true });
+    response.json({ message: alluser });
+  } catch (error) {
+    console.log("Error While Fetching All User Data");
+  }
 }
 
 
-export const adminBlockUserController = async (request,response) => {
+export const adminBlockUserController = async (request, response) => {
   try {
     const userId = request.body.userid;
     const updatedUser = await users.findByIdAndUpdate(
@@ -26,7 +30,7 @@ export const adminBlockUserController = async (request,response) => {
       { new: true } // To get the updated user document as a result
     );
 
-    response.json({message : updatedUser});
+    response.json({ message: updatedUser });
 
   } catch (error) {
     console.error("Error updating user:", error);
@@ -35,8 +39,9 @@ export const adminBlockUserController = async (request,response) => {
 }
 
 
-export const adminVehicleListController = async(request,response) => {
-    // console.log("Inside vehicle controller");
+export const adminVehicleListController = async (request, response) => {
+  // console.log("Inside vehicle controller");
+  try {
     const allvehicles = await ownerDetails.aggregate([
       {
         $unwind: "$vehicles"
@@ -50,47 +55,49 @@ export const adminVehicleListController = async(request,response) => {
         }
       }
     ]);
-    
-    response.json({message : allvehicles})
+    response.json({ message: allvehicles })
+  } catch (error) {
+    console.log("Error While Fetching Vehicle List Controller");
+  }
 }
 
 
-export const adminChangePasswordController = async (request,response) => {
-    // console.log("Inside Change Password .... ");
-    try {
+export const adminChangePasswordController = async (request, response) => {
+  // console.log("Inside Change Password .... ");
+  try {
 
-      var newpass = crypto.createHash('sha256');
-      newpass.update(request.body.changecnfpassword);
-      var newpassword = newpass.digest('hex');
+    var newpass = crypto.createHash('sha256');
+    newpass.update(request.body.changecnfpassword);
+    var newpassword = newpass.digest('hex');
 
-      var oldpass = crypto.createHash('sha256');
-      oldpass.update(request.body.changeoldpassword);
-      var oldpassword = oldpass.digest('hex');
-      await admin.updateOne({
-          email: request.session.log.email,
-          password: oldpassword
-      },
-          {
-              $set: {
-                  password: newpassword
-              }
-          });
-          console.log("Password Update Successfull ..... ");
-          var loggedAdmin = await admin.findOne({email:request.session.log.email});
-          // console.log(loggedAdmin);
-          request.session.log = loggedAdmin;
-          request.session.role = "admin";
-          request.session.save();
-          response.render('./pages/admin_dashboard', { admin: request.session.log,data : ""});
+    var oldpass = crypto.createHash('sha256');
+    oldpass.update(request.body.changeoldpassword);
+    var oldpassword = oldpass.digest('hex');
+    await admin.updateOne({
+      email: request.session.log.email,
+      password: oldpassword
+    },
+      {
+        $set: {
+          password: newpassword
+        }
+      });
+    console.log("Password Update Successfull ..... ");
+    var loggedAdmin = await admin.findOne({ email: request.session.log.email });
+    // console.log(loggedAdmin);
+    request.session.log = loggedAdmin;
+    request.session.role = "admin";
+    request.session.save();
+    response.render('./pages/admin_dashboard', { admin: request.session.log});
   }
   catch (error) {
-      console.log("Error While Updating Password."+error);
-       response.render('./pages/admin_dashboard', { admin: request.session.log,data : ""});
+    console.log("Error While Updating Password." + error);
+    response.render('./pages/admin_dashboard', { admin: request.session.log});
   }
 }
 
 
-export const adminUnBlockUserController = async (request,response) => {
+export const adminUnBlockUserController = async (request, response) => {
   try {
     const userId = request.body.userid;
     console.log(userId);
@@ -106,7 +113,7 @@ export const adminUnBlockUserController = async (request,response) => {
     if (!updatedUser) {
       return response.status(404).json({ message: "User not found" });
     }
-    return response.json({message : updatedUser});
+    return response.json({ message: updatedUser });
   } catch (error) {
     console.error("Error while unblocking the user:", error);
     return response.status(500).json({ message: "An error occurred" });
@@ -114,36 +121,36 @@ export const adminUnBlockUserController = async (request,response) => {
 }
 
 
-export const adminBlockedUsersListController = async(request,response)=>{
-  var allBlockedusers = await users.find({user_status:false});
-    response.json({message : allBlockedusers});
+export const adminBlockedUsersListController = async (request, response) => {
+  var allBlockedusers = await users.find({ user_status: false });
+  response.json({ message: allBlockedusers });
 }
 
 
-export const adminBlockVehicleController = async (request,response) => {
+export const adminBlockVehicleController = async (request, response) => {
 
-  try{
-      // console.log(request.body);
-      console.log("Inside Block Vehicle ");
+  try {
+    // console.log(request.body);
+    console.log("Inside Block Vehicle ");
     var blockvehicle = await ownerDetails.updateOne({
-          "vehicles": {
-            $elemMatch: { "reg_number": request.body.reg_number }
-          }
-        },
-        {
-          $set: {
-            "vehicles.$.vehicle_status": "deactive"
-          }
-        });
-        response.json({message : blockvehicle});
-  }catch(err){
-      console.log("Error while admin block vehicle controller");
+      "vehicles": {
+        $elemMatch: { "reg_number": request.body.reg_number }
+      }
+    },
+      {
+        $set: {
+          "vehicles.$.vehicle_status": "deactive"
+        }
+      });
+    response.json({ message: blockvehicle });
+  } catch (err) {
+    console.log("Error while admin block vehicle controller");
   }
 }
 
 
-export const adminBlockVehicleListController = async (request,response) =>{
-  try{
+export const adminBlockVehicleListController = async (request, response) => {
+  try {
     console.log("block vehicle controller");
     const blockvehicle = await ownerDetails.aggregate([
       {
@@ -158,33 +165,33 @@ export const adminBlockVehicleListController = async (request,response) =>{
         }
       }
     ]);
-    response.json({message : blockvehicle})
-  }catch(err){
+    response.json({ message: blockvehicle })
+  } catch (err) {
     console.log("Error while fetching block vehicle list controller");
   }
 }
 
 
-export const adminUnBlockVehicleController = async (request,response) => {
-  try{
+export const adminUnBlockVehicleController = async (request, response) => {
+  try {
     var unblockvehicle = await ownerDetails.updateOne({
       "vehicles": {
         $elemMatch: { "reg_number": request.body.reg_number }
       }
     },
-    {
-      $set: {
-        "vehicles.$.vehicle_status": "active"
-      }
-    });
-    response.json({message : unblockvehicle});
-  }catch(err){
+      {
+        $set: {
+          "vehicles.$.vehicle_status": "active"
+        }
+      });
+    response.json({ message: unblockvehicle });
+  } catch (err) {
     console.log("Error while unblock vehicle controller");
   }
 }
 
 
-export const adminLogOutController = (request,response)=>{
+export const adminLogOutController = (request, response) => {
   request.session.loggedAdmin = "";
   // request.session.role = "";
   request.session.destroy();
@@ -193,14 +200,61 @@ export const adminLogOutController = (request,response)=>{
   response.render('./pages/index', { user: "" });
 }
 
-export const adminContactUsListController = async function(request,response) {
+export const adminContactUsListController = async (request, response) => {
   try {
     console.log("conatct us controller");
-     var contactusdata = await contactUs.find();
-     response.json({data : contactusdata});
+    var contactusdata = await contactUs.find();
+    response.json({ data: contactusdata });
   } catch (error) {
     console.log("Error While Fetching The Contact Us Data.");
   }
 }
+
+export const adminProfileDetails = async (request, response) => {
+  try {
+    var admindata = await admin.findOne({ _id: request.body.id });
+    response.json({ data: admindata });
+  } catch (error) {
+    console.log("Error While Fetching The Admin Profile Data");
+  }
+}
+
+export const adminUpdateProfileDetailsController = async (request, response) => {
+  try {
+    var update = await admin.updateOne(
+      {
+        _id: request.session.log._id
+      },
+      {
+        $set: {
+          name: request.body.adminname,
+          email: request.body.adminemail,
+          contact_no: request.body.admincontact,
+          gender: request.body.admingender
+        }
+      });
+    console.log("Profile Update Successfull", update);
+    var loggedAdmin = await admin.findOne({ email: request.session.log.email });
+    // console.log(loggedAdmin);
+    request.session.log = loggedAdmin;
+    request.session.role = "admin"
+    request.session.save();
+    response.render('./pages/admin_dashboard', { admin: request.session.log});
+
+  } catch (error) {
+    console.log("Error While Update Admin Profile Controller"+error);
+  }
+}
+
+export const adminGetNewslettterListController = async (request,response) => {
+    try {
+      var newsletterlist = await newsletter.find();
+      response.json({ data : newsletterlist});
+    } catch (error) {
+      console.log("Error While Fetching Newsletter List Controller");
+    }
+}
+
+
 
 /* Admin@123 -->  2b3bdc53a332daaf96dc5afa224c9e86036b9b9c40cba884987835418848a997  */

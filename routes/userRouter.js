@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import {userOwnerVehicleDataController,userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterDriverController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleCOntroller,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingRequestDataController,userUpdateUserDataController,userAcceptOwnerBookingController,userOwnerCurrentBookingDataController,userVerifyBookingStartPinController,userWalletDataController,userOwnerDriverDataController,userDeleteDriverController,userStartBookingController} from "../controller/userController.js";
+import {userCurrentBookingDataController,userRequestedBookingDataController,userOwnerVehicleDataController,userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleCOntroller,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingRequestDataController,userUpdateUserDataController,userAcceptOwnerBookingController,userOwnerCurrentBookingDataController,userVerifyBookingStartPinController,userWalletDataController,userOwnerDriverDataController,userDeleteDriverController,userStartBookingController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -41,41 +41,35 @@ router.post('/completeprofile',upload.fields([
 router.get('/logoutuser',userLogoutUserController)
 router.get("/booking",userVehicleBookingController);
 router.post('/contactus',userContactUsController);
-
 router.get("/userdashboard",userDashboardController);
 router.post('/createpassword',userCreatePasswordController);
 router.post('/changepassword',userChangePasswordController);
-
-router.post('/registerdriver',upload.single('licenceimage'),userRegisterDriverController);
 router.get("/registerowner",userRegisterOwnerController)
-
 router.post('/adddriver',upload.single('licenceimage'),userAddDriverController);
 router.post('/addvehicle',upload.fields([
     {name: 'rcbookimage', maxCount: 1},
     {name: 'vehicleimage', maxCount: 1}
 ]),userAddVehicleController);
-
 router.post("/searchvehicle",userSearchVehicleDetailsController);
 router.post("/booknow",userBookNowVehicleController);
-
-router.post('/addInsurance',userAddInsuranceController);
-router.get('/viewbookinghistory',userViewBookingHistoryController);
-router.get('/deletevehicle',userDeleteVehicleCOntroller);
-router.post('/updateinsurance',userUpdateInsuranceController);
-router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
-router.post('/updateuserdata',userUpdateUserDataController);
 router.post('/acceptbooking',userAcceptOwnerBookingController);
 router.post('/verifybookingstartpin',userVerifyBookingStartPinController);
 router.get('/walletdata',userWalletDataController);
-
-router.post('/startbooking',userStartBookingController);
-
 router.get('/ownercurrentbookingdata',userOwnerCurrentBookingDataController);
 router.get('/ownervehiclebookingrequestdata',userVehicleBookingRequestDataController);
 router.get('/ownerdriverdata',userOwnerDriverDataController);
-router.post('/deletedriver',userDeleteDriverController)
 router.get('/ownervehicledata',userOwnerVehicleDataController);
+router.get('/userrequestedbookingdata',userRequestedBookingDataController);
+router.get('/usercurrentbookingdata',userCurrentBookingDataController);
 
+router.post('/updateuserdata',userUpdateUserDataController);
+router.post('/deletedriver',userDeleteDriverController)
+router.post('/startbooking',userStartBookingController);
+router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
+router.post('/updateinsurance',userUpdateInsuranceController);
+router.get('/viewbookinghistory',userViewBookingHistoryController);
+router.get('/deletevehicle',userDeleteVehicleCOntroller);
+router.post('/addInsurance',userAddInsuranceController);
 export default router;
 
 

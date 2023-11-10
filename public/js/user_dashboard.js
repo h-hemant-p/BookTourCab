@@ -373,6 +373,106 @@ function showSuccess4(input) {
 /* ------------------------------ Validation End -------------------------------------- */
 
 
+
+
+
+/*----------------- show user requested booking data start---------------*/
+var showUserRequestedBookingData = async()=>{
+    const response = await fetch('/user/userrequestedbookingdata');
+    const data = await response.json();
+    const bookingData = data[0] ?? [];
+    console.log(bookingData)
+    var table = "";
+    table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
+    if(bookingData.bookings.length>0){
+        table += `
+            <thead  align="center">
+                <th>Reg No</th>
+                <th>Company</th>
+                <th>Model</th>
+                <th>Contact No</th>
+                <th>Booking Date</th>
+                <th>Hours</th>
+                <th>Action</th>
+            </thead>
+            <tbody> `        
+
+            bookingData.bookings.forEach(booking => {
+                table += 
+                `<tr align="center">
+                    <td >${booking.reg_no}</td>
+                    <td >${booking.company}</td>
+                    <td >${booking.model}</td>
+                    <td >${booking.contact_no}</td>
+                    <td >${booking.booking_date}</td>
+                    <td >${booking.total_time}</td>
+                    <td >
+                        <form action="/user/cancelbooking" method="post">
+                            <input type="text" class="d-none" name="bookingid" value="${booking.bokingid}">
+                            <input type="submit" class="btn btn-danger"  value="Cancel"  >
+                        </form>
+                    </td>
+                </tr>`
+            });
+            table += " <tbody>";
+    }else{
+        table+=`<tbody><tr><td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Requested Booking Found</td></tr></tbody>`;
+    };
+    table += "</table>";
+    document.getElementById('user-requested-booking-data').innerHTML = table;
+}
+/*----------------- show user requested booking data start---------------*/
+
+
+/*----------------- show user Currrent booking data start---------------*/
+var showUserCurrentBookingData = async()=>{
+    const response = await fetch('/user/usercurrentbookingdata');
+    const data = await response.json();
+    const bookingData = data[0] ?? [];
+    console.log(bookingData)
+    var table = "";
+    table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
+    if(bookingData.bookings.length<0){///////
+        table += `
+            <thead  align="center">
+                <th>Reg No</th>
+                <th>Company</th>
+                <th>Model</th>
+                <th>Contact No</th>
+                <th>Booking Date</th>
+                <th>Hours</th>
+                <th>Action</th>
+            </thead>
+            <tbody> `        
+
+            bookingData.bookings.forEach(booking => {
+                table += 
+                `<tr align="center">
+                    <td >${booking.reg_no}</td>
+                    <td >${booking.company}</td>
+                    <td >${booking.model}</td>
+                    <td >${booking.contact_no}</td>
+                    <td >${booking.booking_date}</td>
+                    <td >${booking.total_time}</td>
+                    <td >
+                        <form action="/user/cancelbooking" method="post">
+                            <input type="text" class="d-none" name="bookingid" value="${booking.bokingid}">
+                            <input type="submit" class="btn btn-danger"  value="Cancel"  >
+                        </form>
+                    </td>
+                </tr>`
+            });
+            table += " <tbody>";
+    }else{
+        table+=`<tbody><tr><td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Current Bookings Found</td></tr></tbody>`;
+    };
+    table += "</table>";
+    document.getElementById('user-current-bookigs-data').innerHTML = table;
+}
+/*----------------- show user Current booking data end---------------*/
+
+
+
 /*    User Booking History Start   :::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 document.getElementById('user-booking-history-btn').addEventListener('click', async function (e) {
     e.preventDefault();
@@ -709,7 +809,7 @@ $(document).ready(function () {
 
 /*------------------------------ howDataAfterBookingStartVerifyPin Start --------------------------------- */
 var showDataAfterBookingStartVerifyPin = ()=>{
-    setTimeout(showOwnerCurrentBookings,100)
+    setTimeout(showOwnerCurrentBookings,10)
 }
 /*------------------------------ howDataAfterBookingStartVerifyPin Start --------------------------------- */
 
@@ -723,7 +823,7 @@ var showOwnerCurrentBookings =  async function(){
     const data = await response.json();
     var currentbookings = data.bookings;
     console.log(currentbookings);
-    if(bookingdata.length>0){
+    if(bookingdata.length<1){
 
         currentbookings.forEach((element) => {
             var manufacture = new Date(element.manufacture_year).getFullYear();
@@ -794,13 +894,13 @@ var showOwnerCurrentBookings =  async function(){
                                     <div class="d-flex  mb-1 flex-column">`;
                                     if(element.booking_status=="Confirm"){
                                         bookingdata += `
-                                        <form class="class="d-flex align-items-center flex-column" action="/user/startbooking" method="post">
-                                            <input type="text" class="form-control d-none" name = "bookingid" value="${element.bookingid}">
+                                        
+                                            
                                             <input type="text" class="form-control" placeholder="Enter Pin" name = "verifypin" id="verifypin">
-                                            <input type="submit" class="btn btn-outline-success w-100 mt-2 fw-bold border border-2" id = "verifybtn" onclick="checkVerifyPin('${element.bookingid}');" value="Verify Pin">
                                             <span class="text-danger" style="display:none;" id="warning-msg" >Invalid Pin</span>
+                                            <input type="submit" class="btn btn-outline-success w-100 mt-2 fw-bold border border-2" id = "verifybtn" onclick="checkVerifyPin('${element.bookingid}');" value="Verify Pin">
                                             <span class="text-success" style="display:none;" id="success-msg" >Booking Started Successfully</span>
-                                        </form>`;
+                                        `;
                                     }else if(element.booking_status=="Running"){
                                         bookingdata += 
                                         `<div><span class="text-success fw-bold">Booking Started Successfully.</span></div>
@@ -821,7 +921,7 @@ var showOwnerCurrentBookings =  async function(){
         <table class="table table-striped mt-1" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">
             <tbody>
                 <tr>
-                    <td class="fw-bold text-danger" style="padding-top:15%; padding-left:40%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Current Booking Found</td>
+                    <td class="fw-bold text-danger" style="padding-top:15%; padding-left:30%; font-size:2rem; border-bottom-width:0px; box-shadow:inset 0 0 0 0px var(--bs-table-accent-bg)">No Current Booking Found</td>
                 </tr>
             </tbody>
         </table>`;
@@ -853,7 +953,7 @@ async function checkVerifyPin(bookingid){
         return response.json();
     }).then(responseData1 => {
         console.log('Server response:', responseData1.message);
-        if(responseData1.message==true){
+        if(responseData1.message===true){
             document.getElementById("warning-msg").style.display="none";
             document.getElementById("success-msg").style.display = "block";
             document.getElementById('verifypin').style.display="none";

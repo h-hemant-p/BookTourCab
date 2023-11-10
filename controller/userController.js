@@ -179,41 +179,6 @@ export const signInReloadController = (request, response, next) => {
 }
 
 
-export const userRegisterDriverController = async (request, response) => {
-    console.log(request.body);
-    try {
-        var res = await drivingDetails.create({
-            experience_year: request.body.experienceyear,
-            dl_number: request.body.licencenumber,
-            dl_issue_date: request.body.licenceissuedate,
-            dl_expiry_date: request.body.licenceexpirydate,
-            dl_class: request.body.licenceclass,
-            dl_image: request.file.filename
-        });
-
-        console.log(res);
-        await users.updateOne({
-            email: request.session.log.email
-        }, {
-            $set: {
-                is_driver: true,
-                driving_details: res._id
-            }
-        });
-
-        var loggedUser = await users.findOne({ email: request.session.log.email });
-        request.session.log = loggedUser;
-        request.session.save();
-        console.log("data inserted Successfullly ... ");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
-    }
-    catch (error) {
-        console.log("Error While Become a BTC Driver." + error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
-    }
-}
-
-
 export const userRegisterOwnerController = async (request, response) => {
     try {
         console.log("Hii1 .. ");
@@ -875,12 +840,16 @@ export const userVerifyBookingStartPinController = async(request,response)=>{
     try{
         var bookingDetail = await bookings.findOne({_id : request.body.bookingid});
         if(bookingDetail.bookingpin==request.body.pin){
-            await bookings.updateOne({_id : request.body.bookingid
-            },
-            {$set : {
-                booking_status : "Running"
-            }
-        })
+            await bookings.updateOne(
+                {
+                    _id : request.body.bookingid
+                },
+                {
+                    $set : {
+                        booking_status : "Running"
+                    }
+                }
+            );
             response.json({message: true});
         }else{
             response.json({message : false});
@@ -940,3 +909,147 @@ export const userOwnerVehicleDataController = async(request,response)=>{
         console.log(error);
     }
 };
+
+export const userRequestedBookingDataController = async(request,response)=>{
+    try{
+        var bookingDetails = await bookings.find(
+            {
+                $and:[
+                    {
+                        customer:request.session.log._id
+                    },
+                    {
+                        booking_status : "Pending"
+                    }
+                ]
+                
+            }
+        );
+        console.log(bookingDetails)
+        // if(bookingDetails)
+        var data = [];
+        for(let i=0;i<bookingDetails.length;i++){
+            var vehicledata = await ownerDetails.findOne({//.................
+                "_id": bookingDetails[i].owner,
+                "vehicles._id":  bookingDetails[i].vehicle
+            },
+            {
+                "vehicles.$": 1
+            });
+            var details = {
+                bookingid : bookingDetails[i]._id,
+                reg_no : vehicledata.reg_number,
+                company : vehicledata.company,
+                model : vehicledata.model,
+                contact_no : request.session.log.contact_no,
+                booking_date : bookingDetails[i].booking_date,
+                hours : bookingDetails[i].total_time
+            }
+            data.push(details);
+            console.log(details)
+        }
+        console.log(data);
+        response.json({bookings : data});
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const userCurrentBookingDataController = async(request,response)=>{
+    try{
+        var bookingDetails = await bookings.find(
+            {
+                $or:[
+                    {
+                        $and:[
+                            {
+                                customer:request.session.log._id
+                            },
+                            {
+                                booking_status : "Running"
+                            }
+                        ]
+                    },
+                    {
+                        $and:[
+                            {
+                                customer:request.session.log._id
+                            },
+                            {
+                                booking_status : "Confirm"
+                            }
+                        ]
+                    },
+                ]
+                
+            }
+        );
+        console.log(bookingDetails)
+        // if(bookingDetails)
+        var data = [];
+        for(let i=0;i<bookingDetails.length;i++){
+            var vehicledata = await ownerDetails.findOne({
+                "_id": bookingDetails[i].owner,
+                "vehicles._id":  bookingDetails[i].vehicle
+            },
+            {
+                "vehicles.$": 1
+            });
+            var details = {
+                bookingid : bookingDetails[i]._id,
+                reg_no : vehicledata.reg_number,
+                company : vehicledata.company,
+                model : vehicledata.model,
+                contact_no : request.session.log.contact_no,
+                booking_date : bookingDetails[i].booking_date,
+                hours : bookingDetails[i].total_time
+            }
+            data.push(details);
+            console.log(details)
+        }
+        console.log(data);
+        response.json({bookings : data});
+    }catch(error){
+        console.log(error);
+    }
+}
+// export const userCurrentBookingDataController = async(request,response)=>{
+//     try{
+//         var bookingDetails = await bookings.find(
+//             {
+//                 $and:[
+//                     {
+//                         customer:request.session.log._id
+//                     },
+//                     {
+//                         $or:[
+//                             {
+
+//                                 booking_status : "Running"
+//                             },{
+//                                 booking_status : "Confirm"
+//                             }
+//                         ]
+//                     }
+//                 ]
+                
+//             }
+//         );
+//         console.log(bookingDetails)
+//         // if(bookingDetails)
+//         var details = {
+//             bookingid : bookingDetails._id,
+//             reg_no : bookingDetails.reg_number,
+//             company : bookingDetails.company,
+//             model : bookingDetails.model,
+//             contact_no : request.session.log.contact_no,
+//             booking_date : bookingDetails.booking_date,
+//             hours : bookingDetails.total_time
+//         }
+//         console.log(details)
+//         response.json({bookings : details});
+//     }catch(error){
+//         console.log(error);
+//     }
+// }
+

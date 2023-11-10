@@ -53,10 +53,10 @@
                                 <a href="#"><i class="fa fa-tachometer"></i> User Dashboard</a>
                                 <ul>
                                     <li> 
-                                        <a class="dashboard-links" id="user-current-bookings-btn" onclick="dashboardChoices('user-current-bookings')" >Current Bookings</a>
+                                        <a class="dashboard-links" onclick="showUserCurrentBookingData(); dashboardChoices('user-current-bookings')" >Current Bookings</a>
                                     </li>
                                     <li> 
-                                        <a class="dashboard-links" id="user-requested-bookings-btn" onclick="dashboardChoices('user-requested-bookings')" >Requested Bookings</a>
+                                        <a class="dashboard-links" onclick="showUserRequestedBookingData(); dashboardChoices('user-requested-bookings')" >Requested Bookings</a>
                                     </li>
                                     <li>
                                         <a class="dashboard-links" id="user-booking-history-btn" onclick="dashboardChoices('user-booking-history')" >Booking History</a>
@@ -265,7 +265,7 @@
             <!-- My Requested Bookings Dashboard Start -->
                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="user-requested-bookings" >
                     <h4 class="text-center fw-bold m-2 ">Requested Bookings</h4>
-                    <div id="requested-booking-data"></div>
+                    <div id="user-requested-booking-data"></div>
                 </div>
             <!-- My Requested Bookings End  -->
 

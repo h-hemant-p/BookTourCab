@@ -5,8 +5,10 @@ import wallets from '../model/walletModel.js';
 import ownerDetails from '../model/ownerDetailModel.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
+// import nodemailer from 'nodemailer';
+import { sendMail } from '../middleware/nodeMailer.js';
 import fs from 'fs';
+import { error } from 'console';
 
 
 var writeSecretKey = (secretKey)=>{
@@ -222,45 +224,31 @@ export const indexSigninUserController = async(request, response) => {
 
 
 export const indexGetOtpController = (request, response) => {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "hemantpraja88@gmail.com",
-            pass: "prou mshy xwev nygg",
-        },
-        secure: true,
-    });
     var min = 1000; // Minimum four-digit number
     var max = 9999; // Maximum four-digit number
     var otp = Math.floor(Math.random() * (max - min + 1)) + min;
-
-    
-    const mailOptions = {
-        from: 'aartimakwana2408@gmail.com',
-        to: request.body.email,
-        subject: `Your One time Password is ${otp}`,
-        text: 'Send By BookTourCab(BTC)'
-    };
-    
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error("Error while sending Email.");
-            response.render("./pages/index",{user:""});
-            
-        } else {
-            request.session.otp = otp;
-            request.session.email = request.body.email;
-            try{
-                request.session.contact_no = request.body.contactno;
-            }catch(error){
-                console.error("Contact number not saved in session.")
-            }
-            request.session.save();
-            console.log('Email sent successfully!');
-            console.log(otp);
+    var email = request.body.email;
+    var subject =  `Welcome to BOOK TOUR CAB - Your Ultimate Vehicle Booking Solution!`;
+    var message = `Thank you for choosing us as your trusted partner for all your vehicle booking needs. Our team is dedicated to providing you with a seamless and convenient experience for your transportation requirements. Your One time Password is ${otp}`;
+    var html = '';
+    try{
+        sendMail(email,subject,message,html);
+        request.session.otp = otp;
+        request.session.email = request.body.email;
+        try{
+            request.session.contact_no = request.body.contactno;
+        }catch(error){
+            console.error("Contact number not saved in session.")
         }
-    });
-}
+        request.session.save();
+        console.log('Email sent successfully!');
+        console.log(otp);
+    }catch(error){
+        console.error("Error while sending Email.");
+        console.error(error);
+        response.render("./pages/index",{user:""});
+    }    
+};
 
 export const indexRenderSignController = (request,response)=>{
     response.render('./pages/sign',{user : request.session.log});

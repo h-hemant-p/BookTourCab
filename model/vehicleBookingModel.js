@@ -14,12 +14,12 @@ var vehicleBookingModel = mongoose.Schema({
     vehicle :{
         type : mongoose.Schema.Types.ObjectId,
         required : true,
-        ref : "ownerDetails"
+        ref : "vehicles"
     },
     owner :{
         type : mongoose.Schema.Types.ObjectId,
         required : true,
-        ref : "users"
+        ref : "owners"
     },
     start_date : {
         type : Date,

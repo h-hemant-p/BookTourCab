@@ -255,6 +255,4 @@ export const adminGetNewslettterListController = async (request,response) => {
     }
 }
 
-
-
 /* Admin@123 -->  2b3bdc53a332daaf96dc5afa224c9e86036b9b9c40cba884987835418848a997  */

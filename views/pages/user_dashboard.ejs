@@ -112,7 +112,10 @@
                         <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
                             
                             <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
-                            <i class="fa-solid fa-pen-to-square" style="margin-left: 12%; margin-top: 0;" onclick="uploadProfileImage()"></i><br>
+                             <!-- Hidden file input and label -->
+                            <input type="file" id="imageInput" style="display:none;">
+                            <label for="imageInput" class="custom-file-input-label" id="fileInputLabel"  style="margin-left: 9%; margin-top: 0;"><i class="fa-solid fa-pen-to-square" onclick="uploadProfileImage()"></i></label><br>
+                            <div id="userprof"></div>
                             
                             <%if(user.name){%>
                                 <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= user.name %></span><br>
@@ -157,7 +160,7 @@
 
             <!-- User Profile Update Modal Start -->
                 <div class="modal fade" id="userDetailsUpdateForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalTitleId">User Details Update Form </h5>
@@ -165,13 +168,14 @@
                             </div>
                     
                             <div class="modal-body">
-                                <form   class="form" enctype="multipart/form-data">
+                                <form   class="form" action="/user/updateprofile" method="post">
                                     <div class="container ">
                                         <div class="border bg-primary">
                                             <h5 class="m-2 fw-bold text-center text-light">USER PROFILE UPDATE FORM</h5>
                                         </div>
                                     </div>
                                     <div class="container"><br>
+                                    
                                         <div class="row">
                                             <div class="mb-3 col-lg-6 form-field">
                                                 <label for="user-name" class=" form-label fw-bold">Name</label>
@@ -209,32 +213,6 @@
                                                 <label for="user-city" class=" form-label fw-bold ">City</label>
                                                 <select id ="userupdatecity" class="form-control w-75" name="city" ></select>
                                                 <script language="javascript">print_state("userupdatestate");</script>
-                                                <small></small>
-                                            </div>
-                                        </div>
-                        
-                                        <div class=" row ">
-                                            <div class="mb-3 col-lg-6 form-field">
-                                                <label for="user-aadhar-number" class=" form-label fw-bold ">Aadhar Number</label>
-                                                <input type="text" class="form-control  w-75 " placeholder="Enter Aadhar Number" id="useraadharnumber" name="aadharnumber" aria-describedby="ride" onkeyup="checkAadharNumber3()">
-                                                <small></small>
-                                            </div>
-                                            <div class="mb-3 col-lg-6 form-field">
-                                                <label for="user-aadhar-img" class=" form-label fw-bold">Upload Aadhar Image</label>
-                                                <input type="file" class="form-control w-75" placeholder="Upload Aadhar image here" id="useraadharimg" name="aadharimg" aria-describedby="ride" accept="image/*" onchange="checkAadharImage3()">
-                                                <small></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="mb-3 col-lg-6 form-field">
-                                                <label for="user-pan-number" class=" form-label fw-bold ">Pan Card Number (optional)</label>
-                                                <input type="text" class="form-control w-75 " placeholder="Enter Pancard Number" name="pannumber" id="userpannumber" onkeyup="checkPanCardNumber3()" aria-describedby="ride">
-                                                <small></small>
-                                            </div>
-                                            <div class="mb-3 col-lg-6 form-field">
-                                                <label for="user-pancard-image" class=" form-label fw-bold">Upload Pan Card Image (optional)</label>
-                                                <input type="file" class="form-control w-75" placeholder="UploadPan Card image here" name="panimg" id="userpancardimage" accept="image/*" onchange="checkPanCardImage3()" aria-describedby="ride">
                                                 <small></small>
                                             </div>
                                         </div>

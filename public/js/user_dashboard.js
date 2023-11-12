@@ -982,3 +982,37 @@ document.getElementById("wallet-dashboard").addEventListener("click",async()=>{
 var uploadProfileImage = ()=>{
     
 }
+
+// Profile Image Upload
+document.getElementById('imageInput').addEventListener('change', function() {
+    console.log("hii1");
+    var fileInput = this;
+    var selectedImageDiv = document.getElementById('selectedImage');
+    var file = fileInput.files[0];
+
+    // selectedImageDiv.textContent = 'Selected image: ' + file.name;
+
+    // Send the file to the server (you need to implement this)
+    uploadImage(file);
+  });
+
+  function uploadImage(file) {
+    console.log("hii2");
+    console.log(file);
+    // Implement your code to send the file to the server using AJAX or fetch
+    // Example using fetch:
+    var formData = new FormData();
+    formData.append('image', file);
+    var userprofiledata = "";
+
+    fetch('/user/uploadprofileimage', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {console.log(data.message)
+        userprofiledata+= ` <img src="uploads/${data.message}" height="200px" width="220px" alt="image">`;
+    document.getElementById('userprof').innerHTML = userprofiledata;
+    })
+    .catch(error => console.error('Error:', error));
+  }

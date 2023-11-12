@@ -1067,3 +1067,62 @@ export const userNewsLetterController = async(request,response) => {
         response.render("./pages/index", { user: request.session.log });
     }
 }
+
+export const userUploadProfileImageController = async(request,response) => {
+    try {
+        console.log("Inside Profile image ");
+        console.log(request.file);
+
+        await users.updateOne({
+            _id : request.session.log._id
+        },
+        {
+        $set : {
+            profile_img : request.file.filename
+            }
+        })
+    
+        var userdetails = await users.findOne({_id : request.session.log._id})
+        response.json({ message: userdetails.profile_img });
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
+
+}
+
+
+export const userUpdateProfileController = async (request, response) => {
+    try {
+
+        // console.log(request.body);
+        await users.updateOne({
+            _id: request.session.log._id
+        },
+            {
+                $set: {
+                    name: request.body.name,
+                    gender: request.body.gender,
+                    address: request.body.address,
+                    pin_code: request.body.pincode,
+                    state: request.body.state,
+                    city: request.body.city
+                }
+            });
+
+        var loggedUser = await users.findOne({ email: request.session.log.email });
+        var loggedOwnerDetails = await ownerDetails.findOne({
+            _id: loggedUser.owner_details
+        });
+
+        request.session.log = loggedUser;
+        request.session.ownerDetails = loggedOwnerDetails;
+        request.session.role = "user";
+        request.session.save();
+        console.log("Profile Updated Successfully");
+        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+    } catch (error) {
+        console.log("Error While Updating User Profile Controller" + error);
+        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+    }
+}

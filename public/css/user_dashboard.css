@@ -125,3 +125,26 @@ h1 {
 #change-password {
   display: none;
 }
+
+
+
+/* Hide the default file input */
+input[type="file"] {
+  display: none;
+}
+
+/* Style the custom file input container */
+.custom-file-input-label {
+  display: inline-block;
+  color: #473f3f;
+  /* font-size: 26px; */
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+/* Style the icon */
+#uploadIcon {
+  width: 30px; /* Set the width and height as needed */
+  height: 30px;
+  cursor: pointer;
+}

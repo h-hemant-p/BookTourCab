@@ -92,9 +92,9 @@ var vehicleModel = mongoose.Schema({
     },
     feedback:[feedbacks.schema],
     vehicle_status :{
-        type : String,
+        type : Boolean,
         required : true,
-        default : "active"
+        default : true
     }
 });
 

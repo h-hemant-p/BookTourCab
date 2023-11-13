@@ -284,7 +284,6 @@ export const userAddVehicleController = async (request, response) => {
             automatic: (request.body.automatic == "true"),
             ac: (request.body.ac == "true"),
             driver: (request.body.driver == "true"),
-            // have_insurance : (request.body.haveinsurance=="true"),
             rc_book_image: rcimg.filename,
             images: vehicle_image
         };
@@ -297,7 +296,6 @@ export const userAddVehicleController = async (request, response) => {
             }
         });
 
-        // console.log(owner);
         var loggedUser = await users.findOne({ email: request.session.log.email });
         var loggedOwnerDetails = await ownerDetails.findOne({
             _id: loggedUser.owner_details
@@ -319,7 +317,6 @@ export const userAddVehicleController = async (request, response) => {
 export const userSearchVehicleDetailsController = async (request, response) => {
     var pickuplat, pickuplon, lat2, lon2;
     var arr = [];
-    // console.log( request.body);
 
     const startDate = new Date(`${request.body.bookstartdate}T${request.body.bookstarttime}`);
     const endDate = new Date(`${request.body.bookenddate}T${request.body.bookendtime}`);
@@ -385,45 +382,46 @@ export const userSearchVehicleDetailsController = async (request, response) => {
 
         if (res[i].OwnerDetails.length != 0) {
             for (var j = 0; j < res[i].OwnerDetails[0].vehicles.length; j++) {
+                if(ownerDetails[0].vehicles[j].have_insurance && !ownerDetails[0].vehicles[j].is_booked && ownerDetails[0].vehicles[j].vehicle_status){
+                    var amount = res[i].OwnerDetails[0].vehicles[j].rent * totalHours;
+                    var gst_amount = (amount * 18) / 100;
+                    var totalamount = (amount + gst_amount).toFixed(0);
 
-                var amount = res[i].OwnerDetails[0].vehicles[j].rent * totalHours;
-                var gst_amount = (amount * 18) / 100;
-                var totalamount = (amount + gst_amount).toFixed(0);
-
-                var obj = {
-                    owner_contact: res[i].contact_no,
-                    owner_name: res[i].name,
-                    address: res[i].address,
-                    nearbyvehicle: fixed_distance,
-                    registerno: res[i].OwnerDetails[0].vehicles[j].reg_number,
-                    company: res[i].OwnerDetails[0].vehicles[j].company,
-                    model_name: res[i].OwnerDetails[0].vehicles[j].model,
-                    manufactureyear: res[i].OwnerDetails[0].vehicles[j].manufacture_year,
-                    fueltype: res[i].OwnerDetails[0].vehicles[j].fuel_type,
-                    vehicleclass: res[i].OwnerDetails[0].vehicles[j].vehicle_class,
-                    seatingcapacity: res[i].OwnerDetails[0].vehicles[j].seating_capacity,
-                    totaldoors: res[i].OwnerDetails[0].vehicles[j].doors,
-                    airbags: res[i].OwnerDetails[0].vehicles[j].air_bags,
-                    mileage: res[i].OwnerDetails[0].vehicles[j].mileage,
-                    rateperhr: res[i].OwnerDetails[0].vehicles[j].rent,
-                    automatic: res[i].OwnerDetails[0].vehicles[j].automatic,
-                    haveac: res[i].OwnerDetails[0].vehicles[j].ac,
-                    havedriver: res[i].OwnerDetails[0].vehicles[j].driver,
-                    vehicleimg: res[i].OwnerDetails[0].vehicles[j].images[0].image,
-                    totalamount: totalamount,
-                    startdate: request.body.bookstartdate,
-                    starttime: request.body.bookstarttime,
-                    enddate: request.body.bookenddate,
-                    endtime: request.body.bookendtime,
-                    pickuplocation: request.body.pickuplocation,
-                    droplocation: request.body.droplocation,
-                    vehicleobjid: res[i].OwnerDetails[0].vehicles[j]._id,
-                    ownerobjid: res[i].OwnerDetails[0]._id,
-                    totalHours: totalHours,
-                    gst: gst_amount,
-                    amount: amount
+                    var obj = {
+                        owner_contact: res[i].contact_no,
+                        owner_name: res[i].name,
+                        address: res[i].address,
+                        nearbyvehicle: fixed_distance,
+                        registerno: res[i].OwnerDetails[0].vehicles[j].reg_number,
+                        company: res[i].OwnerDetails[0].vehicles[j].company,
+                        model_name: res[i].OwnerDetails[0].vehicles[j].model,
+                        manufactureyear: res[i].OwnerDetails[0].vehicles[j].manufacture_year,
+                        fueltype: res[i].OwnerDetails[0].vehicles[j].fuel_type,
+                        vehicleclass: res[i].OwnerDetails[0].vehicles[j].vehicle_class,
+                        seatingcapacity: res[i].OwnerDetails[0].vehicles[j].seating_capacity,
+                        totaldoors: res[i].OwnerDetails[0].vehicles[j].doors,
+                        airbags: res[i].OwnerDetails[0].vehicles[j].air_bags,
+                        mileage: res[i].OwnerDetails[0].vehicles[j].mileage,
+                        rateperhr: res[i].OwnerDetails[0].vehicles[j].rent,
+                        automatic: res[i].OwnerDetails[0].vehicles[j].automatic,
+                        haveac: res[i].OwnerDetails[0].vehicles[j].ac,
+                        havedriver: res[i].OwnerDetails[0].vehicles[j].driver,
+                        vehicleimg: res[i].OwnerDetails[0].vehicles[j].images[0].image,
+                        totalamount: totalamount,
+                        startdate: request.body.bookstartdate,
+                        starttime: request.body.bookstarttime,
+                        enddate: request.body.bookenddate,
+                        endtime: request.body.bookendtime,
+                        pickuplocation: request.body.pickuplocation,
+                        droplocation: request.body.droplocation,
+                        vehicleobjid: res[i].OwnerDetails[0].vehicles[j]._id,
+                        ownerobjid: res[i].OwnerDetails[0]._id,
+                        totalHours: totalHours,
+                        gst: gst_amount,
+                        amount: amount
+                    }
+                    arr.push(obj);
                 }
-                arr.push(obj);
             }
         }
     }

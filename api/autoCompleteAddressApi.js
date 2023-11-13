@@ -11,9 +11,11 @@ function addressAutocomplete1(containerElement, callback, options) {
         var currentValue = this.value;
         closeDropDownList();
         if (currentPromiseReject) {
-            currentPromiseReject({
-                canceled: true
-            });
+            currentPromiseReject(
+                {
+                    canceled: true
+                }
+            );
         }
         var promise = new Promise((resolve, reject) => {
             currentPromiseReject = reject;
@@ -126,7 +128,8 @@ function addressAutocomplete1(containerElement, callback, options) {
     });
 
     function setActive(items, index) {
-        if (!items || !items.length) return false;
+        if (!items || !items.length) 
+            return false;
 
         for (var i = 0; i < items.length; i++) {
             items[i].classList.remove("autocomplete-active");
@@ -219,7 +222,8 @@ function addressAutocomplete2(containerElement, callback, options) {
                       response.json().then(data => reject(data));
                   }
               });
-        });       promise.then((data) => {
+        });       
+        promise.then((data) => {
             currentItems = data.features;
             var autocompleteItemsElement = document.createElement("div");
             autocompleteItemsElement.setAttribute("class", "autocomplete-items");

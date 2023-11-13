@@ -98,7 +98,7 @@ h1 {
   font-family: FontAwesome;
 }
 
-/* /---------------------/ */
+/*---------------------*/
 .myDashboardCard {
   border-radius: 10px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
@@ -130,6 +130,7 @@ h1 {
 #change-password,
 #admin-forget-password,
 #admin-contact-us,
-#newsletter-request {
+#newsletter-request,
+#send-notification {
     display: none;
 }

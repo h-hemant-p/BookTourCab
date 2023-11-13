@@ -1,5 +1,18 @@
 // Function number : 6
 
+function VehicleHaveInsurance6(){
+  var yesRadioButton = document.getElementById('Yes');
+  var noRadioButton = document.getElementById('No');
+
+  if (yesRadioButton.checked) {
+    showSuccess6(yesRadioButton);
+    return true;
+  } else if (noRadioButton.checked) {
+    showError6(noRadioButton, 'it is must to have insurance of vehicle.');
+    return false;
+  }
+}
+
 function VehicleRigistrationNumber6() {
   let registration_number = document.getElementById("registration-number");
   let valid = false;
@@ -241,13 +254,16 @@ function showSuccess6(input) {
   error.textContent = '';
 }
 
+
+
 function submitVehicleDetails6(){
 
-  if( VehicleRigistrationNumber6() &&  VehicleCompaneyName6() &&  VehicleRegistrationYear6() &&  VehicleManufactureYear6() &&  VehicleModelName6() &&  checkSelectedVehicle6() &&  checkFuelType6() &&  checkVehicleRcBook6() &&  VehicleSittingCapacity6())
+  if(VehicleHaveInsurance6() && VehicleRigistrationNumber6() &&  VehicleCompaneyName6() &&  VehicleRegistrationYear6() &&  VehicleManufactureYear6() &&  VehicleModelName6() &&  checkSelectedVehicle6() &&  checkFuelType6() &&  checkVehicleRcBook6() &&  VehicleSittingCapacity6())
   {
     return true;
   }
   else{
+    VehicleHaveInsurance6();
     VehicleRigistrationNumber6();
     VehicleCompaneyName6();
     VehicleRegistrationYear6();

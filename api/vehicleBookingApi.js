@@ -56,20 +56,14 @@ function runDirection(start, end) {
 }
 
 function submitVehicleBooking(event) {
-  // console.log("Hiiiii........");
-
   event.preventDefault();
-  // delete current map layer
   map.remove();
 
   let pickuplocation = document.getElementById('pickuplocation').value;
   let droplocation = document.getElementById('droplocation').value;
-  // run directions function
   runDirection(pickuplocation, droplocation);
   return false;
 }
 
-// asign the form to form variable
 const form = document.getElementById('form');
-// call the submitForm() function when submitting the form
 form.addEventListener('submit', submitVehicleBooking);

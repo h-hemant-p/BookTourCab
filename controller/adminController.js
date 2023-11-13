@@ -6,7 +6,7 @@ import session from 'express-session';
 import admin from '../model/adminModel.js';
 import contactUs from '../model/contactUs.js';
 import newsletter from '../model/newsLetterModel.js';
-
+import { sendMail } from '../middleware/nodeMailer.js';
 export const adminUserListController = async (request, response) => {
   try {
     var alluser = await users.find({ user_status: true });
@@ -88,11 +88,11 @@ export const adminChangePasswordController = async (request, response) => {
     request.session.log = loggedAdmin;
     request.session.role = "admin";
     request.session.save();
-    response.render('./pages/admin_dashboard', { admin: request.session.log});
+    response.render('./pages/admin_dashboard', { admin: request.session.log });
   }
   catch (error) {
     console.log("Error While Updating Password." + error);
-    response.render('./pages/admin_dashboard', { admin: request.session.log});
+    response.render('./pages/admin_dashboard', { admin: request.session.log });
   }
 }
 
@@ -239,20 +239,54 @@ export const adminUpdateProfileDetailsController = async (request, response) => 
     request.session.log = loggedAdmin;
     request.session.role = "admin"
     request.session.save();
-    response.render('./pages/admin_dashboard', { admin: request.session.log});
+    response.render('./pages/admin_dashboard', { admin: request.session.log });
 
   } catch (error) {
-    console.log("Error While Update Admin Profile Controller"+error);
+    console.log("Error While Update Admin Profile Controller" + error);
   }
 }
 
-export const adminGetNewslettterListController = async (request,response) => {
-    try {
-      var newsletterlist = await newsletter.find();
-      response.json({ data : newsletterlist});
-    } catch (error) {
-      console.log("Error While Fetching Newsletter List Controller");
+export const adminGetNewslettterListController = async (request, response) => {
+  try {
+    var newsletterlist = await newsletter.find();
+    response.json({ data: newsletterlist });
+  } catch (error) {
+    console.log("Error While Fetching Newsletter List Controller");
+  }
+}
+
+export const adminSendNotificationController = async (request, response) => {
+  try {
+    let senttomail = request.body.to_send_notification;
+    var subject = "Existing Update By BTC";
+    var message = request.body.notification;
+    var html = "";
+
+    if (senttomail == "users") {
+      var allusers = await users.find();
+      allusers.forEach(element => {
+        sendMail(element.email,subject,message,html);
+      });
     }
+    else if (senttomail == "owners") {
+      var allowners = await users.find({is_owner:true});
+      console.log("all owners : ",allowners);
+
+      allowners.forEach(element => {
+        sendMail(element.email,subject,message,html);
+      });
+    }
+    else if (senttomail == "newsletters") {
+      var allnewsletters = await newsletter.find();
+
+      allnewsletters.forEach(element => {
+        sendMail(element.email,subject,message,html);
+      });
+    }
+    response.render('./pages/admin_dashboard', { admin: request.session.log });
+  } catch (error) {
+
+  }
 }
 
 /* Admin@123 -->  2b3bdc53a332daaf96dc5afa224c9e86036b9b9c40cba884987835418848a997  */

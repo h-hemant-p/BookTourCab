@@ -9,6 +9,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none';  
         document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "allusers-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -19,6 +20,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none';   
         document.getElementById('newsletter-request').style.display = 'none'; 
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "allblockusers-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -29,6 +31,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none'; 
         document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "vehicles-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -39,6 +42,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none'; 
         document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "allblockvehicles-details") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -49,6 +53,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none';     
         document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "change-password") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -59,6 +64,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'block';
         document.getElementById('admin-contact-us').style.display = 'none';
         document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "admin-contact-us") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -69,6 +75,7 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'block';
         document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'none';
     }
     else if (option === "newsletter-request") {
         document.getElementById('adminaccount-details').style.display = 'none';
@@ -79,6 +86,19 @@ function showDetails(option) {
         document.getElementById('change-password').style.display = 'none';
         document.getElementById('admin-contact-us').style.display = 'none';
         document.getElementById('newsletter-request').style.display = 'block';
+        document.getElementById('send-notification').style.display = 'none';
+    }
+
+    else if (option === "send-notification") {
+        document.getElementById('adminaccount-details').style.display = 'none';
+        document.getElementById('allusers-details').style.display = 'none';
+        document.getElementById('allblockusers-details').style.display = 'none';
+        document.getElementById('vehicles-details').style.display = 'none';
+        document.getElementById('allblockvehicles-details').style.display = 'none';
+        document.getElementById('change-password').style.display = 'none';
+        document.getElementById('admin-contact-us').style.display = 'none';
+        document.getElementById('newsletter-request').style.display = 'none';
+        document.getElementById('send-notification').style.display = 'block';
     }
 }
 
@@ -618,6 +638,7 @@ function submitchangepassword7() {
     }
 }
 /*  Change Password End  */
+
 /*  Check Admin name Start  */
  function checkUsername7(){
     let adminname = document.getElementById('adminname');
@@ -662,6 +683,8 @@ function checkContactNumber7(){
 
 /*  Check Contact Number End  */
 
+
+/* Admin Profile Submit Start */
 function submitFormDetails(){
     if(checkUsername7() && checkContactNumber7()){
         return true;
@@ -669,6 +692,53 @@ function submitFormDetails(){
     else{
         checkUsername7();
         checkContactNumber7();
+        return false;
+    }
+}
+/* Admin Profile Submit Start */
+
+/* Admin Sent Notification */
+function checkNotificationInput(){
+    let notification = document.getElementById('notification');
+
+    let valid7 = false;
+    let notification_input = notification.value.trim();
+    
+    if(!isRequired7(notification_input)){
+        showError7(notification,"Notification Cannot Be Blank");
+    }
+    else{
+        showSuccess7(notification);
+        valid7 = true;
+    }
+    return valid7;
+}
+
+/* Admin Check Sent To Notification  */
+function checkSendToNotification(){
+    let to_send = document.getElementById('to_send_notification');
+
+    let valid7 = false;
+    let to_send_input = to_send.value.trim();
+
+    if(!isRequired7(to_send_input)){
+        showError7(to_send,"Select to Send Notification.")
+    }
+    else{
+        showSuccess7(to_send);
+        valid7 = true;
+    }
+    return valid7;
+}
+
+/*  Submit Sent Notification Details */
+function checkNotificationDetails(){
+    if(checkNotificationInput() && checkSendToNotification()){
+        return true;
+    }
+    else{
+        checkNotificationInput();
+        checkSendToNotification();
         return false;
     }
 }

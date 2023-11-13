@@ -5,7 +5,6 @@ import wallets from '../model/walletModel.js';
 import ownerDetails from '../model/ownerDetailModel.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-// import nodemailer from 'nodemailer';
 import { sendMail } from '../middleware/nodeMailer.js';
 import fs from 'fs';
 import { error } from 'console';
@@ -20,28 +19,19 @@ var writeSecretKey = (secretKey)=>{
 }
 
 export const indexSignupUserController = async (request, response) => {
-    // console.log('hi');
-    
     if ( request.session.otp == request.body.otp) {
         try {
-            
-            // console.log('hii2');
-            // const options = { maxTimeMS: 1000 };
-            // db.setProfilingLevel(1, { slowms: 100 });
             const existingUser = await users.findOne({ email: request.session.email });
-            // const existingUser = await users.findOne({ email: request.session.email },null, options);
             if (existingUser) {
                 console.log("User allready Exist");
                 response.render("./pages/index",{user:""});
             }
             else{
-                // console.log('hii3');
                 const existingAdmin = await admin.findOne({email:request.session.email});
                 if(existingAdmin){
                     console.log('You are an admin');
                     response.render("./pages/index",{user:""});
                 }else{
-                    // console.log('hii4');
                     let payload = {};
                     const maxAge = 6 * 24 * 60 * 60 * 1000;
                     const SECRET_KEY = crypto.randomBytes(32).toString('hex');
@@ -55,7 +45,6 @@ export const indexSignupUserController = async (request, response) => {
                     };
                     
                     var token = jwt.sign(payload, SECRET_KEY,expiryTime);
-                    // console.log('hi 5');
                     response.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
                     writeSecretKey(SECRET_KEY);
                     console.log("cookie saved successfully.");
@@ -101,7 +90,6 @@ export const indexSigninUserController = async(request, response) => {
     var is_admin = false;
     var is_user = false;
     
-    // sign in with otp
     if(request.session.otp){
         if(request.session.otp==request.body.otp){
             try{

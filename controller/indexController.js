@@ -65,7 +65,6 @@ export const indexSignupUserController = async (request, response) => {
 
                     var loggedUser = await users.findOne({email:request.session.email});
                     request.session.log = loggedUser;
-                    request.session.ownerDetails = {};
                     request.session.role = "user";
                     request.session.save();
                     console.log('user saved in session successfully');
@@ -173,7 +172,7 @@ export const indexSigninUserController = async(request, response) => {
         request.session.role = "admin";
         request.session.save();
 
-        response.render('./pages/admin_dashboard', { admin: request.session.log,data : ""});
+        response.render('./pages/admin_dashboard', { admin: request.session.log});
 
     }else if(is_user){
         let payload = {};
@@ -195,14 +194,6 @@ export const indexSigninUserController = async(request, response) => {
         console.log("cookie saved successfully.");
 
         var loggedUser = await users.findOne({email:request.session.email});
-        var loggedOwnerDetails = await ownerDetails.findOne({
-            _id : loggedUser.owner_details
-        });
-        if(loggedOwnerDetails){
-            request.session.ownerDetails = loggedOwnerDetails;
-        }else{
-            request.session.ownerDetails = {};
-        }
         request.session.log = loggedUser;
         request.session.role = "admin";
         request.session.save();

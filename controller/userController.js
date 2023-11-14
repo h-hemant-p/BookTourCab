@@ -12,6 +12,7 @@ import swal from 'sweetalert';
 import session from 'express-session';
 import { log } from 'console';
 import newsletter from '../model/newsLetterModel.js';
+import axios from 'axios';
 
 
 
@@ -21,7 +22,6 @@ export const userLogoutUserController = (request, response) => {
     request.session.log = "";
     request.session.destroy();
     response.cookie('jwt', '', { expires: new Date(0) })
-    response.cookie('SECRET_KEY', '', { expires: new Date(0) })
     response.render('./pages/index', { user: "" })
 }
 
@@ -84,11 +84,11 @@ export const userCreatePasswordController = async (request, response) => {
         request.session.log = loggedUser;
         request.session.save();
         console.log("Password Created Successfully");
-        response.render('./pages/user_dashboard', { user: request.session.log, ownerDetails: request.session.ownerDetails })
+        response.render('./pages/user_dashboard', { user: request.session.log })
     } catch (error) {
         console.log(error);
         console.log("Error while Create a user Password.");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
 }
 
@@ -120,11 +120,11 @@ export const userChangePasswordController = async (request, response) => {
         request.session.save();
         console.log("Password Updated Successfully.....");
         console.log(request.session.log);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
     catch (error) {
         console.log("Error While Updating Password.");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
 }
 
@@ -153,7 +153,7 @@ export const userDashboardController = (request, response) => {
     console.log(request.session);
 
     if (user) {
-        response.render("./pages/user_dashboard", { user: user, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: user });
     } else {
         response.status(404).render("./pages/404");
     }
@@ -204,12 +204,12 @@ export const userRegisterOwnerController = async (request, response) => {
         request.session.save();
         console.log("Hii4 .. ");
         console.log("data inserted Successfullly ... ");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
         console.log("Hii5 .. ");
     } catch (error) {
         console.log(".Error while becoming Owner ");
         console.log(error)
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
 }
 
@@ -249,11 +249,11 @@ export const userAddDriverController = async (request, response) => {
         var loggedUser = await users.findOne({ email: request.session.log.email });
         request.session.log = loggedUser;
         request.session.save();
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     } catch (error) {
         console.log("Error while Adding Driver.")
         console.log(error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
 }
 
@@ -305,11 +305,11 @@ export const userAddVehicleController = async (request, response) => {
         request.session.role = "user";
         request.session.save();
         console.log("Vehicle Data Inserted Successfully.. ");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
     catch (error) {
         console.log("Error While Register." + error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
 }
 
@@ -379,10 +379,13 @@ export const userSearchVehicleDetailsController = async (request, response) => {
         const distance = R * c;
         let fixed_distance = parseFloat(distance).toFixed(2);
 
-
+        // console.log(res);
+        
         if (res[i].OwnerDetails.length != 0) {
+
             for (var j = 0; j < res[i].OwnerDetails[0].vehicles.length; j++) {
-                if(ownerDetails[0].vehicles[j].have_insurance && !ownerDetails[0].vehicles[j].is_booked && ownerDetails[0].vehicles[j].vehicle_status){
+                
+                if(res[i].OwnerDetails[0].vehicles[j].have_insurance && !res[i].OwnerDetails[0].vehicles[j].is_booked && res[i].OwnerDetails[0].vehicles[j].vehicle_status){
                     var amount = res[i].OwnerDetails[0].vehicles[j].rent * totalHours;
                     var gst_amount = (amount * 18) / 100;
                     var totalamount = (amount + gst_amount).toFixed(0);
@@ -420,7 +423,9 @@ export const userSearchVehicleDetailsController = async (request, response) => {
                         gst: gst_amount,
                         amount: amount
                     }
+                    console.log(obj);
                     arr.push(obj);
+                    
                 }
             }
         }
@@ -491,12 +496,9 @@ export const userBookNowVehicleController = async (request, response) => {
     }
 }
 
-
 export const userAddInsuranceController = async (request, response) => {
-
-    var reg_number = request.body.registrationNumber;
-    var ownerId = request.body.ownerId;
-    // console.log(request.body);
+    console.log(request.body);
+    
     try {
         var insurance = await vehiclesInsurance.create({
             policy_number: request.body.policynumber,
@@ -509,11 +511,9 @@ export const userAddInsuranceController = async (request, response) => {
             premium_amount: request.body.insurancepremiumamount,
             coverage_amount: request.body.coverageamount
         });
-
-        // var vehicalsDetails = await ownerDetails.findOne({ _id: ownerId }, { vehicles: 1 });
         await ownerDetails.updateOne({
             "vehicles": {
-                $elemMatch: { "reg_number": reg_number }
+                $elemMatch: { "reg_number": request.body.registrationNumber }
             }
         },
         {
@@ -524,10 +524,10 @@ export const userAddInsuranceController = async (request, response) => {
         });
 
         console.log("Vehicle Insurance Added Successfully.. ");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails, result: "" });
+        response.render("./pages/user_dashboard", { user: request.session.log});
     } catch (error) {
         console.log("Error While Insurance vehicle." + error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails, result: "" });
+        response.render("./pages/user_dashboard", { user: request.session.log});
     }
 }
 
@@ -582,45 +582,17 @@ export const userViewBookingHistoryController = async (request, response) => {
 }
 
 
-export const userDeleteVehicleCOntroller = async (request, response) => {
+export const userDeleteVehicleController = async (request, response) => {
+    var id = request.body.vehicleid;
+
     try {
-
-        var reg = request.query.reg_number;
-        console.log("hii", reg);
-
-        var loggedUser = await users.findOne({ email: request.session.log.email });
-        var loggedOwnerDetails = await ownerDetails.findOne({
-            _id: loggedUser.owner_details
-        });
-        request.session.log = loggedUser;
-        request.session.ownerDetails = loggedOwnerDetails;
-        request.session.role = "user";
-        request.session.save();
-
-
-        var existvehicle = await ownerDetails.findOne({ email: request.session.log.email, "vehicles.reg_number": request.query.reg_number }, { "vehicles.$": 1 });
-
-        if (existvehicle) {
-
-            await ownerDetails.updateOne(
-                { email: request.session.log.email },
-                { $pull: { vehicles: { reg_number: request.query.reg_number } } }
-            )
-
-            console.log("Vehicle Deleted Successfully.. ");
-            response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
-
-        } else {
-            console.log("No Vehicle Found ....");
-            response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
-        }
-
+        await ownerDetails.updateOne(
+            { _id: request.session.log.owner_details},
+            { $pull: { vehicles: { _id: id } } }
+        );
+    } catch (error) {
+        console.log(error)
     }
-    catch (error) {
-        console.log("Error While Register." + error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
-    }
-
 }
 
 
@@ -674,12 +646,12 @@ export const userUpdateVehicleInsuranceDetailsController = async (request, respo
         request.session.role = "user";
         request.session.save();
 
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
         console.log("Insurance Updated Successfully");
 
     } catch (err) {
         console.log("Error while Update Vehicle Insurance Controller" + err);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails, result: "" });
+        response.render("./pages/user_dashboard", { user: request.session.log, result: "" });
     }
 }
 
@@ -839,13 +811,17 @@ export const userVerifyBookingStartPinController = async(request,response)=>{
     try{
         var bookingDetail = await bookings.findOne({_id : request.body.bookingid});
         if(bookingDetail.bookingpin==request.body.pin){
+            var min = 1000; 
+            var max = 9999;
+            var completionPin = Math.floor(Math.random() * (max - min + 1)) + min;
             await bookings.updateOne(
                 {
                     _id : request.body.bookingid
                 },
                 {
                     $set : {
-                        booking_status : "Running"
+                        booking_status : "Running",
+                        completion_pin : completionPin
                     }
                 }
             );
@@ -878,26 +854,6 @@ export const userOwnerDriverDataController = async(request,response)=>{
     }
 }
 
-export const userStartBookingController = async(request,response)=>{
-    var min = 1000; 
-    var max = 9999;
-    var completionPin = Math.floor(Math.random() * (max - min + 1)) + min;
-    try{
-        await bookings.updateOne(
-            {
-                _id:request.body.bookingid
-            },{
-                $set :{
-                    booking_status : "Running",
-                    completion_pin : completionPin
-                }
-            }
-        );
-        console.log('Booking Started Successfully.');
-    }catch(error){
-        console.log(error);
-    }
-}
 
 export const userOwnerVehicleDataController = async(request,response)=>{
     try{
@@ -1118,9 +1074,9 @@ export const userUpdateProfileController = async (request, response) => {
         request.session.role = "user";
         request.session.save();
         console.log("Profile Updated Successfully");
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     } catch (error) {
         console.log("Error While Updating User Profile Controller" + error);
-        response.render("./pages/user_dashboard", { user: request.session.log, ownerDetails: request.session.ownerDetails });
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
 }

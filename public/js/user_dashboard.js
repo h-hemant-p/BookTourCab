@@ -380,11 +380,12 @@ function showSuccess4(input) {
 var showUserRequestedBookingData = async()=>{
     const response = await fetch('/user/userrequestedbookingdata');
     const data = await response.json();
-    const bookingData = data[0] ?? [];
+    console.log(data)
+    const bookingData = data.bookings;
     console.log(bookingData)
     var table = "";
     table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
-    if(bookingData.bookings.length>0){
+    if(bookingData.length>0){
         table += `
             <thead  align="center">
                 <th>Reg No</th>
@@ -397,7 +398,7 @@ var showUserRequestedBookingData = async()=>{
             </thead>
             <tbody> `        
 
-            bookingData.bookings.forEach(booking => {
+            bookingData.forEach(booking => {
                 table += 
                 `<tr align="center">
                     <td >${booking.reg_no}</td>
@@ -428,11 +429,13 @@ var showUserRequestedBookingData = async()=>{
 var showUserCurrentBookingData = async()=>{
     const response = await fetch('/user/usercurrentbookingdata');
     const data = await response.json();
+    console.log(data);
+    
     const bookingData = data[0] ?? [];
     console.log(bookingData)
     var table = "";
     table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
-    if(bookingData.bookings.length<0){///////
+    if(bookingData.bookings.length>0){///////
         table += `
             <thead  align="center">
                 <th>Reg No</th>
@@ -472,127 +475,6 @@ var showUserCurrentBookingData = async()=>{
 /*----------------- show user Current booking data end---------------*/
 
 
-
-/*    User Booking History Start   :::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-document.getElementById('user-booking-history-btn').addEventListener('click', async function (e) {
-    e.preventDefault();
-    console.log("Vehicle List ");
-
-    const response = await fetch('/user/viewbookinghistory')
-    // console.log(response);
-    const data = await response.json();
-    console.log(data);
-
-    var userbooking = data.bookings;
-   
-    var bookingCards = ``;
-    userbooking.forEach(element => {
-        const bookDate = element.booking_date;
-        const date1 = new Date(bookDate);
-        const day1 = date1.getDate().toString().padStart(2, '0');
-        const month1 = (date1.getMonth() + 1).toString().padStart(2, '0');
-        const year1 = date1.getFullYear();
-
-        const start_date = element.start_date;
-        const date2 = new Date(start_date);
-        const day2 = date2.getDate().toString().padStart(2, '0');
-        const month2 = (date2.getMonth() + 1).toString().padStart(2, '0');
-        const year2 = date2.getFullYear();
-
-        // Format the date as "dd-mm-yyyy"
-        const bookingDate = `${day1}-${month1}-${year1}`
-        const startDate = `${day2}-${month2}-${year2}`
-
-        bookingCards += 
-        `<div class="row custom-div" >
-            <div class="col col-lg-2 bg-light">
-                <img src="uploads/${element.vehicle_image}" height="200px" width="220px" alt="image">
-                </div>
-            <div class=" col-lg-7 ">
-                <div class="row mt-3">
-                <p class="offset-lg-1 fs-5 fw-bold"> ${element.vehicle_company} ${element.vehicle_model}<sub>(${element.manufacture_year})</sub></p><br>
-                </div><br>
-
-                <div class="row">
-                    <div class="offset-md-1 col-lg-5 col-md-4 col-sm-4"><small class=" text-primary fw-bold "> Booking Start : <span class="text-secondary">${element.start_date}  ${element.start_time}</span></small></div>
-                    <div class="offset-md-1 col-lg-5 col-md-4 col-sm-4"><small class=" text-primary fw-bold "> Booking Start : <span class="text-secondary">${element.end_date}  ${element.end_time}</span></small></div>
-                    
-                </div>
-            </div>
-                <div class=" col-lg-3 ">
-                <p class="fs-3 text-lg-center fw-bold "> &#x20B9; ${element.total_charges}  <span class="text-center fw-bold ms-1 fs-6">(Total Cost)</span> </p>
-                <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${element.booking_charges}  <span class="text-center fw-bold ms-1 fs-6">(Booking Cost)</span> </p>
-                <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${element.gst_charges}  <span class="text-center fw-bold ms-1 fs-6">(GST Cost)</span> </p>
-                <p class="ms-3"><i class="fa-solid fa-check" style="color: #21c076; font-size: 18px; font-weight: bold;"></i><span class="ms-2 text-secondary fw-bold">Free Cancellation</span></p>
-                 
-            </div>
-        </div>`;
-    });
-    document.getElementById('booking-history-data').innerHTML = bookingCards;
-});
-/*  User Booking History End   */
-
-
-/*--------------------Vehicle Insurance form start------------------------- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
-function setRegistrationNumber(regNumber, ownerId) {
-    // Set the registration number in the hidden input field
-    document.getElementById('registrationNumber').value = regNumber;
-    document.getElementById('ownerId').value = ownerId;
-    console.log("JHGFDS", regNumber);
-}
-/*--------------------Vehicle Insurance form End ------------------------- */
-
-
-/* ---------------  Update Insurance Start --------------- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
-$(document).ready(function () {
-
-    $('.open-modal').click(function () {
-        var _id = $(this).data('insurance_details');
-        var postData = {
-            id: _id
-        };
-
-        $.ajax({
-            url: '/user/updateinsurance',
-            type: 'POST',
-            data: JSON.stringify(postData),
-            contentType: 'application/json',
-            success: function (response) {
-                console.log('Success:', response);
-
-                const coveragestart1 = response.data.coverage_start_date;
-                const date1 = new Date(coveragestart1);
-                const day1 = date1.getDate().toString().padStart(2, '0');
-                const month1 = (date1.getMonth() + 1).toString().padStart(2, '0');
-                const year1 = date1.getFullYear();
-                const coverage_start_date = `${year1}-${month1}-${day1}`;
-
-                const bookDate = response.data.coverage_end_date;
-                const date2 = new Date(bookDate);
-                const day2 = date1.getDate().toString().padStart(2, '0');
-                const month2 = (date1.getMonth() + 1).toString().padStart(2, '0');
-                const year2 = date1.getFullYear();
-                const coverage_end_date = `${year1}-${month1}-${day1}`
-
-                $('#insuranceid').val(response.data._id);
-                $('#policynumber').val(response.data.policy_number);
-                $('#policyholdername').val(response.data.policy_holder_name);
-                $('#policyholdercontact').val(response.data.policy_holder_contact_info);
-                $('#policyholderaadhar').val(response.data.policy_holder_aadhar_no);
-                $('#coveragestartdate').val(coverage_start_date);
-                $('#coverageenddate').val(coverage_end_date);
-                $('#insurancepremiumamount').val(response.data.premium_amount);
-                $('#coverageamount').val(response.data.coverage_amount);
-                $('#insuranceprovider').val(response.data.insurance_provider);
-            },
-            error: function (xhr, status, error) {
-                console.error('Error:', status, error);
-            }
-        });
-
-    });
-});
-/* ---------------  Update Insurance End   --------------- */
 
 
 /* -----------------owner vehicle bookinigs Request start ----------------------------*/
@@ -709,11 +591,17 @@ var showOwnerDrivers = async function(){
 /* --------------------------- Show owner Drivers end ------------------------------------------ */
 
 
+/* --------------------------- Delete Vehicles Start ------------------------------------------ */
+var deleteVehicles = ()=>{
+    //    e.preventDefault();
+    setTimeout(showOwnerVehicles,100);
+}
+ /* --------------------------- Delete Vehicles end ------------------------------------------ */
+  
+
 /* ----------------Show owner Drivers start ----------------------------*/
 var showOwnerVehicles = async function(){
-    // e.preventDefault();
-
-    const response = await fetch('/user/ownervehicledata')
+    const response = await fetch('/user/ownervehicledata');
     const vehicleData = await response.json();
     console.log(vehicleData)
     var table = "";
@@ -730,17 +618,75 @@ var showOwnerVehicles = async function(){
             <tbody> `        
 
             vehicleData.vehicles.forEach(vehicle => {
+                console.log('insurance : ',vehicle.insurance_details);
+                $(document).ready(function () {
+                    console.log('ready');
+                    
+                    $('.open-modal').click(function () {
+                        var _id = $(this).data('insurance_id');
+                        console.log(_id);
+                        
+                        var postData = {
+                            id: _id
+                        };
+                
+                        $.ajax({
+                            url: '/user/updateinsurance',
+                            type: 'POST',
+                            data: JSON.stringify(postData),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('Success:', response);
+                
+                                const coveragestart1 = response.data.coverage_start_date;
+                                const date1 = new Date(coveragestart1);
+                                const day1 = date1.getDate().toString().padStart(2, '0');
+                                const month1 = (date1.getMonth() + 1).toString().padStart(2, '0');
+                                const year1 = date1.getFullYear();
+                                const coverage_start_date = `${year1}-${month1}-${day1}`;
+                
+                                const bookDate = response.data.coverage_end_date;
+                                const date2 = new Date(bookDate);
+                                const day2 = date1.getDate().toString().padStart(2, '0');
+                                const month2 = (date1.getMonth() + 1).toString().padStart(2, '0');
+                                const year2 = date1.getFullYear();
+                                const coverage_end_date = `${year1}-${month1}-${day1}`
+                
+                                $('#insuranceid').val(response.data._id);
+                                $('#policynumber').val(response.data.policy_number);
+                                $('#policyholdername').val(response.data.policy_holder_name);
+                                $('#policyholdercontact').val(response.data.policy_holder_contact_info);
+                                $('#policyholderaadhar').val(response.data.policy_holder_aadhar_no);
+                                $('#coveragestartdate').val(coverage_start_date);
+                                $('#coverageenddate').val(coverage_end_date);
+                                $('#insurancepremiumamount').val(response.data.premium_amount);
+                                $('#coverageamount').val(response.data.coverage_amount);
+                                $('#insuranceprovider').val(response.data.insurance_provider);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error:', status, error);
+                            }
+                        });
+                
+                    });
+                });
+                
                 table += 
                 `<tr align="center">
                     <td >${vehicle.reg_number}</td>
                     <td >${vehicle.company}</td>
                     <td >${vehicle.model}</td>`;
                     if(vehicle.have_insurance){
-                        table += `<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" >Update</button></td>`;
+                        table += `<td><button class="open-modal btn btn-success" data-bs-toggle="modal" data-bs-target="#updateinsurance" data-insurance_id="${vehicle.insurance_details}" >Update</button></td>`;
                     }else{
-                        table += `<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" >Add</button></td>`;
+                        table += `<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicle_insurance" onClick="setRegistrationNo('${vehicle.reg_number}')">Add</button></td>`;
                     }
-        table += `<td><button  class=" btn btn-danger ">Delete </button></td>
+        table += `  <td >
+                        <form action="/user/deletevehicle" method="post">
+                            <input type="text" class="d-none" name="vehicleid" value="${vehicle._id}">
+                            <input type="submit" class="btn btn-danger"  value="Delete"  onclick="deleteVehicles();">
+                        </form>
+                    </td>
                 </tr>`
             });
             table += " <tbody>";
@@ -751,6 +697,17 @@ var showOwnerVehicles = async function(){
     document.getElementById('owner-vehicle-list-data').innerHTML = table;
 }
 /* --------------------------- Show owner Drivers end ------------------------------------------ */
+                    
+
+/* --------------------------- SetRegistrationNo Start ------------------------------------------ */
+var setRegistrationNo = (reg_no)=>{
+    
+    document.getElementById('registrationNumber').value = reg_no;
+    console.log(document.getElementById('registrationNumber').value);
+    
+}
+/* --------------------------- SetRegistrationNo End ------------------------------------------ */
+
 
 
 /* --------- Accept Request start ------------------ */
@@ -894,12 +851,9 @@ var showOwnerCurrentBookings =  async function(){
                                     <div class="d-flex  mb-1 flex-column">`;
                                     if(element.booking_status=="Confirm"){
                                         bookingdata += `
-                                        
-                                            
                                             <input type="text" class="form-control" placeholder="Enter Pin" name = "verifypin" id="verifypin">
                                             <span class="text-danger" style="display:none;" id="warning-msg" >Invalid Pin</span>
                                             <input type="submit" class="btn btn-outline-success w-100 mt-2 fw-bold border border-2" id = "verifybtn" onclick="checkVerifyPin('${element.bookingid}');" value="Verify Pin">
-                                            <span class="text-success" style="display:none;" id="success-msg" >Booking Started Successfully</span>
                                         `;
                                     }else if(element.booking_status=="Running"){
                                         bookingdata += 
@@ -931,7 +885,7 @@ var showOwnerCurrentBookings =  async function(){
 /*------------------------------ Show Owner Current Booking Start --------------------------------- */
 
 
-/*-------- verifyg pin Start --------------------------------- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;*/
+/*-------- verifyg pin Start ---------------------------------*/
 async function checkVerifyPin(bookingid){
     var pin = document.getElementById('verifypin').value;
     console.log(pin);
@@ -954,14 +908,9 @@ async function checkVerifyPin(bookingid){
     }).then(responseData1 => {
         console.log('Server response:', responseData1.message);
         if(responseData1.message===true){
-            document.getElementById("warning-msg").style.display="none";
-            document.getElementById("success-msg").style.display = "block";
-            document.getElementById('verifypin').style.display="none";
-            document.getElementById('verifybtn').style.display="none";
             showDataAfterBookingStartVerifyPin();
         }else{
             document.getElementById("warning-msg").style.display="block";
-            document.getElementById("success-msg").style.display = "none";
         }
     });
 }
@@ -1016,3 +965,122 @@ document.getElementById('imageInput').addEventListener('change', function() {
     })
     .catch(error => console.error('Error:', error));
   }
+
+
+
+
+
+// /*    User Booking History Start   :::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+// document.getElementById('user-booking-history-btn').addEventListener('click', async function (e) {
+//     e.preventDefault();
+//     console.log("Vehicle List ");
+
+//     const response = await fetch('/user/viewbookinghistory')
+//     // console.log(response);
+//     const data = await response.json();
+//     console.log(data);
+
+//     var userbooking = data.bookings;
+   
+//     var bookingCards = ``;
+//     userbooking.forEach(element => {
+//         const bookDate = element.booking_date;
+//         const date1 = new Date(bookDate);
+//         const day1 = date1.getDate().toString().padStart(2, '0');
+//         const month1 = (date1.getMonth() + 1).toString().padStart(2, '0');
+//         const year1 = date1.getFullYear();
+
+//         const start_date = element.start_date;
+//         const date2 = new Date(start_date);
+//         const day2 = date2.getDate().toString().padStart(2, '0');
+//         const month2 = (date2.getMonth() + 1).toString().padStart(2, '0');
+//         const year2 = date2.getFullYear();
+
+//         // Format the date as "dd-mm-yyyy"
+//         const bookingDate = `${day1}-${month1}-${year1}`
+//         const startDate = `${day2}-${month2}-${year2}`
+
+//         bookingCards += 
+//         `<div class="row custom-div" >
+//             <div class="col col-lg-2 bg-light">
+//                 <img src="uploads/${element.vehicle_image}" height="200px" width="220px" alt="image">
+//                 </div>
+//             <div class=" col-lg-7 ">
+//                 <div class="row mt-3">
+//                 <p class="offset-lg-1 fs-5 fw-bold"> ${element.vehicle_company} ${element.vehicle_model}<sub>(${element.manufacture_year})</sub></p><br>
+//                 </div><br>
+
+//                 <div class="row">
+//                     <div class="offset-md-1 col-lg-5 col-md-4 col-sm-4"><small class=" text-primary fw-bold "> Booking Start : <span class="text-secondary">${element.start_date}  ${element.start_time}</span></small></div>
+//                     <div class="offset-md-1 col-lg-5 col-md-4 col-sm-4"><small class=" text-primary fw-bold "> Booking Start : <span class="text-secondary">${element.end_date}  ${element.end_time}</span></small></div>
+                    
+//                 </div>
+//             </div>
+//                 <div class=" col-lg-3 ">
+//                 <p class="fs-3 text-lg-center fw-bold "> &#x20B9; ${element.total_charges}  <span class="text-center fw-bold ms-1 fs-6">(Total Cost)</span> </p>
+//                 <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${element.booking_charges}  <span class="text-center fw-bold ms-1 fs-6">(Booking Cost)</span> </p>
+//                 <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${element.gst_charges}  <span class="text-center fw-bold ms-1 fs-6">(GST Cost)</span> </p>
+//                 <p class="ms-3"><i class="fa-solid fa-check" style="color: #21c076; font-size: 18px; font-weight: bold;"></i><span class="ms-2 text-secondary fw-bold">Free Cancellation</span></p>
+                 
+//             </div>
+//         </div>`;
+//     });
+//     document.getElementById('booking-history-data').innerHTML = bookingCards;
+// });
+// /*  User Booking History End   */
+
+
+
+// /* ---------------  Update Insurance Start ---------------*/
+$(document).ready(function () {
+    console.log('ready');
+    
+    $('.open-modal').click(function () {
+        var _id = $(this).data('insurance_id');
+        console.log(_id);
+        
+        var postData = {
+            id: _id
+        };
+
+        $.ajax({
+            url: '/user/updateinsurance',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            contentType: 'application/json',
+            success: function (response) {
+                console.log('Success:', response);
+
+                const coveragestart1 = response.data.coverage_start_date;
+                const date1 = new Date(coveragestart1);
+                const day1 = date1.getDate().toString().padStart(2, '0');
+                const month1 = (date1.getMonth() + 1).toString().padStart(2, '0');
+                const year1 = date1.getFullYear();
+                const coverage_start_date = `${year1}-${month1}-${day1}`;
+
+                const bookDate = response.data.coverage_end_date;
+                const date2 = new Date(bookDate);
+                const day2 = date1.getDate().toString().padStart(2, '0');
+                const month2 = (date1.getMonth() + 1).toString().padStart(2, '0');
+                const year2 = date1.getFullYear();
+                const coverage_end_date = `${year1}-${month1}-${day1}`
+
+                $('#insuranceid').val(response.data._id);
+                $('#policynumber').val(response.data.policy_number);
+                $('#policyholdername').val(response.data.policy_holder_name);
+                $('#policyholdercontact').val(response.data.policy_holder_contact_info);
+                $('#policyholderaadhar').val(response.data.policy_holder_aadhar_no);
+                $('#coveragestartdate').val(coverage_start_date);
+                $('#coverageenddate').val(coverage_end_date);
+                $('#insurancepremiumamount').val(response.data.premium_amount);
+                $('#coverageamount').val(response.data.coverage_amount);
+                $('#insuranceprovider').val(response.data.insurance_provider);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+
+    });
+});
+// /* ---------------  Update Insurance End   --------------- */

@@ -37,8 +37,6 @@ form1.addEventListener('submit', function postData(e) {
                 var haveac = "";
                 var havedriver = "";
                 for (var index in responseData) {
-
-                    
                     var obj = responseData[index].amount + "$$" + responseData[index].droplocation + "$$" + responseData[index].enddate + "$$" + responseData[index].endtime + "$$" + responseData[index].ownerobjid + "$$" + responseData[index].pickuplocation + "$$" + responseData[index].startdate + "$$" + responseData[index].starttime + "$$" + responseData[index].vehicleobjid + "$$" + responseData[index].totalamount + "$$" + responseData[index].gst + "$$" + responseData[index].totalHours + "$$" + responseData[index].havedriver + "$$" + "Pending";
                     if (responseData[index].automatic) {
                         automatic = "Yes";
@@ -102,11 +100,15 @@ form1.addEventListener('submit', function postData(e) {
                             </form> 
                         </div>
                     </div>`;
-
                 }
             }
             else {
-                vehicledata = "! No Result Found";
+                vehicledata =`
+                <div class="alert alert-danger text-center fs-4 fw-bold" role="alert">
+                    Sorry!! No Service Available for this Adresss
+                </div>`;
+        
+                swal("Sorry!!", " No Service Available for this Adresss", "warning");
             }
             document.getElementById('vehiclesdata').innerHTML = vehicledata;
         })

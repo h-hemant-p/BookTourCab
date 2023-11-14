@@ -312,3 +312,7 @@ function showSuccess8(input) {
   const error = formField.querySelector('small');
   error.textContent = '';
 }
+
+var addInsurance = ()=>{
+  
+}

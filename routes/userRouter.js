@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import {userUpdateProfileController,userUploadProfileImageController,userNewsLetterController,userCurrentBookingDataController,userRequestedBookingDataController,userOwnerVehicleDataController,userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleCOntroller,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingRequestDataController,userUpdateUserDataController,userAcceptOwnerBookingController,userOwnerCurrentBookingDataController,userVerifyBookingStartPinController,userWalletDataController,userOwnerDriverDataController,userDeleteDriverController,userStartBookingController} from "../controller/userController.js";
+import {userUpdateProfileController,userUploadProfileImageController,userNewsLetterController,userCurrentBookingDataController,userRequestedBookingDataController,userOwnerVehicleDataController,userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleController,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingRequestDataController,userUpdateUserDataController,userAcceptOwnerBookingController,userOwnerCurrentBookingDataController,userVerifyBookingStartPinController,userWalletDataController,userOwnerDriverDataController,userDeleteDriverController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -64,15 +64,14 @@ router.get('/usercurrentbookingdata',userCurrentBookingDataController);
 router.post('/newsletter',userNewsLetterController);
 router.post('/uploadprofileimage',upload.single('image'),userUploadProfileImageController);
 router.post('/updateprofile',userUpdateProfileController);
-
-router.post('/updateuserdata',userUpdateUserDataController);
-router.post('/deletedriver',userDeleteDriverController)
-router.post('/startbooking',userStartBookingController);
-router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
-router.post('/updateinsurance',userUpdateInsuranceController);
-router.get('/viewbookinghistory',userViewBookingHistoryController);
-router.get('/deletevehicle',userDeleteVehicleCOntroller);
 router.post('/addInsurance',userAddInsuranceController);
+router.post('/updateuserdata',userUpdateUserDataController);
+router.post('/updateinsurance',userUpdateInsuranceController);
+router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
+router.post('/deletedriver',userDeleteDriverController);
+router.post('/deletevehicle',userDeleteVehicleController);
+
+router.get('/viewbookinghistory',userViewBookingHistoryController);
 export default router;
 
 

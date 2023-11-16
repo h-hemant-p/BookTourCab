@@ -1,7 +1,7 @@
 "use strict"
 import express from 'express';
-import {adminUserListController,adminVehicleListController,adminChangePasswordController,adminBlockUserController,adminBlockedUsersListController,adminUnBlockUserController,adminLogOutController,adminBlockVehicleController,adminBlockVehicleListController,adminUnBlockVehicleController,adminContactUsListController,adminProfileDetails,adminUpdateProfileDetailsController,adminGetNewslettterListController,adminSendNotificationController} from '../controller/adminController.js'
-
+import {adminUserListController,adminVehicleListController,adminChangePasswordController,adminBlockUserController,adminBlockedUsersListController,adminUnBlockUserController,adminLogOutController,adminBlockVehicleController,adminBlockVehicleListController,adminUnBlockVehicleController,adminContactUsListController,adminProfileDetails,adminUpdateProfileDetailsController,adminGetNewslettterListController,adminSendNotificationController,adminUploadProfileImageController} from '../controller/adminController.js'
+import  {upload}  from '../middleware/fileUpload.js';
 let adminRouter = express.Router();
 
 adminRouter.use(express.static('public'));
@@ -24,5 +24,6 @@ adminRouter.post('/adminprofiledata',adminProfileDetails);
 adminRouter.post('/updateprofile',adminUpdateProfileDetailsController);
 adminRouter.get('/newsletterlist',adminGetNewslettterListController);
 adminRouter.post('/sendnotification',adminSendNotificationController);
+adminRouter.post('/uploadprofileimg',upload.single('profileimage'),adminUploadProfileImageController);
 
 export default adminRouter;

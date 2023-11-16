@@ -76,16 +76,27 @@
                 </div>  
             </div>
             <!-- Main Menu -->
-
+            <% console.log(admin);%>
             <!-- Admin Profile Detail -->
             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " id="adminaccount-details" >
                 <div class="d-sm-flex m-2"  style="background-color: white; width: 98%; ">
                     <div class="offset-lg-4 offset-md-4 col-lg-8 col-md-8 offset-sm-3 col-sm-9 col-xs-12" >
+                        <%if(!admin.profile_image){%>
+                            <img src="images/profilePic.jpeg"  width="25%" alt="image" style="border-radius: 50%;" class="mt-lg-4" ><br>
+                                
+                                <!-- Hidden Profile image input and label -->
+                                <form id="uploadprofileimage" action="/admin/uploadprofileimg" method="post" enctype="multipart/form-data">
+                                    <input type="file" id="imageInput" name="profileimage" style="display:none;" onchange="submitFormOnChange()"  accept="image/*">
+                                    <label for="imageInput" class="custom-file-input-label" id="fileInputLabel"  style="margin-left: 9%; margin-top: 0;"><i class="fa-solid fa-pen-to-square"></i></label><br> 
+                                </form>
+                            <%}else{%>
+                                <img src="uploads/<%= admin.profile_image%>" alt="profile image" width="25%" class="img-fluid rounded-circle mt-lg-4" ><br>
+                                <form id="uploadprofileimage" action="/admin/uploadprofileimg" method="post" enctype="multipart/form-data">
+                                    <input type="file" id="imageInput" name="profileimage" style="display:none;" onchange="submitFormOnChange()"  accept="image/*">
+                                    <label for="imageInput" class="custom-file-input-label" id="fileInputLabel"  style="margin-left: 9%; margin-top: 0;"><i class="fa-solid fa-pen-to-square"></i></label><br> 
+                                </form>
+                            <%}%>
                         
-                        <img src="images/profilePic.jpeg"  width="25%" alt="" style="border-radius: 50%;" class="mt-lg-4" ><br>
-                        <i class="fa-solid fa-pen-to-square" style="margin-left: 12%; margin-top: 30px;" onclick="uploadProfileImage()"></i><br>
-                        
-                     
                         <label for="name" class="fw-bold fs-5 my-1">Name : </label><span class="fs-6 fw-bold ms-2"><%= admin.name %></span><br>
                         <label for="gender" class="fw-bold fs-5 my-1">Gender : </label><span class="fs-6 fw-bold ms-2"><%= admin.gender %></span><br>
                         <label for="name" class="fw-bold fs-5 my-1">Email : </label><span class="fs-6 fw-bold ms-2"><%= admin.email %></span><br>
@@ -121,9 +132,9 @@
                                         </div>
                                         <div class="mb-3 col-lg-6"><br>
                                             <label for="gender" class=" form-label fw-bold ">Gender*</label>
-                                            <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="admingender" id="admingender" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
-                                            <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="admingender" id="admingender" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
-                                            <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="admingender" id="admingender" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+                                            <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="admingender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+                                            <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="admingender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+                                            <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="admingender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
                                         </div>
                                     </div>
                                     <div class="row">

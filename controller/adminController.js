@@ -289,4 +289,27 @@ export const adminSendNotificationController = async (request, response) => {
   }
 }
 
+export const adminUploadProfileImageController = async(request,response) => {
+  try {
+      await admin.updateOne({
+        _id : request.session.log._id
+      },
+      {
+      $set : {
+          profile_image : request.file.filename
+          }
+      })
+      console.log("Profile Updated Successfull");
+      var loggedAdmin = await admin.findOne({ email: request.session.log.email });
+      // console.log(loggedAdmin);
+      request.session.log = loggedAdmin;
+      request.session.role = "admin"
+      request.session.save();
+      response.render('./pages/admin_dashboard', { admin: request.session.log });
+      
+  } catch (error) {
+    console.log("Error while Uploading profile image controller"+error);
+  }
+}
+
 /* Admin@123 -->  2b3bdc53a332daaf96dc5afa224c9e86036b9b9c40cba884987835418848a997  */

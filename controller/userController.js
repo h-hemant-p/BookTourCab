@@ -421,7 +421,8 @@ export const userSearchVehicleDetailsController = async (request, response) => {
                         ownerobjid: res[i].OwnerDetails[0]._id,
                         totalHours: totalHours,
                         gst: gst_amount,
-                        amount: amount
+                        amount: amount,
+                        owneruserid : res[i]._id
                     }
                     console.log(obj);
                     arr.push(obj);
@@ -462,12 +463,14 @@ export const userBookNowVehicleController = async (request, response) => {
         let bookingtime = bookingdate.toTimeString();
         let driver_status = splitedDataArray[12];
         let booking_status = splitedDataArray[13];
+        let owneruserid = splitedDataArray[14];
+
         
         var user = await users.findOne({ email: request.session.log.email });
 
         await bookings.create({
             customer: user._id,
-            owner: ownerobjid,
+            owner: owneruserid,
             vehicle: vehicleobjid,
             start_date: startDate,
             end_date: enddate,
@@ -582,13 +585,13 @@ export const userViewBookingHistoryController = async (request, response) => {
 }
 
 
+// Pending
 export const userDeleteVehicleController = async (request, response) => {
     var id = request.body.vehicleid;
-
     try {
         await ownerDetails.updateOne(
-            { _id: request.session.log.owner_details},
-            { $pull: { vehicles: { _id: id } } }
+            { _id: request.session.log.owner_details,},
+            { $pull: { vehicles: { _id: id, is_booked:false} } }
         );
     } catch (error) {
         console.log(error)
@@ -596,6 +599,7 @@ export const userDeleteVehicleController = async (request, response) => {
 }
 
 
+// Pending
 export const userDeleteDriverController = async (request, response) => {
     console.log('inside userDeleteDriverController');
     
@@ -655,21 +659,21 @@ export const userUpdateVehicleInsuranceDetailsController = async (request, respo
     }
 }
 
-
+// Pending
 export const userVehicleBookingRequestDataController = async (request, response) => {
     try {
         var userbookings = [];
         // console.log(request.session.log);
-        var res = request.session.log.owner_details;
+        var res = request.session.log._id;
         // console.log(res);
 
         var vehiclebookings = await bookings.find({
             $and : [
-                { owner: res },
+                { owner: request.session.log._id },
                 {booking_status : "Pending"}
             ]
         });
-        // console.log(vehiclebookings);
+        console.log(vehiclebookings);
 
 
         for (var i = 0; i < vehiclebookings.length; i++) {
@@ -766,8 +770,11 @@ export const userOwnerCurrentBookingDataController = async(request,response) => 
                 }
             ]
         });
+        console.log(currentbookings);
         
         var ownerDetail = await ownerDetails.findOne({ _id: ownerid });
+        console.log(ownerDetail);
+        
         for (var i = 0; i < currentbookings.length; i++) {
             var customerid = currentbookings[i].customer;
             var vehicleid = currentbookings[i].vehicle;
@@ -775,7 +782,9 @@ export const userOwnerCurrentBookingDataController = async(request,response) => 
             var customerDetails = await users.findOne({_id : customerid});
 
             if (ownerDetail) {
-                var specificVehicle = ownerDetail.vehicles.find(vehicle => vehicle._id.toString() === vehicleid.toString());
+                var specificVehicle = ownerDetail.vehicles.find(vehicle => vehicle._id.toString() === vehicleid.toString()) ?? {};
+                console.log('sv : ',specificVehicle);
+                
                 var obj = { 
                     username : customerDetails.name,
                     usercontact : customerDetails.contact_no,
@@ -865,7 +874,8 @@ export const userOwnerVehicleDataController = async(request,response)=>{
     }
 };
 
-export const userRequestedBookingDataController = async(request,response)=>{
+// pending
+export const userRequestedBookingDataController = async(request,response)=>{//user dashboard
     try{
         var bookingDetails = await bookings.find(
             {
@@ -884,21 +894,37 @@ export const userRequestedBookingDataController = async(request,response)=>{
         // if(bookingDetails)
         var data = [];
         for(let i=0;i<bookingDetails.length;i++){
-            var vehicledata = await ownerDetails.findOne({//.................
-                "_id": bookingDetails[i].owner,
-                "vehicles._id":  bookingDetails[i].vehicle
+            console.log('bookign details : ',bookingDetails[i]);
+            
+            var ownerdata = await users.findOne({
+                "_id" : bookingDetails[i].owner 
+            }) ;
+
+            var vehicledata = await ownerDetails.findOne({
+                $and:[
+                    {   
+                        "_id": ownerdata.owner_details
+                    },
+                    { 
+                        "vehicles._id":  bookingDetails[i].vehicle
+                    }
+                ]
             },
             {
                 "vehicles.$": 1
             });
+            console.log('vehicle data : ', vehicledata);
+            console.log('Owner data : ',ownerdata);
+            
             var details = {
                 bookingid : bookingDetails[i]._id,
-                reg_no : vehicledata.reg_number,
-                company : vehicledata.company,
-                model : vehicledata.model,
-                contact_no : request.session.log.contact_no,
+                reg_no : vehicledata.vehicles[0].reg_number,
+                company : vehicledata.vehicles[0].company,
+                model : vehicledata.vehicles[0].model,
+                owner : ownerdata.name,
+                contact_no : ownerdata.contact_no,
                 booking_date : bookingDetails[i].booking_date,
-                hours : bookingDetails[i].total_time
+                hours : bookingDetails[i].total_time,
             }
             data.push(details);
             console.log(details)
@@ -907,6 +933,34 @@ export const userRequestedBookingDataController = async(request,response)=>{
         response.json({bookings : data});
     }catch(error){
         console.log(error);
+    }
+}
+
+export const userCancelBookingController = async(request,response)=>{
+    console.log('booking id :',request.body.bookingid);
+    
+    try{
+        await bookings.updateOne({
+            "_id" : request.body.bookingid
+        },{
+            $set:{
+                "booking_status" : "Cancelled"
+            }
+        });
+        var bookingdata = await bookings.findOne({"_id" : request.body.bookingid});
+        var ownerdata = await users.findOne({"_id" : bookingdata.owner});
+        await ownerDetails.updateOne({
+            "vehicles": {
+                $elemMatch: { "_id": bookingdata.vehicle }
+            }
+        },
+        {
+            $set: {
+                "vehicles.$.is_booked": false,
+            }
+        })
+    }catch(error){
+        console.log('Error while userCancelBookingController : ',error );
     }
 }
 
@@ -1024,9 +1078,8 @@ export const userNewsLetterController = async(request,response) => {
 
 export const userUploadProfileImageController = async(request,response) => {
     try {
-        console.log("Inside Profile image ");
-        console.log(request.file);
-
+        // console.log("Inside Profile image ");
+        
         await users.updateOne({
             _id : request.session.log._id
         },
@@ -1035,16 +1088,23 @@ export const userUploadProfileImageController = async(request,response) => {
             profile_img : request.file.filename
             }
         })
-    
-        var userdetails = await users.findOne({_id : request.session.log._id})
-        response.json({ message: userdetails.profile_img });
+        var loggedUser = await users.findOne({ email: request.session.log.email });
+        var loggedOwnerDetails = await ownerDetails.findOne({
+            _id: loggedUser.owner_details
+        });
+
+        request.session.log = loggedUser;
+        request.session.ownerDetails = loggedOwnerDetails;
+        request.session.role = "user";
+        request.session.save();
+        console.log("Profile Updated Successfully");
+        response.render("./pages/user_dashboard", { user: request.session.log });
+       
     } catch (error) {
-        console.error('Error uploading image:', error);
-        response.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error uploading User Profile image');
+        response.render("./pages/user_dashboard", { user: request.session.log });
     }
-
 }
-
 
 export const userUpdateProfileController = async (request, response) => {
     try {

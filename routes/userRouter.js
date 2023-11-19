@@ -83,27 +83,41 @@ export default router;
 /*       
 -----------------: Remaining Tasks :----------------
 
-1. Pop Up Apply
-2. Booking History on User Dashboard
-3. Booking History on Owner Dashboard
-4. Current Booking on User Dashboard
-5. Cancel Booking On User Dashboard
-6. Delete Vehicle and Driver on Owner Dashboard
-7. Payment Gateway Api
-8. Forget Password 
-12. Filter Option on Vehicle Booking Page
-13. Route Managment on All Pages
-14. Apply Datatable 
+    1. Pop Up Apply
+        |-- show success alert on booking 
+        |-- Accept Booking in owner Vehicle
+        |-- Block User and Vehicle in admin
+        |-- Message sent button
+        |-- Booking Cancel
+        |-- Add Vehicle
+        |-- Add Insurance
+        |-- Delete Vehicle
+        |-- Sign Up & Sign Welcome PopUp
+        |-- Add Driver & Update Insurance & Delete Driver
+        |-- 
 
 
-9. Navbar On Signin Page
-10. View Profile on User & Admin Dashboard
-11. Update Profile Image On User & Admin Dashboard
+    2. Booking History on User Dashboard
+    3. Booking History on Owner Dashboard
+    4. Current Booking on User Dashboard
+    5. Cancel Booking On User Dashboard
+    
+    6. Delete Vehicle and Driver on Owner Dashboard
+    7. Payment Gateway Api
+    8. Forget Password 
+    12. Filter Option on Vehicle Booking Page
+    13. Route Managment on All Pages
+    14. Apply Datatable 
 
-Additional Work
 
-1. Set Address using pincode
-2. Auto Complete Address on User Registration Form
-3. Vehicle Model and Company API 
+    9. Navbar On Signin Page
+    10. View Profile on User & Admin Dashboard
+    11. Update Profile Image On User & Admin Dashboard
+
+    Additional Work
+
+    1. Set Address using pincode
+    2. Auto Complete Address on User Registration Form
+    3. Vehicle Model and Company API 
 
 */

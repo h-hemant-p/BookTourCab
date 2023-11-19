@@ -405,9 +405,10 @@ var showUserRequestedBookingData = async()=>{
                     <td >${booking.reg_no}</td>
                     <td >${booking.company}</td>
                     <td >${booking.model}</td>
+                    <td >${booking.owner}</td>
                     <td >${booking.contact_no}</td>
                     <td >${booking.booking_date}</td>
-                    <td >${booking.total_time}</td>
+                    <td >${booking.hours}</td>
                     <td >
                         <form action="/user/cancelbooking" method="post">
                             <input type="text" class="d-none" name="bookingid" value="${booking.bokingid}">
@@ -425,7 +426,7 @@ var showUserRequestedBookingData = async()=>{
 }
 /*----------------- show user requested booking data start---------------*/
 
-
+    
 /*----------------- show user Currrent booking data start---------------*/
 var showUserCurrentBookingData = async()=>{
     const response = await fetch('/user/usercurrentbookingdata');
@@ -481,10 +482,13 @@ var showUserCurrentBookingData = async()=>{
 /* -----------------owner vehicle bookinigs Request start ----------------------------*/
 var showBookingRequestData = async function(e){
     // e.preventDefault();
+    console.log("Hiiiiiiiii");
 
     const response = await fetch('/user/ownervehiclebookingrequestdata')
     console.log("server response",response);
     const data = await response.json();
+    console.log(data.vehiclebookings);
+
     var owner_vehicle_booking = data.vehiclebookings;
 
     var table = "";
@@ -524,7 +528,7 @@ var showBookingRequestData = async function(e){
                     <td >${element.total_time} hr</td>
                     <td >${element.vehicle_reg_no}</td>
                     <td >&#8377;${element.totalamount}</td>
-                    <td ><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}');ShowBookingRequestData()">Accept</button></td>
+                    <td ><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}');showBookingRequestData()">Accept</button></td>
                     <td ><button class="btn btn-danger text-light" onclick = "">Decline</button></td>
                 </tr>`
             });

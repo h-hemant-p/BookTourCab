@@ -118,19 +118,27 @@ form1.addEventListener('submit', function postData(e) {
 
 /*  Search Vehicle For End  */
 function submitForm(form) {
-    swal({
+       swal({
         title: "Are you sure?",
-        text: "This form will be submitted",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
-    })
-    .then(function (isOkay) {
-        if (isOkay) {
-            form.submit();
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+          setTimeout(()=>{
+            form.submit()
+          },2000);
+        } else {
+          swal("Your imaginary file is safe!");
         }
-    });
-    return false;
+      });
+    
+      return false;
 }
 
 /* Vehicle Booking Form Validation Start */

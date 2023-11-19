@@ -266,7 +266,7 @@ const SIGNOTP = `<form>
 <input type="submit" value="Get OTP" style="background-color: rgb(80, 80, 250); font-weight: bold; color: white;">
 </form>
 <form action="/signin" method="post" onsubmit="return checkSigninOtp2()">
-<input  type="password" placeholder="Enter OTP" id="signin-otp" name="otp"  style="text-align: center;" onkeyup="checkSigninOtp2()">
+<input  type="text" placeholder="Enter OTP" id="signin-otp" name="otp"  style="text-align: center;" onkeyup="checkSigninOtp2()">
 <small class="ms-3"></small>
 <input type="submit" value="Sign In" style="background-color: rgb(80, 80, 250); font-weight: bold; color: white;">
 <a href="#" onclick="signInWithPass()">Sign in with Password</a>

@@ -12,8 +12,8 @@ export const aunthicateJWT = (request,response,next)=>{
         
         const token = request.cookies.jwt;
         if(token){
-            console.log('tocken ');
-            console.log(jwt)
+            console.log('token ');
+            // console.log(jwt)
             jwt.verify(token,SECRET_KEY,(error,payload)=>{//secret key not found
                 if(error){
                     console.log('error inside verify method.');
@@ -39,7 +39,7 @@ export const aunthicateJWT = (request,response,next)=>{
 
 export const authorizeUser = async(request,response,next)=>{
     console.log('inside authorizeUser');
-    console.log(request.payload);
+    // console.log(request.payload);
     
     if(request.payload.data.role == "user"){
         try{

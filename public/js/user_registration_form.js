@@ -1,378 +1,266 @@
-// Function number : 6
+// Function Number : 3
 
-function VehicleRigistrationNumber6() {
-    let registration_number = document.getElementById("registration-number");
-    let valid = false;
-  
-    const registration_number_input = registration_number.value.trim();
-    if (!isRequired(registration_number_input)) {
-      console.log("REquired");
-      showError6(registration_number, 'registration Number cannot be blank.');
-  
-    } else if (!ischeckVehicleRigistrationNumber6(registration_number_input)) {
-      showError6(registration_number, 'registratio Number is not valid.')
-    } else {
-      showSuccess6(registration_number);
+function checkUsername3() {
+  let user_name = document.getElementById('user-name');
+
+  let valid = false;
+  const min = 3,
+      max = 25;
+
+  const input_user_name = user_name.value.trim();
+
+  if (!isRequired3(input_user_name)) {
+      showError3(user_name, 'Username cannot be blank.');
+  } else if (!isBetween3(input_user_name.length, min, max)) {
+      showError3(user_name, `Username must be between ${min} and ${max} characters.`)
+  } else {
+      showSuccess3(user_name);
       valid = true;
-    }
-    return valid;
-  };
-  
-  function VehicleCompaneyName6() {
-    let company_name = document.getElementById("company-name");
-    let valid = false;
-  
-    const company_name_input = company_name.value.trim();
-    if (!isRequired6(company_name_input)) {
-      console.log("REquired");
-      showError6(company_name, 'Companey Name cannot be blank.');
-  
-    } else if (!ischeckVehicleCompaneyName6(company_name_input)) {
-        showError6(company_name, 'Companey Name is not valid.')
-    } else {
-        showSuccess6(company_name);
-        valid = true;
-    }
-    return valid;
-  };
-  
-  function VehicleRegistrationYear6() {
-    let manufacture_year = document.getElementById("manufacture-year");
-    let registration_year = document.getElementById("registration-year");
-    let valid = false;
-  
-    let registration_year_input = registration_year.value.trim();
-    const manufacture_year_input = manufacture_year.value.trim();
-    if(!isRequired6(manufacture_year_input)){
-      showError6(registration_year, 'Select manufacture year first');
-    }
-    else{
-        if (!isRequired6(registration_year_input)) {
-            showError(registration_year, 'Registration year cannot be blank.');
-        } else if (!isVehicleRegistrationYear6(manufacture_year_input,registration_year_input)) {
-            showError6(registration_year, 'Registration year is not valid.')
-        } else {
-            showSuccess6(registration_year);
-            valid = true;
-        }
-        return valid;
-      }
-  };
-  
-  function VehicleManufactureYear6() {
-    let manufacture_year = document.getElementById("manufacture-year");
-    let valid = false;
-  
-    const manufacture_year_input = manufacture_year.value.trim();
-    if (!isRequired6(manufacture_year_input)) {
-        showError(manufacture_year, 'Manufacture year cannot be blank.');
-    } else if (!ischeckVehicleManufactureYear6(manufacture_year_input)) {
-        showError6(manufacture_year, 'Manufacture year is not valid.')
-    } else {
-        showSuccess6(manufacture_year);
-        valid = true;
-    }
-    return valid;
-  };
-  
-  function VehicleModelName6() {
-    let model_name = document.getElementById("model-name");
-  
-    let valid = false;
-    const model_name_input = model_name.value.trim();
-  
-    if (!isRequired6(model_name_input)) {
-      showError6(model_name, 'Model name be blank.');
-  
-    } 
-    else if (!ischeckVehicleModelName6(model_name_input)) {
-      showError6(model_name, 'Model name is not valid.')
-    } 
-    else {
-      showSuccess6(model_name);
+  }
+  return valid;
+};
+
+function checkEmail3(){
+  let user_email =  document.getElementById('user-email');
+
+  let valid = false;
+  const email = user_email.value.trim();
+
+  if (!isRequired3(email)) {
+      showError3(user_email, 'Email cannot be blank.');
+  } else if (!isEmailValid3(email)) {
+      showError3(user_email, 'Email is not valid.')
+  } else {
+      showSuccess3(user_email);
       valid = true;
-    }
-      return valid;
-  };
-  
-  function VehicleSittingCapacity6() {
-    let seating_capacity = document.getElementById("seating-capacity");
-    let valid = false;
-  
-    const seating_capacity_input = seating_capacity.value.trim();
-    if (!isRequired6(seating_capacity_input)) {
-        showError6(seating_capacity, 'Capacity cannot be blank.');
-    } else if (!ischeckVehicleSittingCapacity6(seating_capacity_input)) {
-        showError6(seating_capacity, 'Capacity is invalid.')
-    } else {
-        showSuccess6(seating_capacity);
-        valid = true;
-    }
-    return valid;
   }
-  
-  function checkSelectedVehicle6(){
-    let select_vehicle = document.getElementById('select-vehicle');
-  
-    let valid = false;
-    var select_vehicle_input = select_vehicle.value.trim();
-  
-    if(!isRequired6(select_vehicle_input)){
-      showError6(select_vehicle,"Vehicle Required.")
-    }
-    else{
-      showSuccess6(select_vehicle);
+  return valid;
+};
+
+function checkUserCity3(){
+
+  let user_city = document.getElementById('user-city');
+  let valid = false;
+  let user_city_input = user_city.value.trim();
+
+  if(!isRequired3(user_city_input)){
+      showError3(user_city,"City cannot be blank.")
+  }
+  else{
+      showSuccess3(user_city);
       valid = true;
-    }
-    return valid;
   }
+  return valid;
+}
+
+function checkUserState3(){
   
-  function checkFuelType6(){
-    let fuel_type = document.getElementById('fuel-type');
-  
-    let valid = false;
-    var fuel_type_input = fuel_type.value.trim();
-  
-    if(!isRequired6(fuel_type_input)){
-      showError6(fuel_type,"Fuel type Required.")
-    }
-    else{
-      showSuccess6(fuel_type);
+  let user_state = document.getElementById('user-state');
+  let valid = false;
+  let user_state_input = user_state.value.trim();
+
+  if(!isRequired3(user_state_input)){
+      showError3(user_state,"City cannot be blank.")
+  }
+  else{
+      showSuccess3(user_state);
       valid = true;
-    }
-    return valid;
   }
+  return valid;
+}
+
+function checkAadharNumber3(){
+  let user_aadhar_number = document.getElementById('user-aadhar-number');
+  let valid = false;
+
+  let input_aadhar_number = user_aadhar_number.value.trim();
   
-  function checkVehicleRcBook6(){
-    var rc_book_image = document.getElementById('rc-book-image');
-    let valid = false;
-    let input_rc_book = rc_book_image.files[0];
-  
-    if(!isValidFile6(input_rc_book)){
-      showError6(rc_book_image,"File Cannot be blank.")
-    }
-    else{
-      showSuccess6(rc_book_image);
+  if(!isRequired3(input_aadhar_number)){
+
+      showError3(user_aadhar_number, 'Aadhar number cannot be blank.');
+  } else if (!isAadharValid3(input_aadhar_number)) {
+      showError3(user_aadhar_number, 'Aadhar number is not valid.')
+  } else {
+      showSuccess3(user_aadhar_number);
       valid = true;
-    }
-    return valid;
   }
-  
-  function checkVehicleDoors6(){
-    let doors = document.getElementById('total-doors');
-  
-    let valid = false;
-    let doors_input = doors.value.trim();
-  
-    if(!isRequired6(doors_input)){
-      showError6(doors,"Doors Input Cannot Be Blank.")
-    }
-    else if(!isValidVehicleDoors(doors_input)){
-      showError6(doors,"Invalid Doors Input");
-    }
-    else{
-      showSuccess6(doors);
+  return valid;
+};
+
+function checkAadharImage3(){
+  let user_aadhar_image = document.getElementById('user-aadhar-img');
+  let valid  = false;
+  let input_user_image = user_aadhar_image.files[0];
+  if(!isValidFile3(input_user_image)){
+      showError3(user_aadhar_image,"Image cannot be blank.")
+  }
+  else{
+      showSuccess3(user_aadhar_image)
       valid = true;
-    }
-    return valid;  
   }
+  return valid;
+} 
+
+function checkPanCardNumber3(){
+  let user_pan_number = document.getElementById('user-pan-number');
   
-  function checkVehicleAirBags6(){
-    let airbag = document.getElementById('air-bags');
-    let valid = false;
-    let airbag_input = airbag.value.trim();
-  
-    if(!isRequired6(airbag_input)){
-      showError6(airbag,"Airbags Cannot Be Blank.");
-    }
-    else if(!isValidAirBags(airbag_input)){
-      showError6(airbag,'Invalid Airbags Input.')
-    }
-    else{
-      showSuccess6(airbag);
+  let valid = false;
+  let input_pan_number = user_pan_number.value.trim();
+
+  if(!isRequired3(input_pan_number)){
+      showError3(user_pan_number, 'Pan number cannot be blank.');
+  }
+  else if(!isPanNumberValid3(input_pan_number)){
+      showError3(user_pan_number, 'Pancard number is not valid.')
+  }
+  else{
+      showSuccess3(user_pan_number);
       valid = true;
-    }
-    return valid;
   }
-  
-  function checkVeicleMileage6(){
-    let mileage = document.getElementById('mileage');
-    let valid = false;
-    let mileage_input = mileage.value.trim();
-  
-    if(!isRequired6(mileage_input)){
-      showError6(mileage,"Mileage Cannot Be Blank.");
-    }
-    else if(!isValidMileage(mileage_input)){
-      showError6(mileage,"Invalid Mileage Input.");
-    }
-    else{
-      showSuccess6(mileage);
+  return valid;
+}
+
+function checkPanCardImage3(){
+  let user_pancard_image = document.getElementById('user-pancard-image');
+
+  let valid  = false;
+  let input_user_pan = user_pancard_image.files[0];
+
+  if(!isValidFile3(input_user_pan)){
+      showError3(user_pancard_image,"Image cannot be blank.")
+  }
+  else{
+      showSuccess3(user_pancard_image)
       valid = true;
-    }
-    return valid;
   }
-  
-  function checkPerHourVehicleCost6(){
-    let perhrcost = document.getElementById('perhrcost');
-  
-    let valid = false;
-    let perhrcost_input = perhrcost.value.trim();
-  
-    if(!isRequired6(perhrcost_input)){
-      showError6(perhrcost,"Cost Cannot Be Blank")
-    }
-    else if(!isValidPerHrCost(perhrcost_input)){
-      showError6(perhrcost,"Invalid Per Hr Cost Input.")
-    }
-    else{
-      showSuccess6(perhrcost);
+  return valid;
+}
+
+function checkPincode3(){
+  let user_pincode = document.getElementById('pincode');
+  let valid = false;
+
+  let input_pincode = user_pincode.value.trim();
+  if(!isRequired3(input_pincode)){
+      showError3(user_pincode, 'Pincode cannot be blank.');
+  } else if (!isPincodeValid3(input_pincode)) {
+      console.log(input_pincode);
+      
+      showError3(user_pincode, 'Pincode is not valid.')
+  } else {
+      showSuccess3(user_pincode);
       valid = true;
-    }
-    return valid;
   }
-  
-  function checkVehicleImage6(){
-    let vehicleimage = document.getElementById('vehicleimage');
-  
-    let valid = false;
-    let vehicleimage_input = vehicleimage.files[0]; 
-    
-    if(!isValidFile6(vehicleimage_input)){
-      showError6(vehicleimage,"File Cannot be blank.")
-    }
-    else{
-      showSuccess6(vehicleimage);
+  return valid;
+};
+
+
+function checkAddress3(){
+  let user_address = document.getElementById('user-address');
+  let valid = false;
+
+  let input_address = user_address.value.trim();
+
+  if(!isRequired3(input_address)){
+      showError3(user_address, 'Address cannot be blank.');
+  } else if (!isAddressValid3(input_address)) {
+      showError3(user_address, 'Address is not valid.')
+  } else {
+      showSuccess3(user_address);
       valid = true;
-    }
-    return valid;
   }
-  
-  
-  
-  function ischeckVehicleRigistrationNumber6(registration_number_input) {
-      console.log("check mobile");
-      const res =/^[A-Z]{2}\d{2}[A-Z]{2}\d{4}$/;
-      return res.test(registration_number_input);
-  };
-  
-  function ischeckVehicleCompaneyName6(company_name_input){
-    const res = /^[A-Za-z '-]+$/;
-    return res.test(company_name_input);
-  };
-  
-  function isVehicleRegistrationYear6( manufacture_year_input,registration_year){
-    const manufacture_year_inputs = new Date(manufacture_year_input);
-    const registration_years = new Date(registration_year);
-    
-    if( registration_years < manufacture_year_inputs)
-      return false;
-    return true;
-  };
-  
-  function ischeckVehicleManufactureYear6(registration_year_input ) {
-    const selectedDate = new Date(registration_year_input);
-    const currentDate = new Date();
-    // Check if the selected date is in the future
-    if (selectedDate > currentDate)
-        return false;
-        return true;
-  };
-  
-  function ischeckVehicleModelName6(model_name_input){
-    const res = /^[A-Za-z '-]+$/;
-    return res.test(model_name_input);
-  };
-  
-  function ischeckVehicleSittingCapacity6(seating_capacity_input){
-    const res = /^\d+$/;
-    return res.test(seating_capacity_input);
-  };
-  
-  
-  var isRequired6 = (value)=> {
-    if (value == "")
-      return false;
-    else
-      return true;
-  }
-  
-  function isValidFile6(input){
-    if(input == "" || input ==  null || input == undefined)
+  return valid;
+}
+
+// ------------------------------ Regx Patterns ---------------------------
+
+function isEmailValid3(email){
+  const res =  /^\w+([\.-])?\w*@[a-z]*([\.][a-z]{2,3})+$/;
+  return res.test(email);
+}
+
+function isAadharValid3(aadhar_number){
+  const res = /^[1-9]\d{11}$/;
+  return res.test(aadhar_number); 
+}
+
+function isPanNumberValid3(pan_number){
+  var res = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+  return res.test(pan_number);
+}
+
+function isPincodeValid3(pincode){
+  const res = /^\d{6}$/;
+  return res.test(pincode);
+}
+
+function isAddressValid3(address){
+  const res = /^[a-zA-Z0-9\s.,-]+$/;
+  return res.test(address); 
+}
+
+function isValidFile3(input){
+  if(input == "" || input ==  null || input == undefined)
+  return false;
+  return true;
+}
+
+function isRequired3(value){
+  if(value === '')
     return false;
-    return true;
-  }
-  
-  function isValidVehicleDoors(doors_input){
-    const res = /^[1-9]$/
-  
-   return res.test(doors_input);
-  }
-  
-  function isValidAirBags(airbag_input){
-    const res = /^[1-9]$/;
-    return res.test(airbag_input)
-  }
-  
-  function isValidMileage(mileage_input){
-      const res = /^([1-9]|[1-4][0-9]|50)$/;
-      return res.test(mileage_input);
-  }
-  
-  function isValidPerHrCost(cost_input){
-    const res = /^\d+$/;
-    return res.test(cost_input)
-  }
-  
-  function isBetween6(length, min, max) { length < min || length > max ? false : true };
-  
-  function showError6(input, message) {
-    // get the form-field element
-    const formField = input.parentElement;
-    // add the error class
-    formField.classList.remove('success');
-    formField.classList.add('error');
-  
-    // show the error message
-    const error = formField.querySelector('small');
-    error.textContent = message;
-  };
-  
-  
-  function showSuccess6(input) {
-    // get the form-field element
-    const formField = input.parentElement;
-  
-    // remove the error class
-    formField.classList.remove('error');
-    formField.classList.add('success');
-  
-    // hide the error message
-    const error = formField.querySelector('small');
-    error.textContent = '';
-  }
-  
-  function submitVehicleDetails6(){
-  
-    if( VehicleRigistrationNumber6() &&  VehicleCompaneyName6() &&  VehicleRegistrationYear6() &&  VehicleManufactureYear6() &&  VehicleModelName6() &&  checkSelectedVehicle6() &&  checkFuelType6() &&  checkVehicleRcBook6() &&  VehicleSittingCapacity6()&& checkVehicleDoors6() && checkVehicleAirBags6() && checkVeicleMileage6() &&  checkPerHourVehicleCost6() &&  checkVehicleImage6() )
-    {
-      return true;
-    }
-    else{
-      VehicleRigistrationNumber6();
-      VehicleCompaneyName6();
-      VehicleRegistrationYear6();
-      VehicleManufactureYear6();
-      VehicleModelName6();
-      checkSelectedVehicle6();
-      checkFuelType6();
-      checkVehicleRcBook6();
-      VehicleSittingCapacity6();
-      checkVehicleDoors6()
-      checkVehicleAirBags6()
-      checkVeicleMileage6()
-      checkPerHourVehicleCost6()
-      checkVehicleImage6()
+  return true;
+}
+function isBetween3(length, min, max) {
+  if(length < min || length > max) 
       return false;
-    }
+  return true;
+}
+
+
+
+function showError3(input, message){
+  // get the form-field element
+  const formField = input.parentElement;
+  // add the error class
+  formField.classList.remove('success');
+  formField.classList.add('error');
+
+  // show the error message
+  const error = formField.querySelector('small');
+  error.textContent = message;
+}
+
+function showSuccess3(input){
+  // get the form-field element
+  const formField = input.parentElement;
+
+  // remove the error class
+  formField.classList.remove('error');
+  formField.classList.add('success');
+
+  // hide the error message
+  const error = formField.querySelector('small');
+  error.textContent = '';
+}
+
+
+
+function submitFormData3(){//
+  if(checkUsername3() && checkUserCity3() && checkUserState3() && checkAadharNumber3() && checkPincode3() && checkAddress3() && checkAadharImage3()){
+      console.log("Form Submit Successfully !!");
+      // (async()=>{swal("Good job!", "You clicked the button!", "success");})();
+      return true;
   }
+
+  else{
+      checkUsername3();
+      checkUserCity3();
+      checkUserState3();
+      checkAadharNumber3();
+      checkPincode3();
+      checkAddress3();
+      checkAadharImage3();
+      return false;
+  }
+  
+}

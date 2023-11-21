@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use(express.static('./public'));
-app.use("/upload",express.static('upload'));
+app.use("/uploads",express.static('uploads'));
 
 app.use('/', index);
 app.use('/user', user);

@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import {userUpdateProfileController,userUploadProfileImageController,userNewsLetterController,userCurrentBookingDataController,userRequestedBookingDataController,userOwnerVehicleDataController,userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleController,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingRequestDataController,userUpdateUserDataController,userAcceptOwnerBookingController,userOwnerCurrentBookingDataController,userVerifyBookingStartPinController,userWalletDataController,userOwnerDriverDataController,userDeleteDriverController} from "../controller/userController.js";
+import {userUpdateProfileController,userUploadProfileImageController,userNewsLetterController,userCurrentBookingDataController,userRequestedBookingDataController,userOwnerVehicleDataController,userLogoutUserController,userCompleteProfileController,userCreatePasswordController,userContactUsController,userChangePasswordController,userDashboardController,userVehicleBookingController,userRegisterOwnerController,userAddVehicleController,userAddDriverController,userSearchVehicleDetailsController,userBookNowVehicleController,userAddInsuranceController,userViewBookingHistoryController,userDeleteVehicleController,userUpdateInsuranceController,userUpdateVehicleInsuranceDetailsController,userVehicleBookingRequestDataController,userUpdateUserDataController,userAcceptOwnerBookingController,userOwnerCurrentBookingDataController,userVerifyBookingStartPinController,userWalletDataController,userOwnerDriverDataController,userDeleteDriverController,userCancelBookingController} from "../controller/userController.js";
 import  {upload}  from '../middleware/fileUpload.js';
 
 
@@ -62,12 +62,14 @@ router.get('/ownervehicledata',userOwnerVehicleDataController);
 router.get('/userrequestedbookingdata',userRequestedBookingDataController);
 router.get('/usercurrentbookingdata',userCurrentBookingDataController);
 router.post('/newsletter',userNewsLetterController);
-router.post('/uploadprofileimage',upload.single('image'),userUploadProfileImageController);
+router.post('/uploadprofileimage',upload.single('profileimage'),userUploadProfileImageController);
 router.post('/updateprofile',userUpdateProfileController);
 router.post('/addInsurance',userAddInsuranceController);
 router.post('/updateuserdata',userUpdateUserDataController);
 router.post('/updateinsurance',userUpdateInsuranceController);
 router.post('/updateinsurancedetails',userUpdateVehicleInsuranceDetailsController);
+router.post('/cancelbooking',userCancelBookingController);
+
 router.post('/deletedriver',userDeleteDriverController);
 router.post('/deletevehicle',userDeleteVehicleController);
 
@@ -77,31 +79,45 @@ export default router;
 
 
 
-/*
------------------------
-Success message show 
-1. owner
-2. Booking 
-3. signin 
-4. logout
--------------------
-My bookings table scrollable
-Add New Rough data
-Correct all validatioin 
---------------------
-User registration form modify
-----------------------------
-modify fetch code
----------------------------
 
-verify user while booking start by owner 
----------------------------
-vehicle booking status bar for owner 
----------------------------
-generate a notification on owner when user book vehicle 
----------------------------
-payment status on owner
----------------------------
+/*       
+-----------------: Remaining Tasks :----------------
 
+    1. Pop Up Apply
+        |-- show success alert on booking 
+        |-- Accept Booking in owner Vehicle
+        |-- Block User and Vehicle in admin
+        |-- Message sent button
+        |-- Booking Cancel
+        |-- Add Vehicle
+        |-- Add Insurance
+        |-- Delete Vehicle
+        |-- Sign Up & Sign Welcome PopUp
+        |-- Add Driver & Update Insurance & Delete Driver
+        |-- 
+
+
+    2. Booking History on User Dashboard
+    3. Booking History on Owner Dashboard
+    4. Current Booking on User Dashboard
+    5. Cancel Booking On User Dashboard
+    
+    6. Delete Vehicle and Driver on Owner Dashboard
+    7. Payment Gateway Api
+    8. Forget Password 
+    12. Filter Option on Vehicle Booking Page
+    13. Route Managment on All Pages
+    14. Apply Datatable 
+
+
+    9. Navbar On Signin Page
+    10. View Profile on User & Admin Dashboard
+    11. Update Profile Image On User & Admin Dashboard
+
+    Additional Work
+
+    1. Set Address using pincode
+    2. Auto Complete Address on User Registration Form
+    3. Vehicle Model and Company API 
 
 */

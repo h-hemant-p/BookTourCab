@@ -10,8 +10,8 @@
 body{
     background-color: #c9d6ff;
     background: linear-gradient(to right, #e2e2e2, #c9d6ff);
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
     justify-content: center;
     flex-direction: column;
     height: 100vh;
@@ -23,7 +23,7 @@ body{
     
 }
 
-.container{
+.maindiv{
     background-color: #fff;
     border-radius: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
@@ -34,25 +34,25 @@ body{
     min-height: 580px;
 }
 
-.container p{
+.maindiv p{
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.3px;
     margin: 20px 0;
 }
 
-.container span{
+.maindiv span{
     font-size: 12px;
 }
 
-.container a{
+.maindiv a{
     color: #333;
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
 }
 
-.container button{
+.maindiv button{
     background-color: rgb(78, 32, 246);
     color: #fff;
     font-size: 12px;
@@ -66,12 +66,12 @@ body{
     cursor: pointer;
 }
 
-.container button.hidden{
+.maindiv button.hidden{
     background-color: transparent;
     border-color: #fff;
 }
 
-.container form{
+.maindiv form{
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -82,7 +82,7 @@ body{
     /* height: auto; */
 }
 
-.container input{
+.maindiv input{
     background-color: #eee;
     border: none;
     margin: 8px 0;
@@ -111,7 +111,7 @@ body{
     z-index: 2;
 }
 
-.container.active .sign-in{
+.maindiv.active .sign-in{
     transform: translateX(100%);
 }
 
@@ -122,7 +122,7 @@ body{
     z-index: 1;
 }
 
-.container.active .sign-up{
+.maindiv.active .sign-up{
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
@@ -167,7 +167,7 @@ body{
     z-index: 1000;
 }
 
-.container.active .toggle-container{
+.maindiv.active .toggle-container{
     transform: translateX(-100%);
     border-radius: 0 150px 100px 0;
 }
@@ -185,7 +185,7 @@ body{
     transition: all 0.6s ease-in-out;
 }
 
-.container.active .toggle{
+.maindiv.active .toggle{
     transform: translateX(50%);
 }
 
@@ -208,7 +208,7 @@ body{
     transform: translateX(-200%);
 }
 
-.container.active .toggle-left{
+.maindiv.active .toggle-left{
     transform: translateX(0);
 }
 
@@ -217,6 +217,6 @@ body{
     transform: translateX(0);
 }
 
-.container.active .toggle-right{
+.maindiv.active .toggle-right{
     transform: translateX(200%);
 }

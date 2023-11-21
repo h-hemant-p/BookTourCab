@@ -391,6 +391,7 @@ var showUserRequestedBookingData = async()=>{
                 <th>Reg No</th>
                 <th>Company</th>
                 <th>Model</th>
+                <th>Owner</th>
                 <th>Contact No</th>
                 <th>Booking Date</th>
                 <th>Hours</th>
@@ -404,9 +405,10 @@ var showUserRequestedBookingData = async()=>{
                     <td >${booking.reg_no}</td>
                     <td >${booking.company}</td>
                     <td >${booking.model}</td>
+                    <td >${booking.owner}</td>
                     <td >${booking.contact_no}</td>
                     <td >${booking.booking_date}</td>
-                    <td >${booking.total_time}</td>
+                    <td >${booking.hours}</td>
                     <td >
                         <form action="/user/cancelbooking" method="post">
                             <input type="text" class="d-none" name="bookingid" value="${booking.bokingid}">
@@ -424,7 +426,7 @@ var showUserRequestedBookingData = async()=>{
 }
 /*----------------- show user requested booking data start---------------*/
 
-
+    
 /*----------------- show user Currrent booking data start---------------*/
 var showUserCurrentBookingData = async()=>{
     const response = await fetch('/user/usercurrentbookingdata');
@@ -478,12 +480,15 @@ var showUserCurrentBookingData = async()=>{
 
 
 /* -----------------owner vehicle bookinigs Request start ----------------------------*/
-var ShowBookingRequestData = async function(e){
+var showBookingRequestData = async function(e){
     // e.preventDefault();
+    console.log("Hiiiiiiiii");
 
     const response = await fetch('/user/ownervehiclebookingrequestdata')
     console.log("server response",response);
     const data = await response.json();
+    console.log(data.vehiclebookings);
+
     var owner_vehicle_booking = data.vehiclebookings;
 
     var table = "";
@@ -523,7 +528,7 @@ var ShowBookingRequestData = async function(e){
                     <td >${element.total_time} hr</td>
                     <td >${element.vehicle_reg_no}</td>
                     <td >&#8377;${element.totalamount}</td>
-                    <td ><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}');ShowBookingRequestData()">Accept</button></td>
+                    <td ><button class="btn btn-success text-light" onclick = "ownerAcceptRequest('${element.bookingid}');showBookingRequestData()">Accept</button></td>
                     <td ><button class="btn btn-danger text-light" onclick = "">Decline</button></td>
                 </tr>`
             });
@@ -780,7 +785,7 @@ var showOwnerCurrentBookings =  async function(){
     const data = await response.json();
     var currentbookings = data.bookings;
     console.log(currentbookings);
-    if(bookingdata.length<1){
+    if(currentbookings.length>0){
 
         currentbookings.forEach((element) => {
             var manufacture = new Date(element.manufacture_year).getFullYear();
@@ -837,7 +842,7 @@ var showOwnerCurrentBookings =  async function(){
                                 </div>
                                 <div class="col-md-3 col-lg-3 border-sm-start-none border-start">
                                     <div class="d-flex mb-1 flex-column">
-                                        <div>Total Hours   : <span class="text-success fw-bold">&#8377; ${element.total_time}</span></div>
+                                        <div>Total Hours   : <span class="text-success fw-bold">${element.total_time}</span></div>
                                         <div>Per Hour Fare : <span class="text-success fw-bold">&#8377; ${element.rent}</span></div>
                                         <div>Total Fare    : <span class="text-success fw-bold">&#8377; ${element.totalamount}</span></div>`;
                                         if(element.payment_status=="Pending"){
@@ -927,46 +932,6 @@ document.getElementById("wallet-dashboard").addEventListener("click",async()=>{
     // console.log("wallet data",data.wallet);
 });
 /*-------- wallet dashboard start --------------------------------- */
-
-var uploadProfileImage = ()=>{
-    
-}
-
-// Profile Image Upload
-document.getElementById('imageInput').addEventListener('change', function() {
-    console.log("hii1");
-    var fileInput = this;
-    var selectedImageDiv = document.getElementById('selectedImage');
-    var file = fileInput.files[0];
-
-    // selectedImageDiv.textContent = 'Selected image: ' + file.name;
-
-    // Send the file to the server (you need to implement this)
-    uploadImage(file);
-  });
-
-  function uploadImage(file) {
-    console.log("hii2");
-    console.log(file);
-    // Implement your code to send the file to the server using AJAX or fetch
-    // Example using fetch:
-    var formData = new FormData();
-    formData.append('image', file);
-    var userprofiledata = "";
-
-    fetch('/user/uploadprofileimage', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {console.log(data.message)
-        userprofiledata+= ` <img src="uploads/${data.message}" height="200px" width="220px" alt="image">`;
-    document.getElementById('userprof').innerHTML = userprofiledata;
-    })
-    .catch(error => console.error('Error:', error));
-  }
-
-
 
 
 
@@ -1080,7 +1045,12 @@ $(document).ready(function () {
                 console.error('Error:', status, error);
             }
         });
-
     });
 });
 // /* ---------------  Update Insurance End   --------------- */
+
+/*  Upload Profile Image Start */
+function submitFormOnChange() {
+    document.getElementById("uploadprofileimage").submit();
+}
+/*  Upload Profile Image End */

@@ -10,7 +10,7 @@ function checkPolicyNumber8() {
   if (!isRequired(policynumber_input)) {
     showError8(policynumber, "Policy Number Cannot be Blank.")
   }
-  else if (!validPolicyNumber(policynumber_input)) {
+  else if (!validPolicyNumber8(policynumber_input)) {
     showError8(policynumber, "Invalid Policy Number");
   }
   else {
@@ -32,7 +32,7 @@ function checkPolicyHolderName8() {
   if (!isRequired8(policyholder_input)) {
     showError8(policyholder, "Policy Holder Name Cannot Be Blank")
   }
-  else if (!isValidPolicyHolderName(policyholder_input)) {
+  else if (!isValidPolicyHolderName8(policyholder_input)) {
     showError8(policyholder, "Invalid Policy Holder Name.")
   }
   else {
@@ -54,7 +54,7 @@ function checkPolicyHolderContact8() {
   if (!isRequired8(policyholdercontact_input)) {
     showError8(policyholdercontact, "Contact Cannot Be Blank.")
   }
-  else if (!isValidContact(policyholdercontact_input)) {
+  else if (!isValidContact8(policyholdercontact_input)) {
     showError8(policyholdercontact, "Invalid Contact Number.")
   }
   else {
@@ -73,7 +73,7 @@ function checkAadharNumber8() {
   if (!isRequired8(aadhar_input)) {
     showError8(aadhar_number, "Aadhar Cannot Be Blank.");
   }
-  else if (!isAadharValid(aadhar_input)) {
+  else if (!isAadharValid8(aadhar_input)) {
     showError8(aadhar_number, "Invalid Aadhar Number");
   }
   else {
@@ -92,7 +92,7 @@ function checkCoveageStartDate8() {
     showError8(coverage_start_date, 'Date cannot be blank.');
 
   }
-  else if (!isValidCoverageStartDate(coverage_start_date_input)) {
+  else if (!isValidCoverageStartDate8(coverage_start_date_input)) {
     showError8(coverage_start_date, 'Date is not valid.')
   }
   else {
@@ -120,7 +120,7 @@ function checkCoveageEndDate8() {
       showError8(coverage_end_date, 'Date cannot be blank.');
 
     }
-    else if (!isValidCoverageEndDate(start_date_input, coverage_end_date_input)) {
+    else if (!isValidCoverageEndDate8(start_date_input, coverage_end_date_input)) {
       showError8(coverage_end_date, 'End Date is not valid.')
     }
     else {
@@ -141,7 +141,7 @@ function checkPremiumAmount8() {
     showError8(insurance_premium_amount, 'Premium Amount cannot be blank.');
 
   }
-  else if (!isValidPremiumAmount(insurance_premium_amount_input)) {
+  else if (!isValidPremiumAmount8(insurance_premium_amount_input)) {
     showError8(insurance_premium_amount, 'Premium Amount is not valid.')
   }
   else {
@@ -168,7 +168,7 @@ function checkCoverageAmount8() {
     if (!isRequired8(coverage_amount_input)) {
 
     }
-    else if (!isValidCoverageAmount(insurance_premium_amount_input, coverage_amount_input)) {
+    else if (!isValidCoverageAmount8(insurance_premium_amount_input, coverage_amount_input)) {
       showError8(coverage_amount, 'Coverage Amount is not valid.')
     }
     else {
@@ -189,7 +189,7 @@ function checkInsuranceProvider8() {
     showError8(insurance_provider, 'Insurance Provider cannot be blank.');
 
   }
-  else if (!isvalidProvider(insurance_provider_input)) {
+  else if (!isvalidProvider8(insurance_provider_input)) {
     showError8(insurance_provider, 'Insurance Provider is not valid.')
   }
   else {
@@ -225,28 +225,28 @@ function isRequired8(value) {
   return true;
 }
 
-function validPolicyNumber(policynumber_input) {
+function validPolicyNumber8(policynumber_input) {
   const res = /^[A-Za-z0-9]{8,}$/;
   return res.test(policynumber_input);
 }
 
-function isValidPolicyHolderName(policyholder_input) {
-  const res = /^[a-zA-Z]{3,20}$/;
+function isValidPolicyHolderName8(policyholder_input) {
+  const res = /^\D+$/;
   return res.test(policyholder_input);
 }
 
-function isValidContact(mobile_no_input) {
+function isValidContact8(mobile_no_input) {
   console.log("check mobile");
   const res = /^[6789][0-9]{9}$/;
   return res.test(mobile_no_input);
 }
 
-function isAadharValid(aadhar_number) {
+function isAadharValid8(aadhar_number) {
   const res = /^[1-9]\d{11}$/;
   return res.test(aadhar_number);
 }
 
-function isValidCoverageStartDate(coverage_start_date_input) {
+function isValidCoverageStartDate8(coverage_start_date_input) {
   let input_date = new Date(coverage_start_date_input);
   let currentdate = new Date();
   console.log(currentdate);
@@ -255,7 +255,7 @@ function isValidCoverageStartDate(coverage_start_date_input) {
   return true;
 }
 
-function isValidCoverageEndDate(start_date_input, end_date_input) {
+function isValidCoverageEndDate8(start_date_input, end_date_input) {
   let start_date = new Date(start_date_input);
   let end_date = new Date(end_date_input);
 
@@ -264,13 +264,13 @@ function isValidCoverageEndDate(start_date_input, end_date_input) {
   return true;
 }
 
-function isValidPremiumAmount(insurance_premium_amount_input) {
-  const res = /^(?!0$)[1-9]\d*$/;
+function isValidPremiumAmount8(insurance_premium_amount_input) {
+  const res = /^\d+$/;
   return res.test(insurance_premium_amount_input);
 }
 
-function isValidCoverageAmount(premium_amount, coverage_amount) {
-  const res = /^(?!0$)[1-9]\d*$/;
+function isValidCoverageAmount8(premium_amount, coverage_amount) {
+  const res = /^\d+$/;
 
   if (res.test(coverage_amount)) {
     if (premium_amount > coverage_amount) {
@@ -283,7 +283,7 @@ function isValidCoverageAmount(premium_amount, coverage_amount) {
   return false;
 }
 
-function isvalidProvider(insurance_provider_input) {
+function isvalidProvider8(insurance_provider_input) {
   const res = /^[A-Za-z '-]+$/;
   return res.test(insurance_provider_input);
 };
@@ -313,6 +313,3 @@ function showSuccess8(input) {
   error.textContent = '';
 }
 
-var addInsurance = ()=>{
-  
-}

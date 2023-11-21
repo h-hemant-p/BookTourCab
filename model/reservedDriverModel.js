@@ -21,6 +21,12 @@ var reservedDriverModel = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'drivingDetails',
         required : true
+    },
+    driver_status :{
+        type : String,
+        required : true,
+        default : "Active",
+        enum : ['Active','Deactive','Blocked','Deleted']
     }
 });
 

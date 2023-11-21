@@ -22,7 +22,7 @@ var adminModel = mongoose.Schema({
         type:String,
         required : true
     },
-    prifile_image : {
+    profile_image : {
         type : String,
         required : true
     }

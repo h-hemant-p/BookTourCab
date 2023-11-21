@@ -557,6 +557,15 @@ document.getElementById('news-letter-requests').addEventListener('click',async f
 /*  News Letter Requests End */
 
 
+/*  Upload Profile Image Start  */
+function submitFormOnChange() {
+    document.getElementById("uploadprofileimage").submit();
+}
+/*  Upload Profile Image End  */
+
+
+
+
 /*  Validation Start  */
 /* Change Password Start  */
 function checkChangeOldPass7() {
@@ -766,7 +775,7 @@ function isValidContactNumber(mobile_no_input){
 
 
 function isValidPass7(password) {
-    const res = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+    const res = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
     return res.test(password);
 }
 

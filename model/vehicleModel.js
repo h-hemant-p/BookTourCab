@@ -92,9 +92,10 @@ var vehicleModel = mongoose.Schema({
     },
     feedback:[feedbacks.schema],
     vehicle_status :{
-        type : Boolean,
+        type : String,
         required : true,
-        default : true
+        default : "Active",
+        enum : ['Active','Deactive','Blocked','Deleted']
     }
 });
 

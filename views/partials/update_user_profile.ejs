@@ -1,0 +1,76 @@
+    <link rel="stylesheet" href="css/formValidation.css">
+    <!-- User Profile Update Modal Start -->
+   <div class="modal fade" id="userDetailsUpdateForm" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">User Details Update Form </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+    
+            <div class="modal-body">
+                <form class="form" action="/user/updateprofile" onsubmit="return submitUpdateProfileData9()" method="post">
+                    <div class="container ">
+                        <div class="border bg-primary">
+                            <h5 class="m-2 fw-bold text-center text-light">USER PROFILE UPDATE FORM</h5>
+                        </div>
+                    </div>
+                    <div class="container"><br>
+                    
+                        <div class="row">
+                            <div class="mb-3 col-lg-6 form-field">
+                                <label for="user-name" class=" form-label fw-bold">Name</label>
+                                <input type="text" class="form-control w-75" placeholder="Enter Full Name" name="name" id="username" onkeyup="checkUsername9()" autocomplete="off">
+                                <small></small>
+                            </div>
+                            <div class="mb-3 col-lg-6"><br>
+                                <label for="gender" class=" form-label fw-bold ">Gender</label>
+                                <input type="radio" class="border-dark fw-bold mx-3" value="Male" checked name="gender" id="male" aria-describedby="ride"><label for="male" class="fw-bold">Male</label>
+                                <input type="radio" class="border-dark fw-bold mx-3" value="Female" name="gender" id="female" aria-describedby="ride"><label for="female" class="fw-bold">Female</label>
+                                <input type="radio" class="border-dark fw-bold mx-3" value="Other" name="gender" id="other" aria-describedby="ride"><label for="other" class="fw-bold">Other</label>
+                            </div>
+                        </div>
+                        <div class=" row ">
+                            <div class="mb-3 col-lg-6 form-field">
+                                <label for="user-address" class="form-label fw-bold ">Address</label>
+                                <input type="text" class="form-control w-75 " placeholder="Enter Address" id="useraddress" name="address" aria-describedby="address" onkeyup="checkAddress9()">
+                                <small></small>
+                            </div>
+                            <div class="mb-3 col-lg-6 form-field">
+                                <label for="pincode" class=" form-label fw-bold ">Pincode</label>
+                                <input type="text" class="form-control w-75 " placeholder="Enter Pincode" id="userpincode" name="pincode" aria-describedby="ride" onkeyup="checkPincode9()">
+                                <small></small>
+                            </div>
+                        </div>
+            
+                        <div class=" row">
+                            <div class="mb-3 col-lg-6 form-field">
+                                <label for="user-state" class=" form-label fw-bold ">State</label>
+                                <select onchange="print_city('userupdatecity', this.selectedIndex);checkUserState9();" id="userupdatestate" name ="state" class="form-control  w-75"></select>
+                                <small></small>
+                            </div>
+            
+                            <div class="mb-3 col-lg-6 form-field">
+                                <label for="user-city" class=" form-label fw-bold ">City</label>
+                                <select id ="userupdatecity" class="form-control w-75" name="city" onchange="checkUserCity9()"></select>
+                                <script language="javascript">print_state("userupdatestate");</script>
+                                <small></small>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="row mt-2">
+                        <div class="mb-3 col-lg-6 form-field">
+                            <input type="button" class="btn btn-secondary w-75 ms-lg-2" value="cancel" data-bs-dismiss="modal">
+                        </div>
+                        <div class="mb-3 col-lg-6 form-field">
+                            <input type="submit" class="btn btn-primary w-75" value="Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Update Profile Details Modal End -->
+<script src="/js/update_user_proffile_form.js"></script>

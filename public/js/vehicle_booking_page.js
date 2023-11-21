@@ -37,8 +37,7 @@ form1.addEventListener('submit', function postData(e) {
                 var haveac = "";
                 var havedriver = "";
                 for (var index in responseData) {
-                    var obj = responseData[index].amount + "$$" + responseData[index].droplocation + "$$" + responseData[index].enddate + "$$" + responseData[index].endtime + "$$" + responseData[index].ownerobjid + "$$" + responseData[index].pickuplocation + "$$" + responseData[index].startdate + "$$" + responseData[index].starttime + "$$" + responseData[index].vehicleobjid + "$$" + responseData[index].totalamount + "$$" + responseData[index].gst + "$$" + responseData[index].totalHours + "$$" + responseData[index].havedriver + "$$" + "Pending";
-                    if (responseData[index].automatic) {
+                    var obj = responseData[index].amount + "$$" + responseData[index].droplocation + "$$" + responseData[index].enddate + "$$" + responseData[index].endtime + "$$" + responseData[index].ownerobjid + "$$" + responseData[index].pickuplocation + "$$" + responseData[index].startdate + "$$" + responseData[index].starttime + "$$" + responseData[index].vehicleobjid + "$$" + responseData[index].totalamount + "$$" + responseData[index].gst + "$$" + responseData[index].totalHours + "$$" + responseData[index].havedriver + "$$" + "Pending" + "$$" + responseData[index].owneruserid;                    if (responseData[index].automatic) {
                         automatic = "Yes";
                     } else {
                         automatic = "No";
@@ -94,9 +93,9 @@ form1.addEventListener('submit', function postData(e) {
                             <p class="fs-3 text-lg-center fw-bold "> &#x20B9; ${responseData[index]['totalamount']}  <span class="text-center fw-bold ms-1 fs-6">(Total Cost of Rental)</span> </p>
                             <p class="fs-4 ms-lg-3 fw-bold  "> &#x20B9; ${responseData[index]['rateperhr']}  <span class="text-center fw-bold ms-1 fs-6">(Per/hr Cost)</span> </p>
                             <p class="ms-3"><i class="fa-solid fa-check" style="color: #21c076; font-size: 18px; font-weight: bold;"></i><span class="ms-2 text-secondary fw-bold">Free Cancellation</span></p>
-                            <form action = "/user/booknow" method = "post">
-                            <input type = "hidden" value = "${obj}" name = "bookingdata">
-                            <input type = "submit" class="btn btn-primary ms-3 mb-4"  value = "Book Now" style="width: 88%;">
+                            <form action = "/user/booknow" onsubmit="return submitForm(this);" method = "post">
+                                <input type = "hidden" value = "${obj}" name = "bookingdata">
+                                <input type = "submit" class="btn btn-primary ms-3 mb-4"  value = "Book Now" style="width: 88%;">
                             </form> 
                         </div>
                     </div>`;
@@ -118,8 +117,29 @@ form1.addEventListener('submit', function postData(e) {
 });
 
 /*  Search Vehicle For End  */
-
-
+function submitForm(form) {
+       swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+          setTimeout(()=>{
+            form.submit()
+          },2000);
+        } else {
+          swal("Your imaginary file is safe!");
+        }
+      });
+    
+      return false;
+}
 
 /* Vehicle Booking Form Validation Start */
 /*------------------------  Function Number 5 ------------------- */

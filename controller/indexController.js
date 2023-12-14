@@ -69,7 +69,7 @@ export const indexSignupUserController = async (request, response) => {
                     request.session.save();
                     console.log('user saved in session successfully');
                     
-                    response.render("./pages/index",{user : request.session.log})
+                    response.render("./pages/index",{user : request.session.log});
                 }
             }
         }
@@ -223,7 +223,6 @@ export const indexGetOtpController = (request, response) => {
         console.log('Email sent successfully!');
         console.log(otp);
     }catch(error){
-        console.error("Error while sending Email.");
         console.error(error);
         response.render("./pages/index",{user:""});
     }    

@@ -339,7 +339,7 @@ export const userSearchVehicleDetailsController = async (request, response) => {
             as: "OwnerDetails"
         }
     }]);
-
+    // console.log("res : ",res);
     // Find Piuckup Location Latitude longitude
     await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${request.body.pickuplocation}`)
         .then(response => response.json())
@@ -382,7 +382,7 @@ export const userSearchVehicleDetailsController = async (request, response) => {
         // console.log(res);
         
         if (res[i].OwnerDetails.length != 0) {
-
+            // console.log("ownerDetails : ",res[i].ownerDetails);
             for (var j = 0; j < res[i].OwnerDetails[0].vehicles.length; j++) {
                 
                 if(res[i].OwnerDetails[0].vehicles[j].have_insurance && !res[i].OwnerDetails[0].vehicles[j].is_booked && res[i].OwnerDetails[0].vehicles[j].vehicle_status){
@@ -431,7 +431,8 @@ export const userSearchVehicleDetailsController = async (request, response) => {
             }
         }
     }
-    var finalsorted = arr.sort((a, b) => a.nearbyvehicle - b.nearbyvehicle)
+    var finalsorted = arr.sort((a, b) => a.nearbyvehicle - b.nearbyvehicle);
+    // console.log("Vehicles : ",finalsorted);
     response.json({ finalsorted });
 }
 
@@ -659,9 +660,10 @@ export const userUpdateVehicleInsuranceDetailsController = async (request, respo
     }
 }
 
-// Pending
+// Owner Dashboard
 export const userVehicleBookingRequestDataController = async (request, response) => {
     try {
+        console.log("123");
         var userbookings = [];
         // console.log(request.session.log);
         var res = request.session.log._id;
@@ -673,8 +675,7 @@ export const userVehicleBookingRequestDataController = async (request, response)
                 {booking_status : "Pending"}
             ]
         });
-        console.log(vehiclebookings);
-
+        console.log("check : ",vehiclebookings);
 
         for (var i = 0; i < vehiclebookings.length; i++) {
             var userid = vehiclebookings[i].customer;
@@ -683,9 +684,9 @@ export const userVehicleBookingRequestDataController = async (request, response)
 
             var userdetails = await users.findOne({_id : userid});
             // console.log("Userdagta :  ",userdata);
-
-            const ownerDetailsDocument = await ownerDetails.findOne({ _id: ownerid });
-
+            console.log("check 4 : ",userdetails);
+            const ownerDetailsDocument = await ownerDetails.findOne({ _id: userdetails.owner_details });
+            console.log("check 3 : ",ownerDetailsDocument);
             if (ownerDetailsDocument) {
                 const specificVehicle = ownerDetailsDocument.vehicles.find(vehicle => vehicle._id.toString() === vehicleid.toString());
 
@@ -693,22 +694,24 @@ export const userVehicleBookingRequestDataController = async (request, response)
                     // console.log(specificVehicle);
                 }
             
-            var obj = { 
-                username : userdetails.name,
-                usercontact : userdetails.contact_no,
-                total_time : vehiclebookings[i].total_time,
-                startdate :  vehiclebookings[i].start_date,
-                start_time : vehiclebookings[i].start_time,
-                vehicle_reg_no : specificVehicle.reg_number,
-                totalamount :  vehiclebookings[i].total_charges,
-                bookingid : vehiclebookings[i]._id
+                var obj = { 
+                    username : userdetails.name,
+                    usercontact : userdetails.contact_no,
+                    total_time : vehiclebookings[i].total_time,
+                    startdate :  vehiclebookings[i].start_date,
+                    start_time : vehiclebookings[i].start_time,
+                    vehicle_reg_no : specificVehicle.reg_number,
+                    totalamount :  vehiclebookings[i].total_charges,
+                    bookingid : vehiclebookings[i]._id
+                }
+                userbookings.push(obj);
+                console.log("check 2 : ", userbookings);
             }
-            userbookings.push(obj);
         }
-    }
+        console.log("Requested Booking Data : ",userbookings);
         response.json({ vehiclebookings: userbookings })
-    } catch (err) {
-        console.log("Error while fetching the owner vehicle booking data." + err);
+    } catch (error) {
+        console.log("Error while Fetching Requested Booking Data for Owner Dashboard : ",error);
     }
 }
 
@@ -744,6 +747,7 @@ export const userAcceptOwnerBookingController = async(request,response) => {
 export const userOwnerCurrentBookingDataController = async(request,response) => {
     try {
         var userbookings = [];
+        var owner_userid = request.session.log._id;
         var ownerid = request.session.log.owner_details;
 
         var currentbookings = await bookings.find({
@@ -751,7 +755,7 @@ export const userOwnerCurrentBookingDataController = async(request,response) => 
                 {
                     $and : [
                         {   
-                            owner: ownerid 
+                            owner: owner_userid 
                         },
                         {   
                             booking_status : "Confirm"
@@ -761,7 +765,7 @@ export const userOwnerCurrentBookingDataController = async(request,response) => 
                 {
                     $and : [
                         {   
-                            owner: ownerid 
+                            owner: owner_userid 
                         },
                         {   
                             booking_status : "Running"
@@ -809,6 +813,7 @@ export const userOwnerCurrentBookingDataController = async(request,response) => 
                 userbookings.push(obj);
             }
         }
+        console.log("check 1 : ", userbookings);
         response.json({ bookings: userbookings })
     } catch (err) {
         console.log("Error While Fetching Current Booking Controller. \n"+err);
@@ -874,8 +879,9 @@ export const userOwnerVehicleDataController = async(request,response)=>{
     }
 };
 
-// pending
+// pending 
 export const userRequestedBookingDataController = async(request,response)=>{//user dashboard
+    console.log("hiii");
     try{
         var bookingDetails = await bookings.find(
             {
@@ -932,7 +938,7 @@ export const userRequestedBookingDataController = async(request,response)=>{//us
         console.log(data);
         response.json({bookings : data});
     }catch(error){
-        console.log(error);
+        console.log("Error while Fetching Requested Booking Data for User Dashboard : ",error);
     }
 }
 
@@ -997,18 +1003,21 @@ export const userCurrentBookingDataController = async(request,response)=>{
         // if(bookingDetails)
         var data = [];
         for(let i=0;i<bookingDetails.length;i++){
+            var owner_userDetails = await users.findOne({_id:bookingDetails[i].owner},{owner_details:1});
+            console.log("check : ",owner_userDetails);
             var vehicledata = await ownerDetails.findOne({
-                "_id": bookingDetails[i].owner,
+                "_id":owner_userDetails.owner_details,
                 "vehicles._id":  bookingDetails[i].vehicle
             },
             {
                 "vehicles.$": 1
             });
+            console.log("check 1 : ",vehicledata);
             var details = {
                 bookingid : bookingDetails[i]._id,
-                reg_no : vehicledata.reg_number,
-                company : vehicledata.company,
-                model : vehicledata.model,
+                reg_no : vehicledata.vehicles[0].reg_number,
+                company : vehicledata.vehicles[0].company,
+                model : vehicledata.vehicles[0].model,
                 contact_no : request.session.log.contact_no,
                 booking_date : bookingDetails[i].booking_date,
                 hours : bookingDetails[i].total_time

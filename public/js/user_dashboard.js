@@ -433,11 +433,12 @@ var showUserCurrentBookingData = async()=>{
     const data = await response.json();
     console.log(data);
     
-    const bookingData = data[0] ?? [];
-    console.log(bookingData)
+    const bookingData = data.bookings ?? [];
+    // console.log(bookingData.bookings)
+
     var table = "";
     table += ` <table class="table table-striped" border="1" style="background-color: white; font-weight : 500;  overflow-y:scroll; height:600px;" align="center">`;
-    if(bookingData.bookings.length>0){///////
+    if(bookingData.length>0){///////
         table += `
             <thead  align="center">
                 <th>Reg No</th>
@@ -450,7 +451,7 @@ var showUserCurrentBookingData = async()=>{
             </thead>
             <tbody> `        
 
-            bookingData.bookings.forEach(booking => {
+            bookingData.forEach(booking => {
                 table += 
                 `<tr align="center">
                     <td >${booking.reg_no}</td>
@@ -458,7 +459,7 @@ var showUserCurrentBookingData = async()=>{
                     <td >${booking.model}</td>
                     <td >${booking.contact_no}</td>
                     <td >${booking.booking_date}</td>
-                    <td >${booking.total_time}</td>
+                    <td >${booking.hours}</td>
                     <td >
                         <form action="/user/cancelbooking" method="post">
                             <input type="text" class="d-none" name="bookingid" value="${booking.bokingid}">
@@ -482,12 +483,12 @@ var showUserCurrentBookingData = async()=>{
 /* -----------------owner vehicle bookinigs Request start ----------------------------*/
 var showBookingRequestData = async function(e){
     // e.preventDefault();
-    console.log("Hiiiiiiiii");
+    // console.log("Hiiiiiiiii");
 
     const response = await fetch('/user/ownervehiclebookingrequestdata')
     console.log("server response",response);
     const data = await response.json();
-    console.log(data.vehiclebookings);
+    console.log("Booking Requests : ",data.vehiclebookings);
 
     var owner_vehicle_booking = data.vehiclebookings;
 

@@ -1,0 +1,18 @@
+#overview {
+    margin-top: 5px;
+    background-color: #EDF3FD;
+}
+
+p {
+    font-weight: 500;
+    text-align: justify;
+}
+
+h1 {
+    font-family: sans-serif;
+}
+
+.text-image{
+    width: 80%;
+    height: 60vh;
+}

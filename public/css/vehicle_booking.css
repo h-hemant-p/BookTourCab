@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    border: 0;
+}
+
+.card-shadow {
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- Map CSS Start */
+
+#map { 
+    height: 112vh;
+    width: 100%;
+    position: relative;
+}
+
+.formBlock {
+    background-color: #FFF;
+    border: 1px solid #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    border-radius: 5px;
+}
+
+.leaflet-top .leaflet-control {
+    margin-top: 180px;
+}
+
+/* ----- Map CSS End ------ */
+
+
+/* ----- Autocomplete Input Field CSS Start ----- */
+
+.autocomplete-container {
+    position: relative;
+}
+
+.autocomplete-container input {
+    width: calc(100% - 43px);
+    outline: none;
+    padding: 10px;
+    padding-right: 31px;
+    font-size: 16px;
+}
+
+.autocomplete-items {
+    position: absolute;
+    z-index: 99;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    background-color: #fff;
+}
+
+.autocomplete-items div {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.autocomplete-items div:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-items .autocomplete-active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* ----- Autocomplete Input Field CSS End ----- */
+
+/* Custom div shadow */
+.custom-div {
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 20px;
+}
+
+.custom-div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}

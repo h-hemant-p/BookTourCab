@@ -1,0 +1,90 @@
+    <link rel="stylesheet" href="css/formValidation.css">
+     <!-- Insurance Update Modal start  -->
+     <div class="modal fade" id="updateinsurance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Insurance Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/user/updateinsurancedetails" onsubmit="return submitUpdateInsuranceDetails()" method="post">
+                        <div class="container ">
+                            <div class="border bg-primary">
+                                <h5 class="m-2 fw-bold text-center text-light">UPDATE INSURANCE FORM</h5>
+                            </div>
+                        </div>
+                        <div class="container"><br>
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <input type="hidden" id="insuranceid" name="insuranceid" value="">
+                                    <label for="policy_number" class=" form-label fw-bold">Policy Number </label><br>
+                                    <input type="text" class="form-control w-75 " placeholder="Enter Policy Number" id="policynumber" name="policynumber" onkeyup="checkPolicyNumber9()" aria-describedby="ride">
+                                    <small></small>
+                                </div>
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="policy_holder_name" class=" form-label fw-bold">Policy Holder Name</label><br>
+                                    <input type="text" class="form-control w-75" placeholder="Enter Policy Holder Name" id="policyholdername" name="policyholdername" onkeyup="checkPolicyHolderName9()" aria-describedby="ride">
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="policy_holder_contact" class=" form-label fw-bold">Policy Holder Contact </label><br>
+                                    <input type="text" class="form-control w-75" placeholder="Enter Policy Holder Contact" id="policyholdercontact" name="policyholdercontact" onkeyup="checkPolicyHolderContact9()" aria-describedby="ride">
+                                  <small></small>
+                                </div>
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="policy_holder_aadhar" class=" form-label fw-bold ">Policy Holder Aadhar Number</label><br>
+                                    <input type="text" class="form-control w-75" placeholder="Enter Aadhar Number" id="policyholderaadhar" name="policyholderaadhar" onkeyup="checkAadharNumber9()" aria-describedby="ride">
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="coverage_start_date" class=" form-label fw-bold">Coverage Start Date</label><br>
+                                    <input type="date" class="form-control w-75" id="coveragestartdate" name="coveragestartdate" aria-describedby="ride" onchange="checkCoveageStartDate9()">
+                                    <small></small>
+                                </div>
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="coverage_end_date" class=" form-label fw-bold ">Coverage End Date</label><br>
+                                    <input type="date" class="form-control w-75 " id="coverageenddate" name="coverageenddate" aria-describedby="ride"  onchange="checkCoveageEndDate9()">
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class=" row ">
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="insurance_premium_amount" class=" form-label fw-bold">Insurance Premium Amount</label><br>
+                                    <input type="text" class="form-control w-75" placeholder="Enter Insurance Premium Amount" id="insurancepremiumamount" name="insurancepremiumamount" aria-describedby="ride" onkeyup="checkPremiumAmount9()">
+                                    <small></small>
+                                </div>
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="coverage_amount" class=" form-label fw-bold">Coverage Amount</label><br>
+                                    <input type="text" class="form-control w-75" placeholder="Enter Coverage Amount" id="coverageamount" name="coverageamount" aria-describedby="ride" onkeyup="checkCoverageAmount9()">
+                                    <small></small>
+                                </div>
+                            </div>
+                
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <label for="insurance_provider" class=" form-label fw-bold ">Insurance Provider</label><br>
+                                    <input type="text" class="form-control w-75 " placeholder="Enter Insurace Provider" id="insuranceprovider" name="insuranceprovider" aria-describedby="ride" onkeyup="checkInsuranceProvider9()">
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <input type="button" class="btn btn-secondary w-75 fw-bold ms-lg-2" value="cancel" data-bs-dismiss="modal">
+                                </div>
+                                <div class="mb-3 col-lg-6 form-field">
+                                    <input type="submit" class="btn btn-primary w-75 fw-bold" value="Submit">
+                                </div>
+                            </div><br>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Insurance Update Modal End -->
+    <script src="/js/update_vehicle_insurance_form.js"></script>

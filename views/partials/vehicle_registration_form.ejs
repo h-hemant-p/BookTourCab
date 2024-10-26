@@ -1,0 +1,171 @@
+<!-- Vehicle Registration Modal Start  -->
+
+<!-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#vehicle-registration"> Vehicle Registration</button>
+<br><br> -->
+
+<link rel="stylesheet" href="/css/formValidation.css">
+
+
+<div class="modal fade" id="vehicle-registration" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-titleId">Vehicle Registration Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/addvehicle" onsubmit="return submitVehicleDetails6()" enctype="multipart/form-data" method="post">
+        <div class="container ">
+          <div class="border bg-primary">
+            <h5 class="m-2 fw-bold text-center text-light">VEHICLE REGISTRATION FORM</h5>
+          </div>
+        </div>
+        <div class="container"><br>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="registration-number" class=" form-label fw-bold">Rigistration Number</label>
+              <input type="text" class="form-control w-75" placeholder="Enter Vehicle Registration Number" id="registration-number" name="registrationno" aria-describedby="ride" onkeyup="VehicleRigistrationNumber6()">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="company-name" class=" form-label fw-bold">Company Name</label>
+              <input type="text" class="form-control w-75 " placeholder="Enter Vehicle Company Name" id="company-name" name="companyname" aria-describedby="ride" onkeyup="VehicleCompaneyName6()">
+              <small></small>
+            </div>
+          </div>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="manufacture-year" class=" form-label fw-bold ">Manufacture Year</label>
+              <input type="date" class="form-control w-75 " placeholder="Enter Manufacture Year" id="manufacture-year" name="manufactureyear" aria-describedby="ride" onchange="VehicleManufactureYear6()">
+              <small></small> 
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="registration-year" class=" form-label fw-bold ">Registration Year</label>
+              <input type="date" class="form-control w-75 " placeholder="Enter Registration Year" id="registration-year" name="registrationyear" aria-describedby="ride" onchange="VehicleRegistrationYear6()">
+              <small></small>
+            </div>
+            
+          </div>
+          <div class=" row ">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="model-name" class=" form-label fw-bold ">Model Name</label>
+              <input type="text" class="form-control  w-75 " placeholder="Enter Model Name" id="model-name" name="modelname" aria-describedby="ride" onkeyup="VehicleModelName6()">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="seating-capacity" class=" form-label fw-bold">Seating Capacity</label>
+              <input type="text" min="1" class="form-control  w-75" placeholder="Enter Vehicle Seating Capacity"  id="seating-capacity" name="seatingcapacity" aria-describedby="ride" onkeyup="VehicleSittingCapacity6()">
+              <small></small>
+            </div>
+          </div>
+
+          <div class=" row my-3">
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="vehicleclass" class=" form-label fw-bold ">Vehicle Type </label>
+              <select class="form-control form w-75 "  id="select-vehicle" name="vehicleclass" onchange="checkSelectedVehicle6()" aria-label="Default select example">
+                <option class="" value="">Select Vehicle</option>
+                <option class="fw-bold" value="Scooty">Scooty</option>
+                <option class="fw-bold" value="Bike">Bike</option>
+                <option class="fw-bold" value="Car">Car / Taxi</option>
+                <option class="fw-bold" value="Minibus">Mini Bus</option>
+                <option class="fw-bold" value="Bus">Bus</option>
+                <option class="fw-bold" value="Other">Other</option>
+              </select>
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="fueltype" class=" form-label fw-bold ">Fuel Type </label>
+              <select class="form-control form w-75" id="fuel-type" name="fueltype" onchange="checkFuelType6()" aria-label="Default select example">
+                <option class="" value="">Select Fuel Type</option>
+                <option class="fw-bold" value="CNG">CNG</option>
+                <option class="fw-bold" value="Petrol">Petrol</option>
+                <option class="fw-bold" value="Diesel">Diesel</option>
+                <option class="fw-bold" value="Electric">Electric</option>
+              </select>
+              <small></small>
+            </div>
+          </div>
+         
+          <div class=" row">
+            <div class="mb-3 col-lg-6 form-field form-field">
+              <label for="total-doors" class=" form-label fw-bold ">Total Doors </label>
+              <input type="text" class="form-control w-75 " placeholder="Enter number of doors" id="total-doors"  name="doors" onkeyup="checkVehicleDoors6()" aria-describedby="ride">
+              <small></small>
+            </div>
+            <div class="mb-3 col-lg-6 form-field">
+              <label for="air-bags" class=" form-label fw-bold ">Air Bags</label>
+              <input type="text" class="form-control w-75 " placeholder="Enter number of Air Bags" id="air-bags"  name="airbags" onkeyup="checkVehicleAirBags6()" aria-describedby="ride" >
+              <small></small>
+            </div>    
+          </div>
+         
+        <div class=" row">
+          <div class="mb-3 col-lg-6 form-field">
+            <label for="mileage" class=" form-label fw-bold ">Mileage</label>
+            <input type="text" class="form-control w-75 " placeholder="Enter Mileage of vehicle" id="mileage"  name="mileage" onkeyup="checkVeicleMileage6()" aria-describedby="ride">
+            <small></small>
+          </div>
+          <div class="mb-3 col-lg-6 form-field form-field">
+            <label for="perhrcost" class=" form-label fw-bold ">Per/hr Cost</label>
+            <input type="text" class="form-control w-75 " placeholder="Enter Per Hour Cost of vehicle" id="perhrcost"  name="rent" onkeyup="checkPerHourVehicleCost6()"  aria-describedby="ride">
+            <small></small>
+          </div>
+          
+        </div>
+        <div class=" row">
+          <div class="mb-3 col-lg-6 form-field form-field">
+            <label for="rc-book-image" class=" form-label fw-bold ">Upload RC Book Image </label>
+            <input type="file" class="form-control w-75 " placeholder="Upload RC Book Imamge" id="rc-book-image"  name="rcbookimage" accept="image/*" onchange="checkVehicleRcBook6()" aria-describedby="ride">
+            <small></small>
+          </div>
+          <div class="mb-3 col-lg-6 form-field form-field">
+            <label for="vehicleimage" class=" form-label fw-bold ">Upload Vehicle Image </label>
+            <input type="file" class="form-control w-75 " placeholder="Upload RC Book Imamge" id="vehicleimage"  name="vehicleimage" accept="image/*" onchange="checkVehicleImage6()" aria-describedby="ride">
+            <small></small>
+          </div>
+        </div>
+
+        <div class=" row">
+          <div class="mb-3 col-lg-6">
+            <label for="vehicletype" class="form-label fw-bold mt-4">Vehicle Type</label>
+            <input type="radio" class="border-dark mx-2" id="automaticfalse" name="automatic" value="false" aria-describedby="ride" checked> <label for="automaticfalse" class="fw-bold">Manual</label>
+            <input type="radio" class="border-dark mx-2" id="automatictrue" name="automatic" value="true" aria-describedby="ride"> <label for="automatictrue" class="fw-bold">Automatic</label>
+          </div>
+          <div class="mb-3 col-lg-6">
+            <label for="vehicleac" class="form-label fw-bold mt-4">AC Type</label>
+            <input type="radio" class="border-dark mx-2" id="actrue" name="ac" value="true" aria-describedby="ride" > <label for="actrue" class="fw-bold">AC</label>
+            <input type="radio" class="border-dark mx-2" id="acfalse" name="ac" value="false" aria-describedby="ride" checked> <label for="acfalse" class="fw-bold">Non-Ac</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label for="have-insurance" class="form-label fw-bold mt-4">Have Insurance</label>
+            <input type="radio" class="border-dark mx-2" id="Yes" name="haveinsurance" value="true" aria-describedby="ride" checked> <label for="Yes" class="fw-bold">Yes</label>
+            <input type="radio" class="border-dark mx-2" id="No" name="haveinsurance" value="false" aria-describedby="ride"> <label for="No" class="fw-bold">No</label>
+          </div>
+          <div class="mb-3 col-lg-6">
+            <label for="driver" class="form-label fw-bold mt-4">With Driver</label>
+            <input type="radio" class="border-dark mx-2" id="drivertrue" name="driver" value="true" aria-describedby="ride" checked> <label for="drivertrue" class="fw-bold">with driver</label>
+            <input type="radio" class="border-dark mx-2" id="driverfalse" name="driver" value="false" aria-describedby="ride"> <label for="driverfalse" class="fw-bold">without driver</label>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+           <div class="mb-3 col-lg-6 form-field">
+             <input type="button" class="btn btn-secondary w-75" value="cancel" data-bs-dismiss="modal">
+           </div>
+           <div class="mb-3 col-lg-6 form-field">
+             <input type="submit" class="btn btn-primary w-75" value="Submit">
+           </div>
+        </div>
+       
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/vehicle_registration_form.js"></script>
+
+<!-- Vehicle Registration Modal End  -->

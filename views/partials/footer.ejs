@@ -1,40 +1,46 @@
 <!-- footer -->
 <div class="container-fluid mt-3 " id="footer-background">
     <div class="container">
-    <div class="row" >
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-4 ">
-            <h4 class="text-white ms-md-2" id="links">Links</h4>
-            <div class="linksList">
-                <p><a class="fs-6 ms-md-2" href="/">Home</a></p>
-                <p><a class="fs-6 ms-md-2" href="about">About Us</a></p>
-                <p><a class="fs-6 ms-md-2" href="contact_us_form" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a></p>
-                <p><a class="fs-6 ms-md-2" href="privacy_policy">Privacy Policy</a></p>
-                <p><a class="fs-6 ms-md-2" href="#thirdSection">FAQ's</a></p>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-4 ">
+                <h4 class="text-white ms-md-2" id="links">Links</h4>
+                <div class="linksList">
+                    <p><a class="fs-6 ms-md-2" href="/">Home</a></p>
+                    <p><a class="fs-6 ms-md-2" href="about">About Us</a></p>
+                    <p><a class="fs-6 ms-md-2" href="contact_us_form" data-bs-toggle="modal"
+                            data-bs-target="#contactModal">Contact Us</a></p>
+                    <p><a class="fs-6 ms-md-2" href="privacy_policy">Privacy Policy</a></p>
+                    <p><a class="fs-6 ms-md-2" href="#thirdSection">FAQ's</a></p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-4">
+                <h4 class="text-white" id="newsletters">Newsletter</h4>
+                <p class="text-white" id="newsletter">Fill Your Inbox with Excitement: Subscribe to Our Newsletter for
+                    Car Rental & With Deals, and More!</p>
+                <input class="form-control w-50" type="text" name="" id="" placeholder="Enter Your Email"><br>
+                <button class="btn text-light fw-bold w-50" id="newsletter-btn">Subscribe</button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-4">
+                <h4 class="text-white ms-md-4 ">Social Media Links</h4>
+                <ul class="py-2 linksList">
+                    <p><i class="fa fa-instagram" style="font-size:25px"></i><span class="ms-md-2 fs-6">Instagram</span>
+                    </p>
+                    <p><i class="fa fa-facebook" style="font-size:25px"></i><span class="ms-md-2 fs-6">Facebook</span>
+                    </p>
+                    <p><i class="fa fa-twitter" style="font-size:25px"></i><span class="ms-md-2 fs-6">Twitter</span></p>
+                    <p><i class="fa fa-linkedin" style="font-size:25px"></i><span class="ms-md-2 fs-6">Linkedin</span>
+                    </p>
+                </ul>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-4">
-            <h4 class="text-white" id="newsletters">Newsletter</h4>
-            <p class="text-white" id="newsletter">Fill Your Inbox with Excitement: Subscribe to Our Newsletter for Car Rental & With Deals, and More!</p>
-            <input class="form-control w-50" type="text" name="" id="" placeholder="Enter Your Email"><br>
-            <button class="btn text-light fw-bold w-50" id="newsletter-btn">Subscribe</button>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-4">
-            <h4 class="text-white ms-md-4 ">Social Media Links</h4>
-            <ul class="py-2 linksList">
-                <p><i class="fa fa-instagram" style="font-size:25px"></i><span class="ms-md-2 fs-6">Instagram</span></p>
-                <p><i class="fa fa-facebook" style="font-size:25px"></i><span class="ms-md-2 fs-6">Facebook</span></p>
-                <p><i class="fa fa-twitter" style="font-size:25px"></i><span class="ms-md-2 fs-6">Twitter</span></p>
-                <p><i class="fa fa-linkedin" style="font-size:25px"></i><span class="ms-md-2 fs-6">Linkedin</span></p>
-            </ul>
-        </div>
     </div>
-</div>
 </div>
 
 </div>
-    <div class="container-fluid" id="footer-copyright">
-        <p  class="text-white fw-bold text-center m-0" >&copy; CopyRight Act 2023, BookTourCab — Made with passion by ByteShift.</p>
-    </div>
+<div class="container-fluid" id="footer-copyright">
+    <p class="text-white fw-bold text-center m-0">&copy; CopyRight Act 2023, BookTourCab — Made with passion by
+        ByteShift.</p>
+</div>
 
 <!-- adding font awesome link -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -46,3 +52,167 @@
 
 <!-- Sweet allert cdn -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<style>
+    #chatButton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #chatContainer {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+        flex-direction: column;
+    }
+
+    .chat-header {
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #minimizeBtn {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+
+    #chatMessages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+
+    .message {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border-radius: 15px;
+        max-width: 80%;
+    }
+
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+    }
+
+    .bot-message {
+        background-color: #e9ecef;
+        color: black;
+        margin-right: auto;
+    }
+
+    #inputGroup {
+        padding: 15px;
+        background-color: white;
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid #dee2e6;
+    }
+
+    #userInput {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        outline: none;
+    }
+
+    #sendBtn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+</style>
+<button id="chatButton" onclick="toggleChat()">AI Chat</button>
+
+<div id="chatContainer">
+    <div class="chat-header">
+        <span>AI Chat Assistant</span>
+        <button id="minimizeBtn" onclick="toggleChat()">−</button>
+    </div>
+    <div id="chatMessages"></div>
+    <div id="inputGroup">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    function toggleChat() {
+        const container = document.getElementById('chatContainer');
+        const button = document.getElementById('chatButton');
+        container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+        button.style.display = container.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function appendMessage(message, isUser) {
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+        messageDiv.textContent = message;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const userInput = document.getElementById('userInput');
+        const message = userInput.value.trim();
+
+        if (!message) return;
+
+        appendMessage(message, true);
+        userInput.value = '';
+
+        try {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            appendMessage(data.reply, false);
+        } catch (error) {
+            console.error('Error:', error);
+            appendMessage("Sorry, there was an error processing your request.", false);
+        }
+    }
+
+    document.getElementById('userInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>

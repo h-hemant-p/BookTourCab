@@ -666,7 +666,7 @@ export const userVehicleBookingRequestDataController = async (request, response)
         console.log("123");
         var userbookings = [];
         // console.log(request.session.log);
-        var res = request.session.log._id;
+        var res = request.session.log?._id;
         // console.log(res);
 
         var vehiclebookings = await bookings.find({
@@ -700,7 +700,7 @@ export const userVehicleBookingRequestDataController = async (request, response)
                     total_time : vehiclebookings[i].total_time,
                     startdate :  vehiclebookings[i].start_date,
                     start_time : vehiclebookings[i].start_time,
-                    vehicle_reg_no : specificVehicle.reg_number,
+                    vehicle_reg_no : specificVehicle?.reg_number,
                     totalamount :  vehiclebookings[i].total_charges,
                     bookingid : vehiclebookings[i]._id
                 }
